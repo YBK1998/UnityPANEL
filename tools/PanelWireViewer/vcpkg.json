@@ -1,0 +1,11 @@
+{
+  "name": "panelwireviewer",
+  "version": "1.0.0",
+  "description": "CNC panel wiring connection viewer (Dear ImGui + SQLite)",
+  "dependencies": [
+    { "name": "imgui", "features": ["glfw-binding", "opengl3-binding"] },
+    "imgui-node-editor",
+    "glfw3",
+    "sqlite3"
+  ]
+}

@@ -1,0 +1,6 @@
+// Application icon (rasterized from app.svg -- see README).
+// The resource is named GLFW_ICON because GLFW loads the running window /
+// taskbar icon from a user resource of exactly that name; if it's missing GLFW
+// falls back to the generic Windows icon. As the only icon group in the .exe it
+// is also what Windows Explorer shows for the file.
+GLFW_ICON ICON "app.ico"

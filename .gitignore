@@ -17,3 +17,8 @@ __pycache__/
 *.pyc
 Thumbs.db
 .DS_Store
+
+# PanelWireViewer build output
+tools/PanelWireViewer/build/
+tools/PanelWireViewer/panelwire.db
+tools/PanelWireViewer/panelwire_ui.ini
