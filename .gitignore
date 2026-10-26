@@ -1,0 +1,19 @@
+# Unity generated (rebuilt by Unity on open)
+A11_CircuitSim/[Ll]ibrary/
+A11_CircuitSim/[Tt]emp/
+A11_CircuitSim/[Oo]bj/
+A11_CircuitSim/[Ll]ogs/
+A11_CircuitSim/[Uu]ser[Ss]ettings/
+A11_CircuitSim/MemoryCaptures/
+A11_CircuitSim/*.csproj
+A11_CircuitSim/*.sln
+A11_CircuitSim/*.slnx
+A11_CircuitSim/.vs/
+A11_CircuitSim/Build/*_BurstDebugInformation_DoNotShip/
+A11_CircuitSim/Build/*_BackUpThisFolder_ButDontShipItWithYourGame/
+
+# Python / OS
+__pycache__/
+*.pyc
+Thumbs.db
+.DS_Store
