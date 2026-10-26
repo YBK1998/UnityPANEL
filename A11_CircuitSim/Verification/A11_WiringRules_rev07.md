@@ -1,15 +1,16 @@
 # Wiring rule check — rev 0.7
 
-108 numbered conductors.
+109 numbered conductors.
 **9 problem(s).**
 
 ## R1 Conductors per terminal
 
 | Terminal | Conductors | Capacity | Result |
 |---|---|---|---|
-| `PEBAR.BAR` | 11 (140, 139, 141, 142, 147, 143, 144, 145, 146, 149, 148) | 12 | PASS |
-| `XN.T` | 6 (106, 113, 132, 116, 119, 122) | 6 | PASS |
-| `XL.T` | 4 (109, 114, 117, 120) | 6 | PASS |
+| `PEBAR.BAR` | 7 (140, 139, 141, 142, 143, 144, 138) | 8 | PASS |
+| `XN.T` | 6 (106, 113, 132, 116, 119, 122) | 12 | PASS |
+| `PEBAR.BAR2` | 6 (147, 145, 146, 149, 148, 138) | 8 | PASS |
+| `XL.T` | 4 (109, 114, 117, 120) | 12 | PASS |
 
 ## R2 Protective earth
 
@@ -53,7 +54,7 @@
 
 ## R5 Electrical equivalence with rev 0.5
 
-- CHANGED `A1.DCGND`: rev 0.5 net {A1.DCGND, A1.GND, A1.OGND, A2.ALM-, A3.ALM-, A4.ALM-, BKP.T, DOOR.T, G1.PE, G2.-V, G2.PE, H1.-, K1.A2, M2.-, Mains.PE, PEBAR.BAR, S0.3, U1.COM, U1.PEc, X-LIM.3, XT.2, XT.4, Y-LIM.3, Z-LIM.3, Z1.GND} → now {A1.DCGND, A1.GND, A1.OGND, A2.ALM-, A3.ALM-, A4.ALM-, BKP.T, BODY.T, DOOR.T, G1.PE, G2.-V, G2.PE, H1.-, K1.A2, M2.-, Mains.PE, PEBAR.BAR, U1.COM, U1.PEc, X-LIM.3, XS1.PE, XT.2, XT.4, Y-LIM.3, Z-LIM.3, Z1.GND}
+- CHANGED `A1.DCGND`: rev 0.5 net {A1.DCGND, A1.GND, A1.OGND, A2.ALM-, A3.ALM-, A4.ALM-, BKP.T, DOOR.T, G1.PE, G2.-V, G2.PE, H1.-, K1.A2, M2.-, Mains.PE, PEBAR.BAR, S0.3, U1.COM, U1.PEc, X-LIM.3, XT.2, XT.4, Y-LIM.3, Z-LIM.3, Z1.GND} → now {A1.DCGND, A1.GND, A1.OGND, A2.ALM-, A3.ALM-, A4.ALM-, BKP.T, BODY.T, DOOR.T, G1.PE, G2.-V, G2.PE, H1.-, K1.A2, M2.-, Mains.PE, PEBAR.BAR, PEBAR.BAR2, U1.COM, U1.PEc, X-LIM.3, XS1.PE, XT.2, XT.4, Y-LIM.3, Z-LIM.3, Z1.GND}
 - CHANGED `F1.in`: rev 0.5 net {F1.in, F2.in, G2.+V, M2.+} → now {F1.in, F2.in, G2.+V}
 - CHANGED `F1.out`: rev 0.5 net {F1.out, H2.+, H3.+, KM1.43, S0.1} → now {F1.out, H2.+, H3.+, KM1.43, M2.+, S0.1}
 - CHANGED `G1.N`: rev 0.5 net {G1.N, KM1.4T2, U1.N, XS1.N} → now {G1.N, G2.N, KM1.A1, U1.N, XN.T, XS1.N, Z1.NOUT}

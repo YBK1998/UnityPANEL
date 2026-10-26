@@ -1405,11 +1405,17 @@ namespace A11Sim
         public PeBar()
         {
             tag = "PEBAR";
-            title = "PE bar (earth bar)";
-            info = "All protective-earth conductors. Wire 148 is the only 0 V to PE bond (PELV).";
+            title = "PE bars 1 + 2 (earth bars)";
+            info = "Two copper bars, 150 × 25 mm, each on two 17 mm red insulators with 4 points, linked by 138. All protective-earth conductors. " +
+                   "Up to 2 conductors per point (owner decision 2026-10-26) — a deviation from IEC 60204-1 (one protective conductor per terminal point); " +
+                   "a 12-point bar would remove it. Wire 148 is the only 0 V to PE bond (PELV).";
         }
 
-        public override void Build() => Term("BAR", 150, 280, true);
+        public override void Build()
+        {
+            Term("BAR", 150, 280, true);
+            Term("BAR2", 221, 280, true);
+        }
 
         public override void DrawStatic(Gfx g, Labels lb)
         {
@@ -1417,7 +1423,8 @@ namespace A11Sim
             g.color = Pal.PE;
             Sym.Ground(g, new Vector2(286, 277.5f));
             g.color = Pal.Sym;
-            lb.Add("PE bar (earth bar)", 152, 281.6f, 1.05f, Pal.Title, TA.Left, 0, true);
+            lb.Add("PE bar 1", 152, 281.6f, 1.05f, Pal.Title, TA.Left, 0, true);
+            lb.Add("PE bar 2", 223, 281.6f, 1.05f, Pal.Title, TA.Left, 0, true);
             foreach (var (x, l, line) in Drops)
             {
                 if (line) g.Dashed(new Vector2(x, 280), new Vector2(x, 276.5f), 0.4f, 0.3f);

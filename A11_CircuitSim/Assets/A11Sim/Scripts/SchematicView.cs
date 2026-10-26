@@ -944,6 +944,21 @@ namespace A11Sim
                 for (int i = 0; i < 10; i++) yield return null;
                 yield return Shot(dir, name);
             }
+            // Interior with the door open: whole plate, row A + busbars (top), earth bars (bottom wall).
+            panel.ToggleDoor();
+            for (int i = 0; i < 240 && panel.doorAngle < panel.doorTarget - 1f; i++) yield return null;
+            var inside = new (string name, Vector3 target, float yaw, float pitch, float dist)[]
+            {
+                ("v6_interior", new Vector3(0, 0, 0.15f), 0, 0, 1.45f),
+                ("v7_row_a_busbars", new Vector3(0.02f, 0.33f, 0.18f), 0, 0, 0.6f),
+                ("v8_earth_bars", new Vector3(-0.02f, -0.47f, 0.07f), 0, 35, 0.45f),
+            };
+            foreach (var (name, target, yaw, pitch, dist) in inside)
+            {
+                panel.Focus(target, yaw, pitch, dist);
+                for (int i = 0; i < 10; i++) yield return null;
+                yield return Shot(dir, name);
+            }
             Application.Quit();
         }
 

@@ -1,6 +1,6 @@
-# Wire schedule rev 0.7 — wired directly; no terminal blocks, only the 230 V L / N distribution blocks
+# Wire schedule rev 0.7 — wired directly; no terminal blocks, only the 230 V L / N busbars
 
-Generated from the simulator netlist (`netlist_rev07.json`). Max. 2 conductors per device terminal; "2×" = twin ferrule. XL and XN take one conductor per point. Changes against the rev 0.5 schedule (§ 8) are marked.
+Generated from the simulator netlist (`netlist_rev07.json`). Max. 2 conductors per device terminal; "2×" = twin ferrule. XL and XN (12-point busbars) take one conductor per point; the two 4-point earth bars take up to 2 per point (owner decision 2026-10-26) and are linked by 138. Changes against the rev 0.5 schedule (§ 8) are marked.
 
 Colours (IEC 60204-1 13.2.4): L **black**, N **light blue**, PE **green/yellow**, AC control (KM1 coil) **red**, DC power (48 V, brake resistor) **black**, +24 V / DC control / signals **dark blue**, 0 V **blue/white**. The spindle cable W1 is one 4G1.5 shielded cable (cores brown / black / grey / G/Y).
 
@@ -11,20 +11,20 @@ Colours (IEC 60204-1 13.2.4): L **black**, N **light blue**, PE **green/yellow**
 | 103 | Main CB 2 | EMI filter LIN | 2.5 mm² black | was 2.5 mm² brown |
 | 104 | Main CB 4 | EMI filter NIN | 2.5 mm² light blue | was 2.5 mm² blue |
 | 105 | EMI filter LOUT (2×) | Contactor 1L1 | 2.5 mm² black | was EMI filter LOUT → TB1; was 2.5 mm² brown |
-| 106 | EMI filter NOUT | N distribution block XN | 2.5 mm² light blue | was EMI filter NOUT → TB2; was 2.5 mm² blue |
-| 109 | Contactor 2T1 | L distribution block XL | 2.5 mm² black | was Contactor 2T1 → LBUS; was 2.5 mm² brown |
+| 106 | EMI filter NOUT | N busbar XN | 2.5 mm² light blue | was EMI filter NOUT → TB2; was 2.5 mm² blue |
+| 109 | Contactor 2T1 | L busbar XL | 2.5 mm² black | was Contactor 2T1 → LBUS; was 2.5 mm² brown |
 | 111 | EMI filter LOUT (2×) | CB-24V 1 | 2.5 mm² black | was TB1 → CB-24V 1; was 1.5 mm² brown |
 | 112 | CB-24V 2 (2×) | PSU 24V L | 1.5 mm² black | was 1.5 mm² brown |
-| 113 | N distribution block XN | PSU 24V N | 1.5 mm² light blue | was TB2 → PSU 24V N; was 1.5 mm² blue |
-| 114 | L distribution block XL | CB-VFD 1 | 2.5 mm² black | was LBUS → CB-VFD 1; was 2.5 mm² brown |
+| 113 | N busbar XN | PSU 24V N | 1.5 mm² light blue | was TB2 → PSU 24V N; was 1.5 mm² blue |
+| 114 | L busbar XL | CB-VFD 1 | 2.5 mm² black | was LBUS → CB-VFD 1; was 2.5 mm² brown |
 | 115 | CB-VFD 2 | VFD L | 2.5 mm² black | was 2.5 mm² brown |
-| 116 | N distribution block XN | VFD N | 2.5 mm² light blue | was NBUS → VFD N; was 2.5 mm² blue |
-| 117 | L distribution block XL | CB-48V 1 | 2.5 mm² black | was LBUS → CB-48V 1; was 1.5 mm² brown |
+| 116 | N busbar XN | VFD N | 2.5 mm² light blue | was NBUS → VFD N; was 2.5 mm² blue |
+| 117 | L busbar XL | CB-48V 1 | 2.5 mm² black | was LBUS → CB-48V 1; was 1.5 mm² brown |
 | 118 | CB-48V 2 | PSU 48V L | 1.5 mm² black | was 1.5 mm² brown |
-| 119 | N distribution block XN | PSU 48V N | 1.5 mm² light blue | was NBUS → PSU 48V N; was 1.5 mm² blue |
-| 120 | L distribution block XL | CB-PUMP 1 | 2.5 mm² black | was LBUS → CB-PUMP 1; was 1.5 mm² brown |
+| 119 | N busbar XN | PSU 48V N | 1.5 mm² light blue | was NBUS → PSU 48V N; was 1.5 mm² blue |
+| 120 | L busbar XL | CB-PUMP 1 | 2.5 mm² black | was LBUS → CB-PUMP 1; was 1.5 mm² brown |
 | 121 | CB-PUMP 2 | Schuko L | 1.5 mm² black | was 1.5 mm² brown |
-| 122 | N distribution block XN | Schuko N | 1.5 mm² light blue | was NBUS → Schuko N; was 1.5 mm² blue |
+| 122 | N busbar XN | Schuko N | 1.5 mm² light blue | was NBUS → Schuko N; was 1.5 mm² blue |
 | 123 | VFD U | HDC-HA 1 | 1.5 mm² brown, core of W1 4G1.5 shielded | was 1.5 mm² shielded |
 | 124 | VFD V | HDC-HA 2 | 1.5 mm² black, core of W1 4G1.5 shielded | was 1.5 mm² shielded |
 | 125 | VFD W | HDC-HA 3 | 1.5 mm² grey, core of W1 4G1.5 shielded | was 1.5 mm² shielded |
@@ -34,18 +34,19 @@ Colours (IEC 60204-1 13.2.4): L **black**, N **light blue**, PE **green/yellow**
 | 129 | VFD PB | Braking resistor T2 | 1.5 mm² black, silicone | was 1.5 mm² |
 | 130 | CB-24V 2 (2×) | K1 41 | 1.5 mm² red | was TB1 → K1 21; was 1.5 mm² brown |
 | 131 | K1 44 | Contactor A2 | 1.5 mm² red | was K1 24 → Contactor A2; was 1.5 mm² brown |
-| 132 | N distribution block XN | Contactor A1 | 1.5 mm² light blue | was TB2 → Contactor A1; was 1.5 mm² blue |
-| 139 | Enclosure body (earth stud) | Earth bar | 4 mm² G/Y | **new** |
-| 140 | Mains (gland) PE | Earth bar | 4 mm² G/Y |  |
-| 141 | Backplate | Earth bar | 4 mm² G/Y |  |
-| 142 | Door strap | Earth bar | 6 mm² braided strap | was 2.5 mm² G/Y |
-| 143 | EMI filter GND | Earth bar | 4 mm² G/Y |  |
-| 144 | VFD PEc | Earth bar | 2.5 mm² G/Y |  |
-| 145 | PSU 48V PE | Earth bar | 1.5 mm² G/Y |  |
-| 146 | PSU 24V PE | Earth bar | 1.5 mm² G/Y |  |
-| 147 | DIN-rail earth stud | Earth bar | 2.5 mm² G/Y | was DINTB → Earth bar; was G/Y |
-| 148 | PSU 24V -V2 (2×) | Earth bar | 1.5 mm² G/Y | was TB0V → Earth bar |
-| 149 | Schuko PE | Earth bar | 1.5 mm² G/Y | **new** |
+| 132 | N busbar XN | Contactor A1 | 1.5 mm² light blue | was TB2 → Contactor A1; was 1.5 mm² blue |
+| 138 | Earth bar 1 | Earth bar 2 | 4 mm² G/Y | **new** |
+| 139 | Enclosure body (earth stud) | Earth bar 1 | 4 mm² G/Y | **new** |
+| 140 | Mains (gland) PE | Earth bar 1 | 4 mm² G/Y |  |
+| 141 | Backplate | Earth bar 1 | 4 mm² G/Y |  |
+| 142 | Door strap | Earth bar 1 | 6 mm² braided strap | was 2.5 mm² G/Y |
+| 143 | EMI filter GND | Earth bar 1 | 4 mm² G/Y |  |
+| 144 | VFD PEc | Earth bar 1 | 2.5 mm² G/Y |  |
+| 145 | PSU 48V PE | Earth bar 2 | 1.5 mm² G/Y | was PSU 48V PE → Earth bar 1 |
+| 146 | PSU 24V PE | Earth bar 2 | 1.5 mm² G/Y | was PSU 24V PE → Earth bar 1 |
+| 147 | DIN-rail earth stud | Earth bar 2 | 2.5 mm² G/Y | was DINTB → Earth bar 1; was G/Y |
+| 148 | PSU 24V -V2 (2×) | Earth bar 2 | 1.5 mm² G/Y | was TB0V → Earth bar 1 |
+| 149 | Schuko PE | Earth bar 2 | 1.5 mm² G/Y | **new** |
 | 150 | PSU 48V +V1 | DMA860H-X AC1 | 1.5 mm² black | was 1.5 mm² red |
 | 151 | PSU 48V -V1 | DMA860H-X AC2 | 1.5 mm² black |  |
 | 152 | PSU 48V +V2 | DMA860H-Y AC1 | 1.5 mm² black | was 1.5 mm² red |

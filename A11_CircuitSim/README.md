@@ -4,15 +4,19 @@ A live, zoomable version of `United_Box_A11_Manual_rev0.5.pdf`. Sheets E1–E4 a
 schematic. Energized conductors glow in their potential's color.
 
 The model is **wiring rev 0.7**: the rev 0.5 circuit wired directly, with no terminal blocks except two 230 V
-distribution blocks, XL (switched L) and XN (all N). Wire numbers follow § 8, except 9 removed and 2 added: 149 (pump
-outlet PE) and 139 (enclosure body to earth bar). See `Verification/A11_Wire_Schedule_rev07.md`.
+busbars, XL (switched L) and XN (all N). Wire numbers follow § 8, except 9 removed and 3 added: 149 (pump
+outlet PE), 139 (enclosure body to earth bar) and 138 (link between the two earth bars). See `Verification/A11_Wire_Schedule_rev07.md`.
 
 Rev 0.7 changes (from a wire-by-wire review against the part datasheets, `Verification/A11_Circuit_Verification.md`):
 - The E-stop gets an **added NC contact block (ZB2-BE102)**: NC1 opens the K1 chain, NC2 → A11 X7 in series with the
   **tool-setter over-travel** (wire 347). OFF does not raise the A11 alarm. K1 pole 4 switches the KM1 coil, pole 3 stays
   empty as the gap between 24 V and 230 V, pole 2 is spare.
 - The KM1 coil circuit is fed from **QF4 out (C6)**.
-- **XL / XN** distribution blocks: every N conductor has its own point; KM1 switches L only.
+- **XL / XN** busbars (160 × 16 × 42, 12 points each, vertical in the strip right of the right vertical duct): every N
+  conductor has its own point; KM1 switches L only.
+- **Hardware measured 2026-10-26:** EMI filter 51 × 51 × 30 screwed to the plate at the far left of row A (LINE side down,
+  LOAD side up); DIN rail shortened to 330 mm; two 4-point copper earth bars (150 × 25 on 17 mm insulators) linked by 138,
+  with **up to 2 conductors per point** — owner decision, a deviation from IEC 60204-1 (one protective conductor per point).
 - Sensor 0 V comes straight from the A11 J8 GND screw (not through the drive ALM screws). The limit / home sensors stay
   NPN NO, so do the hard-limit check after any connector work.
 - **Power lane VP** (left: mains in, shielded VFD cable W1 with the shield 360° at both ends) and **motor lane VM**
@@ -61,13 +65,13 @@ Inside is the full panel at datasheet size, in the bought enclosure:
   the right, foamed door gasket;
 - no removable panels: the 10 cable entries are drilled / punched through the bottom wall (mains and HDC-HA under the
   power lane, motor connectors under the motor lane, sensor connectors near the A11);
-- its own galvanised mounting plate on welded M6 studs. The plate size is **assumed 750 × 955** — measure yours and set
-  `Cabinet3D.PlateW` / `PlateH`. The layout uses the centre 539 × 955 of it, so there is spare room left and right.
+- its own galvanised mounting plate on welded M6 studs. The plate is **730 W × 930 H (measured)**,
+  `Cabinet3D.PlateW` / `PlateH`. The layout uses the centre 539 × 930 of it, so there is spare room left and right.
 
 The panel has TS35 rails and slotted 40 × 60 ducts, plus the power lane VP and the motor lane VM on the spare width.
-Row A holds the MCBs, EMI filter, UMC65 contactor, K1 (Finder 55.34 on a socket that looks like a Schneider RXZE2S114M, exact part not confirmed; wire by the IEC numbers, see caution C11),
-the F1 / F2 RT18 holders with 10 × 38 gG 2 A fuses, the Schuko DIN socket and the L / N distribution blocks XL, XN. Row B has the VFD with a live display (100 mm clear above it) and two PSUs, row C the three DMA860H drives, and
-row D the A11E board. The braking resistor, the filter fan and the outlet filter sit on the side walls, and the earth bar
+Row A holds the plate-mounted EMI filter (far left), then on the 330 mm DIN rail the MCBs, UMC65 contactor, K1 (Finder 55.34 on a socket that looks like a Schneider RXZE2S114M, exact part not confirmed; wire by the IEC numbers, see caution C11),
+the F1 / F2 RT18 holders with 10 × 38 gG 2 A fuses and the Schuko DIN socket. The L / N busbars XL, XN stand vertically right of the right vertical duct. Row B has the VFD with a live display (100 mm clear above it) and two PSUs, row C the three DMA860H drives, and
+row D the A11E board. The braking resistor, the filter fan and the outlet filter sit on the side walls, and the two earth bars
 and the cable entries on the bottom wall. There are no terminal blocks (only XL / XN for 230 V). Each other wire goes
 from device screw to device screw, with at most 2 per screw (twin ferrule). The size choice and its sources are in `Verification/A11_Enclosure_Selection.md`.
 

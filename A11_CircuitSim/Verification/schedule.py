@@ -12,7 +12,7 @@ NAMES = {
     "R1": "Braking resistor", "XS1": "Schuko", "PEBAR": "Earth bar", "BKP": "Backplate", "DOOR": "Door strap", "BODY": "Enclosure body (earth stud)",
     "RAIL": "DIN-rail earth stud", "F1": "F1", "F2": "F2", "M2": "Fan", "S0": "E-stop", "S1": "OFF", "S2": "ON",
     "H1": "Yellow lamp", "H2": "Green lamp", "H3": "Red lamp", "A1": "A11", "A2": "DMA860H-X", "A3": "DMA860H-Y",
-    "A4": "DMA860H-Z", "XT": "Tool setter", "XL": "L distribution block XL", "XN": "N distribution block XN",
+    "A4": "DMA860H-Z", "XT": "Tool setter", "XL": "L busbar XL", "XN": "N busbar XN",
 }
 
 
@@ -21,6 +21,8 @@ def pretty(tid):
     name = NAMES.get(dev, dev)
     if tid == "K1.A2b":
         term = "A2 (2nd screw)"
+    if dev == "PEBAR":
+        return "Earth bar 2" if term == "BAR2" else "Earth bar 1"
     return f"{name} {term}" if term not in ("T", "BAR") else name
 
 
@@ -33,9 +35,10 @@ def main():
         if not w.get("notConnected"):
             load[w["from"]] += 1
             load[w["to"]] += 1
-    lines = ["# Wire schedule rev 0.7 — wired directly; no terminal blocks, only the 230 V L / N distribution blocks", "",
+    lines = ["# Wire schedule rev 0.7 — wired directly; no terminal blocks, only the 230 V L / N busbars", "",
              "Generated from the simulator netlist (`netlist_rev07.json`). Max. 2 conductors per device terminal; "
-             "\"2×\" = twin ferrule. XL and XN take one conductor per point. Changes against the rev 0.5 schedule (§ 8) are marked.", "",
+             "\"2×\" = twin ferrule. XL and XN (12-point busbars) take one conductor per point; the two 4-point earth bars take up to 2 per point "
+             "(owner decision 2026-10-26) and are linked by 138. Changes against the rev 0.5 schedule (§ 8) are marked.", "",
              "Colours (IEC 60204-1 13.2.4): L **black**, N **light blue**, PE **green/yellow**, AC control (KM1 coil) **red**, "
              "DC power (48 V, brake resistor) **black**, +24 V / DC control / signals **dark blue**, 0 V **blue/white**. "
              "The spindle cable W1 is one 4G1.5 shielded cable (cores brown / black / grey / G/Y).", "",

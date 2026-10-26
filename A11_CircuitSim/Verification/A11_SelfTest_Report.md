@@ -1,6 +1,6 @@
 # A11 circuit self-test
 
-Generated 2026-10-26 15:46 from `A11Layout.Build()` (the same model the app runs).
+Generated 2026-10-26 20:08 from `A11Layout.Build()` (the same model the app runs).
 
 **62 passed, 0 failed.**
 
@@ -8,12 +8,12 @@ Generated 2026-10-26 15:46 from `A11Layout.Build()` (the same model the app runs
 
 | Result | Check | Detail |
 |---|---|---|
-| PASS | A1 Every wire starts and ends on its own terminal or on its own net | 152 conductors |
+| PASS | A1 Every wire starts and ends on its own terminal or on its own net | 154 conductors |
 | PASS | A2 No conductor runs over a terminal of a different net |  |
 | PASS | A3 No two nets are drawn on top of each other |  |
 | PASS | A4 No wire end touches a conductor of a different net |  |
 | PASS | A5 No two terminals share one position |  |
-| PASS | A6 Every § 8 wire number is present exactly once | 108 numbered wires (rev 0.7 schedule: 108) |
+| PASS | A6 Every § 8 wire number is present exactly once | 109 numbered wires (rev 0.7 schedule: 109) |
 | info | Crossings without connection (normal in a schematic) | 87 |
 
 ## B · § 7.1 tests with no power (Main CB OFF, meter on continuity)
@@ -83,8 +83,8 @@ Generated 2026-10-26 15:46 from `A11Layout.Build()` (the same model the app runs
 
 | Result | Check | Detail |
 |---|---|---|
-| PASS | F1 Max. 2 conductors per device terminal (twin ferrule); earth bar ≤ 12, XL / XN ≤ 6 (one per point) | 30 terminals take 2 conductors (twin ferrule) |
-| PASS | F2 No terminal blocks or virtual bus nodes in the netlist (only the L / N distribution blocks XL, XN) |  |
+| PASS | F1 Max. 2 conductors per device terminal (twin ferrule); earth bars ≤ 8 each (4 points × 2, owner decision), XL / XN busbars ≤ 12 (one per point) | 30 terminals take 2 conductors (twin ferrule) |
+| PASS | F2 No terminal blocks or virtual bus nodes in the netlist (only the L / N busbars XL, XN) |  |
 | PASS | F3 Every PE point (incl. the pump outlet, wire 149, and the enclosure body, wire 139) and the PELV bond reach the earth bar |  |
 | PASS | F4 The fan is protected by F1 (rev 0.5: unfused on TB24+) |  |
 | PASS | F5 The pump outlet and the 48 V PSU each take N from the N block XN (no N looped through the outlet) |  |

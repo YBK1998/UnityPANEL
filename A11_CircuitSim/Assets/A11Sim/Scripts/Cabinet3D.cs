@@ -11,7 +11,7 @@ namespace A11Sim
     /// Inside of the enclosure at real size, rev 0.7 (wired directly; no terminal blocks, only the 230 V L / N distribution blocks).
     /// Enclosure: the bought 800 × 1000 × 250 mm steel wall cabinet with a swing door hinged on the left (seen from the
     /// front), no removable panels (cable glands drilled through the bottom wall) and its own galvanised mounting plate.
-    /// The equipment layout (539 × 955 field, 40 × 60 ducts, 100 mm above the VFD) sits centred on that plate.
+    /// The equipment layout (539 × 930 field, 40 × 60 ducts, 100 mm above the VFD) sits centred on that plate.
     /// Part sizes and their sources: Verification/A11_Enclosure_Selection.md.
     /// Every rev 0.7 wire is routed terminal → duct → duct → terminal with its cross-section and colour.
     /// Segregation: the incoming mains and the shielded VFD → spindle cable W1 run in their own power lane on the far left
@@ -22,8 +22,8 @@ namespace A11Sim
     {
         const int Layer = Panel3D.Layer;
 
-        // Enclosure 800 × 1000 × 250. Mounting plate: ASSUMED 750 × 955 (typical for this size) — measure yours and set it here.
-        public const float EncW = 0.8f, EncH = 1.0f, EncD = 0.25f, PlateW = 0.75f, PlateH = 0.955f;
+        // Enclosure 800 × 1000 × 250. Mounting plate: MEASURED 730 W × 930 H (owner, 2026-10-26).
+        public const float EncW = 0.8f, EncH = 1.0f, EncD = 0.25f, PlateW = 0.73f, PlateH = 0.93f;
         // Body: front frame z = -0.004 (gasket + door to the front plane -0.008), back outer face z = 0.242 (250 overall),
         // sheet 1.5 mm. Mounting plate front face Zb on welded studs.
         const float ZFront = -0.004f, ZBack = 0.242f, Ts = 0.0015f;
@@ -33,19 +33,26 @@ namespace A11Sim
         const float DuctHalf = 0.02f;
         const float Zd = Zb - DuctDepth * 0.5f;
         // Horizontal ducts D0…D4 (y centre) and vertical ducts at the plate edges (x centre).
-        static readonly float[] HD = { 0.4575f, 0.3075f, -0.0175f, -0.2175f, -0.4575f };
+        // D0 and D4 sit on the plate's top and bottom edges. On the 930 plate rows A–C are 12.5 mm lower than on the
+        // old 955 assumption, and row D (A11 board) is 175 high instead of 200.
+        static readonly float[] HD = { 0.445f, 0.295f, -0.03f, -0.23f, -0.445f };
         const float VLx = -0.2495f, VRx = 0.2495f;
         const float DuctX = 0.2295f;           // inner edge of the vertical ducts
         const int VL = 5, VR = 6;
         // Outer lanes on the spare plate width (40 × 60 duct): VP = power (mains in, VFD cable W1), VM = stepper motor cables.
         const float VPx = -0.3225f, VMx = 0.3225f;
+        // VM is shortened to 455 mm: it starts at the top edge of D2, where the motor cables enter it. That frees the strip
+        // above it for the L / N busbars.
+        const float VMTop = -0.01f;
         const int VP = 7, VM = 8;
         static float VX(int d) => d == VL ? VLx : d == VR ? VRx : d == VP ? VPx : VMx;
         // Rows: A = DIN rail (220 V + control), B = VFD and PSUs, C = drives, D = A11 board.
-        const float RailA = 0.3825f;
-        const float RowBBottom = 0.0075f;
-        const float DriveTop = -0.0425f;
-        const float A11y = -0.34f;
+        const float RailA = 0.37f;
+        // TS35 rail ends: from 5 mm right of the plate-mounted EMI filter to just past the Schuko socket (330 mm).
+        const float RailL = -0.1685f, RailR = 0.1615f;
+        const float RowBBottom = -0.005f;
+        const float DriveTop = -0.055f;
+        const float A11y = -0.3525f;
 
         // Hinge crossings (door-local on the door side, cabinet-local on the cabinet side); the door hangs on the left.
         static readonly Vector3 HingeDoorUpper = new(-0.372f, 0.2f, 0.045f), HingeCabUpper = new(-0.387f, 0.2f, 0.06f);
@@ -409,12 +416,13 @@ namespace A11Sim
                 nut.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Vector3.back);
                 nut.transform.localScale = new Vector3(0.01f, 0.005f, 0.01f);
             }
-            Box(g, new Vector3(0, RailA, Zb - 0.00375f), new Vector3(2 * 0.2245f, 0.035f, 0.0015f), mRail);
-            Box(g, new Vector3(0, RailA + 0.0165f, Zb - 0.0045f), new Vector3(2 * 0.2245f, 0.002f, 0.007f), mRail);
-            Box(g, new Vector3(0, RailA - 0.0165f, Zb - 0.0045f), new Vector3(2 * 0.2245f, 0.002f, 0.007f), mRail);
+            float rc = (RailL + RailR) / 2, rl = RailR - RailL;
+            Box(g, new Vector3(rc, RailA, Zb - 0.00375f), new Vector3(rl, 0.035f, 0.0015f), mRail);
+            Box(g, new Vector3(rc, RailA + 0.0165f, Zb - 0.0045f), new Vector3(rl, 0.002f, 0.007f), mRail);
+            Box(g, new Vector3(rc, RailA - 0.0165f, Zb - 0.0045f), new Vector3(rl, 0.002f, 0.007f), mRail);
             Click(g, new Vector3(0, 0, Zb), new Vector3(PlateW, PlateH, 0.004f),
-                () => $"<b>Mounting plate</b> — supplied with the enclosure, galvanised, on four M6 studs\nSize assumed {PlateW * 1000:0} × {PlateH * 1000:0}: " +
-                      "measure yours (Cabinet3D.PlateW / PlateH). The layout uses the centre 539 × 955; component holes are drilled on assembly. " +
+                () => $"<b>Mounting plate</b> — supplied with the enclosure, galvanised, on four M6 studs\nSize {PlateW * 1000:0} × {PlateH * 1000:0} (measured). " +
+                      $"The layout uses the centre 539 × {PlateH * 1000:0}; component holes are drilled on assembly. " +
                       "Enclosure 800 W × 1000 H × 250 D mm, steel, swing door hinged on the left.");
         }
 
@@ -432,9 +440,10 @@ namespace A11Sim
                     mb.Box(new Vector3(x, y + s * (DuctHalf - 0.001f), Zb - DuctDepth / 2), new Vector3(0.005f, 0.002f, DuctDepth));
                 cb.Box(new Vector3(0, y, Zb - DuctDepth - 0.001f), new Vector3(x1 - x0, 2 * DuctHalf + 0.004f, 0.002f));
             }
-            float y0 = -PlateH / 2, y1 = PlateH / 2;
+            float y0 = -PlateH / 2;
             foreach (float x in new[] { VLx, VRx, VPx, VMx })
             {
+                float y1 = x == VMx ? VMTop : PlateH / 2;
                 mb.Box(new Vector3(x, (y0 + y1) / 2, Zb - 0.001f), new Vector3(2 * DuctHalf, y1 - y0, 0.002f));
                 for (float y = y0 + 0.003f; y < y1; y += 0.009f)
                 foreach (float s in new[] { -1f, 1f })
@@ -450,8 +459,8 @@ namespace A11Sim
             Click(g, new Vector3(VPx, 0, Zb - DuctDepth / 2), new Vector3(0.04f, PlateH, 0.06f),
                 () => "<b>Power lane VP</b> (40 × 60 duct on the spare plate width, left)\nOnly the incoming mains (101, 102, 140) and the shielded VFD → spindle cable W1 (123–127). " +
                       "No 24 V or signal wire runs here; the door bundle crosses it at 90°.");
-            Click(g, new Vector3(VMx, 0, Zb - DuctDepth / 2), new Vector3(0.04f, PlateH, 0.06f),
-                () => "<b>Motor lane VM</b> (40 × 60 duct on the spare plate width, right)\nOnly the three stepper motor cables (LiYCY 4 × 1.0 shielded, shield clamped at the drive end) " +
+            Click(g, new Vector3(VMx, (VMTop - PlateH / 2) / 2, Zb - DuctDepth / 2), new Vector3(0.04f, VMTop + PlateH / 2, 0.06f),
+                () => "<b>Motor lane VM</b> (40 × 60 duct on the spare plate width, right; 455 mm, from the third horizontal duct down)\nOnly the three stepper motor cables (LiYCY 4 × 1.0 shielded, shield clamped at the drive end) " +
                       "down to the GX16-6 motor connectors below it. PUL / DIR pairs stay in the inner ducts.");
             // 360° EMC clamp for the W1 shield on the plate where the cable enters the power lane (wire 127 bonds it to VFD PE).
             Box(g, new Vector3(VPx, HD[2] - 0.04f, Zb - 0.004f), new Vector3(0.03f, 0.008f, 0.008f), mGalv);
@@ -476,26 +485,34 @@ namespace A11Sim
 
         void RowA()
         {
-            Mcb(C.Get<Breaker>("QF0"), -0.2065f, 2, "C25");
-
-            // Z1: single-phase 20 A EMI filter, chassis mount (FN2020-20 class, 85 × 54 × 30; HD2AC-20A not published).
+            // Z1: HD2AC-20A single-phase EMI filter, 51 × 51 × 30 (measured), screwed to the plate at the far left of row A
+            // (off the DIN rail). Mounted with the LINE side (2 terminals: L, N in) facing down towards D1 and the LOAD side
+            // (3 terminals: L, N out, PE) facing up towards D0.
             var emi = Group("Z1 EMI filter");
-            float ex = -0.138f, ew = 0.085f, eh = 0.054f, ed = 0.03f;
+            float ex = -0.199f, ew = 0.051f, eh = 0.051f, ed = 0.03f;
             Box(emi, new Vector3(ex, RailA, Zb - ed / 2), new Vector3(ew, eh, ed), P.M(new Color(0.58f, 0.6f, 0.62f), 0.7f, 0.45f));
-            Box(emi, new Vector3(ex, RailA + 0.008f, Zb - ed - 0.0005f), new Vector3(0.06f, 0.024f, 0.001f), mWhite);
-            Label(emi, "HD2AC-20A", new Vector3(ex, RailA + 0.013f, Zb - ed - 0.0012f), 0.0055f, Color.black, true);
-            Label(emi, "EMI FILTER 250 VAC 20 A", new Vector3(ex, RailA + 0.003f, Zb - ed - 0.0012f), 0.0026f, new Color(0.2f, 0.2f, 0.2f));
+            Box(emi, new Vector3(ex, RailA + 0.002f, Zb - ed - 0.0005f), new Vector3(0.042f, 0.02f, 0.001f), mWhite);
+            Label(emi, "HD2AC-20A", new Vector3(ex, RailA + 0.006f, Zb - ed - 0.0012f), 0.0045f, Color.black, true);
+            Label(emi, "EMI FILTER 250 VAC 20 A", new Vector3(ex, RailA - 0.002f, Zb - ed - 0.0012f), 0.0021f, new Color(0.2f, 0.2f, 0.2f));
             string[] eid = { "Z1.LIN", "Z1.NIN", "Z1.LOUT", "Z1.NOUT", "Z1.GND" };
-            float[] exs = { ex - 0.032f, ex - 0.02f, ex + 0.004f, ex + 0.016f, ex + 0.034f };
+            float[] exs = { ex - 0.008f, ex + 0.008f, ex - 0.014f, ex, ex + 0.014f };
             for (int i = 0; i < 5; i++)
             {
-                Box(emi, new Vector3(exs[i], RailA - eh / 2 + 0.004f, Zb - ed - 0.002f), new Vector3(0.0063f, 0.008f, 0.004f), mScrew);
-                Anchor(eid[i], new Vector3(exs[i], RailA - eh / 2 - 0.002f, Zb - ed - 0.002f), 1);
+                bool line = i < 2;
+                float ty = line ? RailA - eh / 2 + 0.004f : RailA + eh / 2 - 0.004f;
+                Box(emi, new Vector3(exs[i], ty, Zb - ed - 0.002f), new Vector3(0.0063f, 0.008f, 0.004f), mScrew);
+                Anchor(eid[i], new Vector3(exs[i], line ? RailA - eh / 2 - 0.002f : RailA + eh / 2 + 0.002f, Zb - ed - 0.002f), line ? 1 : 0);
             }
-            Label(emi, "LINE      LOAD     PE", new Vector3(ex, RailA - eh / 2 + 0.012f, Zb - ed - 0.0012f), 0.0026f, Color.black);
+            Label(emi, "LOAD  L  N  PE", new Vector3(ex, RailA + eh / 2 - 0.011f, Zb - ed - 0.0012f), 0.0024f, Color.black);
+            Label(emi, "LINE  L  N", new Vector3(ex, RailA - eh / 2 + 0.011f, Zb - ed - 0.0012f), 0.0024f, Color.black);
+            foreach (var (dx, dy) in new[] { (-1, -1), (1, 1) })
+                ScrewHead(emi, new Vector3(ex + dx * (ew / 2 - 0.004f), RailA + dy * (eh / 2 - 0.004f), Zb - ed - 0.0006f));
             Solid("Z1", new Vector3(ex, RailA, Zb - ed / 2), new Vector3(ew, eh, ed));
             Click(emi, new Vector3(ex, RailA, Zb - ed / 2), new Vector3(ew, eh, ed),
-                () => C.Get<EmiFilter>("Z1").Tip() + Dims(ew, eh, ed, "20 A 1-phase filter class (Schaffner FN2020-20: 85 × 54 × 30); HD2AC-20A data not published"));
+                () => C.Get<EmiFilter>("Z1").Tip() + "\nScrewed to the plate (not DIN rail). LINE side (L, N in) faces down, LOAD side (L, N out, PE) faces up." +
+                      Dims(ew, eh, ed, "measured"));
+
+            Mcb(C.Get<Breaker>("QF0"), -0.1485f, 2, "C25");
 
             Contactor();
 
@@ -523,37 +540,36 @@ namespace A11Sim
             Click(xs1, new Vector3(sx, RailA, Zr - 0.035f), new Vector3(sw, sh, sd),
                 () => C.Get<SchukoPump>("XS1").Tip() + "\nPE now wired (149) — missing in rev 0.5." + Dims(sw, sh, sd, "Hager SNS016"));
 
-            DistBlock("XL", 0.172f, mBlack, "L", "<b>XL — L distribution block</b> (230 V, 6 points, 1 conductor per point)\nSwitched L from KM1 2T1 (109) → CB-VFD (114), CB-48V (117), CB-PUMP (120); 2 points spare.",
-                new[] { 1, 0, 0, 0, 1, 0 });
-            DistBlock("XN", 0.2f, mBlue, "N", "<b>XN — N distribution block</b> (230 V, 6 points, 1 conductor per point)\nEvery N conductor: EMI N-OUT in (106) → PSU 24 V (113), KM1 coil A1 (132), VFD (116), PSU 48 V (119), pump outlet (122). " +
-                      "KM1 switches L only.", new[] { 1, 1, 1, 1, 1, 1 });
+            BusBar("XL", 0.29f, new Color(0.08f, 0.08f, 0.09f), "L", "<b>XL — L busbar</b> (230 V, 12 points, 1 conductor per point)\nSwitched L from KM1 2T1 (109) → CB-VFD (114), CB-48V (117), CB-PUMP (120); 8 points spare.");
+            BusBar("XN", 0.326f, new Color(0.15f, 0.35f, 0.75f), "N", "<b>XN — N busbar</b> (230 V, 12 points, 1 conductor per point)\nEvery N conductor: EMI N-OUT in (106) → PSU 24 V (113), KM1 coil A1 (132), VFD (116), PSU 48 V (119), pump outlet (122); 6 points spare. " +
+                      "KM1 switches L only.");
 
-            // DIN-rail earth: ring lug under the rail fixing screw (wire 147).
+            // DIN-rail earth: ring lug under the rail's left fixing screw (wire 147).
             var re = Group("rail earth");
-            P.Disc(re, new Vector3(-0.221f, RailA, Zr - 0.002f), 0.008f, 0.002f, mBrass);
-            Anchor("RAIL.T", new Vector3(-0.221f, RailA - 0.006f, Zr - 0.003f), 1);
+            P.Disc(re, new Vector3(RailL + 0.0035f, RailA, Zr - 0.002f), 0.008f, 0.002f, mBrass);
+            Anchor("RAIL.T", new Vector3(RailL + 0.0035f, RailA - 0.006f, Zr - 0.003f), 1);
         }
 
-        /// 230 V DIN-rail distribution block, 6 screw points; side[i] = 0: point on top (duct D0), 1: underneath (duct D1).
-        /// Anchors are taken in wire order (A11Layout), so the order of side[] follows the wires on this block.
-        void DistBlock(string tag, float xc, Material body, string mark, string tip, int[] side)
+        /// 230 V busbar, 160 × 16 × 42 mm (measured), 12 screw points, mounted vertically on the plate in the strip right of
+        /// the right vertical duct VR (free above the shortened motor lane). Wires leave sideways into VR, one per point.
+        void BusBar(string tag, float xc, Color insulator, string mark, string tip)
         {
-            float w = 0.025f, h = 0.045f, d = 0.045f;
+            const float len = 0.16f, w = 0.016f, d = 0.042f, yc = 0.345f;
             var g = Group(tag);
-            Box(g, new Vector3(xc, RailA, Zr - d / 2), new Vector3(w, h, d), body);
-            Box(g, new Vector3(xc, RailA, Zr - d - 0.0005f), new Vector3(w * 0.8f, 0.012f, 0.001f), mWhite);
-            Label(g, tag + " " + mark, new Vector3(xc, RailA, Zr - d - 0.0012f), 0.0042f, Color.black, true);
-            int top = 0, bot = 0;
-            foreach (int sd in side)
-            {
-                int k = sd == 0 ? top++ : bot++;
-                float x = xc - w / 2 + 0.0042f + k * 0.0055f;
-                float y = sd == 0 ? RailA + h / 2 - 0.004f : RailA - h / 2 + 0.004f;
-                ScrewHead(g, new Vector3(x, y, Zr - d - 0.0006f));
-                Anchor(tag + ".T", new Vector3(x, sd == 0 ? RailA + h / 2 + 0.001f : RailA - h / 2 - 0.001f, Zr - d * 0.6f), sd);
-            }
-            Solid(tag, new Vector3(xc, RailA, Zr - d / 2), new Vector3(w, h, d));
-            Click(g, new Vector3(xc, RailA, Zr - d / 2), new Vector3(w, h, d), () => tip + Dims(w, h, d, "6-way DIN-rail distribution block class"));
+            var ins = P.M(insulator, 0f, 0.45f);
+            foreach (float s in new[] { -1f, 1f })
+                Box(g, new Vector3(xc, yc + s * (len / 2 - 0.012f), Zb - 0.0125f), new Vector3(w, 0.024f, 0.025f), ins);
+            Box(g, new Vector3(xc, yc, Zb - 0.025f - 0.0085f), new Vector3(w - 0.004f, len, 0.017f), mBrass);
+            Label(g, tag + " " + mark, new Vector3(xc, yc + len / 2 - 0.006f, Zb - d - 0.0006f), 0.004f, Color.black, true);
+            const int n = 12;
+            float pitch = (len - 0.03f) / (n - 1);
+            for (int k = 0; k < n; k++)
+                ScrewHead(g, new Vector3(xc, yc + len / 2 - 0.015f - k * pitch, Zb - d - 0.0006f));
+            // Anchors in an interleaved order so the few wires spread along the bar (taken in A11Layout wire order).
+            foreach (int k in new[] { 1, 3, 5, 7, 9, 11, 0, 2, 4, 6, 8, 10 })
+                Anchor(tag + ".T", new Vector3(xc - 0.004f, yc + len / 2 - 0.015f - k * pitch, Zb - d - 0.004f), VR);
+            Solid(tag, new Vector3(xc, yc, Zb - d / 2), new Vector3(w, len, d));
+            Click(g, new Vector3(xc, yc, Zb - d / 2), new Vector3(w, len, d), () => tip + Dims(w, len, d, "measured"));
         }
 
         void Mcb(Breaker b, float xc, int poles, string rating)
@@ -907,24 +923,34 @@ namespace A11Sim
                                           "Unplugged = E-stop on the A11: fit a dummy plug (3-4 bridged) if the setter is not used.", new[] { "XT.1", "XT.2", "XT.3", "XT.4" });
             Gland(0.215f, 0.016f, mBlack, "<b>Pump cable gland</b> (coolant pump cord to XS1).", Array.Empty<string>());
 
-            var e = Group("PE bar");
+            // Two earth bars (owner's parts): copper 150 × 25 mm on two 17 mm red insulators, 4 points each, linked by 138.
+            // Up to 2 conductors per point (owner decision 2026-10-26; IEC 60204-1 asks for one protective conductor per point).
+            // Anchors are listed in the order the wires take them (A11Layout order), so each wire lands on its planned point:
+            //   bar 1: P1 140 + 139 · P2 141 + 143 · P3 144 + 138 · P4 142 (door strap, alone)
+            //   bar 2: P1 138 + 148 · P2 145 + 146 · P3 147 + 149 · P4 spare
+            var e = Group("PE bars");
             float zpe = ZBack - 0.185f;
             yf = -EncH / 2 + 0.0015f;
-            Box(e, new Vector3(-0.03f, yf + 0.022f, zpe), new Vector3(0.18f, 0.012f, 0.006f), mBrass);
-            foreach (float x in new[] { -0.11f, 0.05f })
-                Cyl(e, new Vector3(x, yf + 0.009f, zpe), 0.012f, 0.016f, mRed, Vector3.zero);
-            for (int i = 0; i < 12; i++)
+            const float barL = 0.15f, barW = 0.025f, barT = 0.005f, insH = 0.017f;
+            float[] pts = { -0.0525f, -0.0175f, 0.0175f, 0.0525f };
+            void EarthBar(string id, float xc, string mark, (int p, int k)[] order)
             {
-                float x = -0.112f + i * 0.015f;
-                Cyl(e, new Vector3(x, yf + 0.0295f, zpe), 0.005f, 0.003f, mScrew, Vector3.zero);
-                Anchor("PEBAR.BAR", new Vector3(x, yf + 0.03f, zpe - 0.003f), 4);
+                Box(e, new Vector3(xc, yf + insH + barT / 2, zpe), new Vector3(barL, barT, barW), mCopper);
+                foreach (float s in new[] { -1f, 1f })
+                    Cyl(e, new Vector3(xc + s * (barL / 2 - 0.012f), yf + insH / 2, zpe), 0.016f, insH, mRed, Vector3.zero);
+                foreach (float x in pts)
+                    Cyl(e, new Vector3(xc + x, yf + insH + barT + 0.0015f, zpe), 0.008f, 0.003f, mScrew, Vector3.zero);
+                foreach (var (pi, k) in order)
+                    Anchor(id, new Vector3(xc + pts[pi] + (k == 0 ? -0.003f : 0.003f), yf + insH + barT + 0.004f, zpe - 0.004f), 4);
+                Label(e, mark, new Vector3(xc - barL / 2 + 0.006f, yf + insH + barT + 0.0002f, zpe - barW / 2 - 0.0005f), 0.005f, Color.black, true);
+                Solid(mark, new Vector3(xc, yf + (insH + barT) / 2, zpe), new Vector3(barL, insH + barT, barW));
+                Click(e, new Vector3(xc, yf + (insH + barT) / 2, zpe), new Vector3(barL, insH + barT + 0.006f, barW),
+                    () => C.Get<PeBar>("PEBAR").Tip() + $"\n{mark}: copper bar on two red insulators on the bottom wall, 4 points." + Dims(barL, insH + barT, barW, "measured"));
             }
-            Label(e, "PE", new Vector3(-0.122f, yf + 0.022f, zpe - 0.0035f), 0.006f, Color.black, true);
-            Solid("PE bar", new Vector3(-0.03f, yf + 0.016f, zpe), new Vector3(0.18f, 0.03f, 0.012f));
-            Click(e, new Vector3(-0.03f, yf + 0.022f, zpe), new Vector3(0.18f, 0.02f, 0.02f),
-                () => C.Get<PeBar>("PEBAR").Tip() + "\nBusbar on insulators on the bottom wall, next to the cable entries." + Dims(0.18f, 0.012f, 0.006f));
-            Anchor("BKP.T", new Vector3(-0.225f, -0.44f, Zb - 0.004f), 4);
-            P.Disc(e, new Vector3(-0.225f, -0.44f, Zb - 0.002f), 0.008f, 0.003f, mBrass);
+            EarthBar("PEBAR.BAR", -0.11f, "PE 1", new[] { (0, 0), (0, 1), (1, 0), (3, 0), (1, 1), (2, 0), (2, 1) });
+            EarthBar("PEBAR.BAR2", 0.06f, "PE 2", new[] { (2, 0), (1, 0), (1, 1), (2, 1), (0, 0), (0, 1) });
+            Anchor("BKP.T", new Vector3(-0.225f, -0.4275f, Zb - 0.004f), 4);
+            P.Disc(e, new Vector3(-0.225f, -0.4275f, Zb - 0.002f), 0.008f, 0.003f, mBrass);
             // Body earth stud (wire 139) on the inside of the left wall, in front of the mounting plate.
             float xb = -EncW / 2 + Ts;
             Anchor("BODY.T", new Vector3(xb + 0.008f, -0.30f, 0.10f), VL);
@@ -1374,7 +1400,7 @@ namespace A11Sim
             P.Text($"{EncH * 1000:0} mm", g, new Vector3(hx + 0.08f, 0, -0.01f), 0.016f, new Color(1f, 0.8f, 0.3f), true);
             Line(new Vector3(hx + 0.03f, hy + 0.03f, 0f), new Vector3(hx + 0.03f, hy + 0.03f, EncD));
             P.Text($"{EncD * 1000:0} mm", g, new Vector3(hx + 0.03f, hy + 0.05f, EncD / 2), 0.016f, new Color(1f, 0.8f, 0.3f), true).transform.localEulerAngles = new Vector3(0, -90, 0);
-            P.Text($"Steel wall cabinet, swing door hinged on the left · mounting plate {PlateW * 1000:0} × {PlateH * 1000:0} (assumed: measure)", g, new Vector3(0, -hy - 0.075f, -0.01f), 0.011f, new Color(1f, 0.8f, 0.3f));
+            P.Text($"Steel wall cabinet, swing door hinged on the left · mounting plate {PlateW * 1000:0} × {PlateH * 1000:0} (measured)", g, new Vector3(0, -hy - 0.075f, -0.01f), 0.011f, new Color(1f, 0.8f, 0.3f));
             dims.SetActive(false);
         }
 

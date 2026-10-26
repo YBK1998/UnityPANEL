@@ -50,9 +50,9 @@ namespace A11Sim
             c.Add(new NodeT("BKP", "Backplate bond", "Steel backplate earth stud.", 165, 276.5f, true, "", default, TA.Left));
             c.Add(new NodeT("DOOR", "Door bond strap", "Braided strap from the door earth stud to the earth bar.", 180, 276.5f, true, "", default, TA.Left));
             c.Add(new NodeT("RAIL", "DIN-rail earth stud", "Ring lug on the DIN rail fixing screw (no terminal block).", 255, 276.5f, true, "", default, TA.Left));
-            c.Add(new NodeT("XL", "XL — L distribution block (230 V, ≈ 6 points)", "Switched L after KM1 2T1 → CB-VFD, CB-48V, CB-PUMP (one conductor per point, 2 spare).",
+            c.Add(new NodeT("XL", "XL — L busbar (230 V, 12 points)", "Switched L after KM1 2T1 → CB-VFD, CB-48V, CB-PUMP (one conductor per point, 8 spare). 160 × 16 × 42 mm on the plate, right of the right vertical duct.",
                 124, 210, false, "XL", new Vector2(124, 212.2f), TA.Center));
-            c.Add(new NodeT("XN", "XN — N distribution block (230 V, ≈ 6 points)", "Every N conductor: EMI N-OUT in → PSU 24 V, KM1 coil A1, VFD, PSU 48 V, pump outlet (one conductor per point).\nKM1 switches L only.",
+            c.Add(new NodeT("XN", "XN — N busbar (230 V, 12 points)", "Every N conductor: EMI N-OUT in → PSU 24 V, KM1 coil A1, VFD, PSU 48 V, pump outlet (one conductor per point, 6 spare). 160 × 16 × 42 mm, beside XL.\nKM1 switches L only.",
                 112, 205, false, "XN", new Vector2(110.6f, 202.4f), TA.Right));
 
             // ================= E2 — 24 V control =================
@@ -156,20 +156,25 @@ namespace A11Sim
 
             // ---- PE (earth bar is a busbar, not a terminal block) ----
             c.W("140", "Mains.PE", "PEBAR.BAR", K.PE, "Mains PE (gland) → Earth bar", "4 mm² G/Y", 18, 296, 18, 302, 150, 302, 150, 280);
-            c.Bus("PEBAR.BAR", K.PE, 150, 280, 286, 280);
+            // Two 4-point earth bars on insulators (bar 1: 150–213, bar 2: 221–286), linked by 138.
+            c.Bus("PEBAR.BAR", K.PE, 150, 280, 213, 280);
+            c.Bus("PEBAR.BAR2", K.PE, 221, 280, 286, 280);
             NoLabel(c.W("139", "BODY.T", "PEBAR.BAR", K.PE, "Enclosure body (earth stud) → Earth bar · NEW: the body had no PE conductor", "4 mm² G/Y", 157.5f, 276.5f, 157.5f, 280));
             NoLabel(c.W("141", "BKP.T", "PEBAR.BAR", K.PE, "Backplate bond → Earth bar", "4 mm² G/Y", 165, 276.5f, 165, 280));
             NoLabel(c.W("142", "DOOR.T", "PEBAR.BAR", K.PE, "Door bond strap → Earth bar", "6 mm² braided strap", 180, 276.5f, 180, 280));
-            NoLabel(c.W("147", "RAIL.T", "PEBAR.BAR", K.PE, "DIN-rail earth stud → Earth bar (ring lug, no terminal block)", "2.5 mm² G/Y", 255, 276.5f, 255, 280));
+            NoLabel(c.W("147", "RAIL.T", "PEBAR.BAR2", K.PE, "DIN-rail earth stud → Earth bar (ring lug, no terminal block)", "2.5 mm² G/Y", 255, 276.5f, 255, 280));
             Stub(c, "143", "Z1.GND", "EMI filter ground lug → Earth bar", "4 mm² G/Y", 30, 266, 34, 266);
             Stub(c, "144", "U1.PEc", "VFD PE → Earth bar", "2.5 mm² G/Y", 172, 162, 176, 162);
-            Stub(c, "145", "G1.PE", "PSU 48V PE → Earth bar", "1.5 mm² G/Y", 362, 178, 366, 178);
-            Stub(c, "146", "G2.PE", "PSU 24V PE → Earth bar", "1.5 mm² G/Y", 48, 224, 52, 224);
-            Stub(c, "149", "XS1.PE", "Schuko outlet PE → Earth bar · NEW: missing in rev 0.5 (pump was unearthed)", "1.5 mm² G/Y", 302, 183, 306, 183);
-            var w148 = c.W("148", "G2.-V2", "PEBAR.BAR", K.PE, "PSU 24V −V (screw 2) → Earth bar · PELV bond: the only 0 V to PE bond", "1.5 mm² G/Y", 10, 8, 10, 4);
+            Stub(c, "145", "G1.PE", "PSU 48V PE → Earth bar 2", "1.5 mm² G/Y", 362, 178, 366, 178, "PEBAR.BAR2");
+            Stub(c, "146", "G2.PE", "PSU 24V PE → Earth bar 2", "1.5 mm² G/Y", 48, 224, 52, 224, "PEBAR.BAR2");
+            Stub(c, "149", "XS1.PE", "Schuko outlet PE → Earth bar 2 · NEW: missing in rev 0.5 (pump was unearthed)", "1.5 mm² G/Y", 302, 183, 306, 183, "PEBAR.BAR2");
+            var w148 = c.W("148", "G2.-V2", "PEBAR.BAR2", K.PE, "PSU 24V −V (screw 2) → Earth bar · PELV bond: the only 0 V to PE bond", "1.5 mm² G/Y", 10, 8, 10, 4);
             w148.labelText = "148 PELV bond → PE bar";
             w148.labelAt = new Vector2(11.2f, 4.6f);
             w148.stub = true;
+            var w138 = c.W("138", "PEBAR.BAR", "PEBAR.BAR2", K.PE, "Earth bar 1 → earth bar 2 · link (both bars sit on insulators)", "4 mm² G/Y", 213, 280, 221, 280);
+            w138.labelText = "138";
+            w138.labelAt = new Vector2(217, 281.2f);
 
             // ---- DC power ----
             c.W("150", "G1.+V1", "A2.AC1", K.DC48, "PSU 48V +V (screw 1) → DMA860H-X AC 1 · 48 V", "1.5 mm² black", 334, 168, 334, 150, 272, 150, 272, 140);
@@ -283,10 +288,10 @@ namespace A11Sim
             c.W("348", "XT.2", "XT.4", K.DC24, "TS pin 2 → TS pin 4 (yellow) · 0 V to the over-travel switch (jumper in the connector)", z0, 140, 54, 128, 54, 128, 44, 140, 44);
         }
 
-        static void Stub(Circuit c, string num, string from, string desc, string spec, float x0, float y0, float x1, float y1)
+        static void Stub(Circuit c, string num, string from, string desc, string spec, float x0, float y0, float x1, float y1, string to = "PEBAR.BAR")
         {
-            var w = c.W(num, from, "PEBAR.BAR", K.PE, desc, spec, x0, y0, x1, y1);
-            w.labelText = num + " → PE bar";
+            var w = c.W(num, from, to, K.PE, desc, spec, x0, y0, x1, y1);
+            w.labelText = num + (to == "PEBAR.BAR" ? " → PE bar 1" : " → PE bar 2");
             w.labelAt = new Vector2(x1 + 0.5f, y1);
             w.stub = true;
         }

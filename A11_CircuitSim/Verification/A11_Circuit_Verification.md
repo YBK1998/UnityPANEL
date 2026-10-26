@@ -102,9 +102,9 @@ that need measurements (Y-output rating, pulse current, ALM polarity, S-grade bi
 ## Cabinet fit at real component sizes (from the 3D model)
 
 The 3D cabinet uses **datasheet sizes** and the bought **800 × 1000 × 250 enclosure** (swing door hinged on the left, its
-own plate, assumed 750 × 955; the layout uses the centre 539 × 955, the spare width carries the power lane VP and the motor
+own plate, measured 730 × 930; the layout uses the centre 539 × 930, the spare width carries the power lane VP and the motor
 lane VM). `A11_Enclosure_Selection.md` lists every part size and source, and compares the candidate enclosures. The model
-routes 120 conductors (116 in the cabinet, plus the door wires), and a collision test confirms **0 conductors pass through a part**.
+routes 121 conductors (117 in the cabinet, plus the door wires), and a collision test confirms **0 conductors pass through a part**.
 
 Findings from the earlier 600 × 800 model (rev 0.5):
 

@@ -74,12 +74,15 @@ def build(out):
             (TICK, "Fuse holder RT18-32 (or RT14) 1P, DIN rail, for 10 × 38 mm fuse links (F1, F2)", "x2", "DIN"),
             (TICK, "Fuse link 10 × 38 mm (RO15) gG 2 A: use these for F1 and F2", "x2 + spares", "-"),
             (TICK, "Fuse link 10 × 38 mm aM 2 A: do NOT use for F1 / F2 (aM = motor short-circuit only, no overload protection)", "-", "spare / return"),
+            (TICK, "230 V busbar 160 × 16 × 42 mm, 12 points, on insulators: XL (switched L) and XN (all N); vertical, right of the right vertical duct", "x2", "screws to plate"),
+            (TICK, "Earth bar, copper 150 × 25 mm on two 17 mm red insulators, 4 points: PE 1 and PE 2, linked by wire 138. Up to 2 conductors per point "
+                   "(owner decision; IEC 60204-1 asks for one protective conductor per point - a 12-point bar removes the deviation)", "x2", "bottom wall"),
+            (TICK, "Slotted wire duct 40 W × 60 H with cover, 2 m", "x2", "screws to plate"),
         ]),
         ("ENCLOSURE & MOUNTING", [
-            (BOX, "230 V distribution block 1P, ≈ 6 points, DIN rail: XL (switched L) and XN (all N, light blue / blue marking)", "x2", "DIN"),
-            (BOX, "DIN rail TS35 × 7.5, slotted", "1 m", "screws to plate"),
+            (BOX, "DIN rail TS35 × 7.5, slotted: one 330 mm piece (row A, right of the plate-mounted EMI filter)", "0.5 m", "screws to plate"),
             (BOX, "DIN rail end stops", "x4", "DIN"),
-            (BOX, "Slotted wire duct 40 W × 60 H with cover (inner ducts + power lane VP + motor lane VM)", "4 × 2 m", "screws to plate"),
+            (BOX, "Slotted wire duct 40 W × 60 H with cover, 2 m: the third length (motor lane VM shortened to 455 mm; cut list in A11_Enclosure_Selection.md)", "x1", "screws to plate"),
             (BOX, "DIN rail earth clamp, M6 stud", "x1", "DIN"),
             (BOX, f"Door earth strap, braided ≥ 6 mm², {w('6 mm² braided strap')}, M6 lugs (door stud → earth bar, through the hinge loop)", "x1", "-"),
             (BOX, "M6 earth stud kit (bolt, 2 nuts, serrated washers): body (wire 139) and plate (wire 141), only where the enclosure has none", "x2", "body / plate"),
@@ -138,7 +141,7 @@ def build(out):
     note = ParagraphStyle("n", fontName="Helvetica-Oblique", fontSize=6.8, leading=8.5)
     story = [
         Table([[Paragraph("A11 Box - Parts to Buy", title),
-                Paragraph("United Control Box, wiring rev 0.7 (direct wired; no terminal blocks, only L / N distribution blocks)"
+                Paragraph("United Control Box, wiring rev 0.7 (direct wired; no terminal blocks, only the L / N busbars)"
                           "<br/>Enclosure: bought 800 × 1000 × 250, swing door", sub)]],
               colWidths=[70 * mm, 112 * mm], style=[("VALIGN", (0, 0), (-1, -1), "BOTTOM"), ("ALIGN", (1, 0), (1, 0), "RIGHT"),
                                                     ("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0)]),

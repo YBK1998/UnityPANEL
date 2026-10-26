@@ -233,6 +233,7 @@ namespace A11Sim.EditorTools
             var expected = new List<int>();
             for (int i = 101; i <= 132; i++) expected.Add(i);
             expected.Add(139); // enclosure body bond (rev 0.6)
+            expected.Add(138); // link between the two 4-point earth bars (2026-10-26)
             for (int i = 140; i <= 149; i++) expected.Add(i);
             expected.RemoveAll(i => i is 107 or 108 or 110); // TB1 / TB2 gone; KM1 4T2 not used (N on the XN block, rev 0.7)
             for (int i = 150; i <= 155; i++) expected.Add(i);
@@ -588,13 +589,13 @@ namespace A11Sim.EditorTools
                     l.Add(w.number);
                 }
             }
-            var multi = new Dictionary<string, int> { ["PEBAR.BAR"] = 12, ["XL.T"] = 6, ["XN.T"] = 6 };
+            var multi = new Dictionary<string, int> { ["PEBAR.BAR"] = 8, ["PEBAR.BAR2"] = 8, ["XL.T"] = 12, ["XN.T"] = 12 }; // earth bars: 4 points × 2 (owner decision); busbars: 12 points
             var over = count.Where(kv => kv.Value.Count > (multi.TryGetValue(kv.Key, out int cap) ? cap : 2))
                 .Select(kv => $"{kv.Key} ({string.Join(",", kv.Value)})").ToList();
-            r.Check("F1 Max. 2 conductors per device terminal (twin ferrule); earth bar ≤ 12, XL / XN ≤ 6 (one per point)", over.Count == 0,
+            r.Check("F1 Max. 2 conductors per device terminal (twin ferrule); earth bars ≤ 8 each (4 points × 2, owner decision), XL / XN busbars ≤ 12 (one per point)", over.Count == 0,
                 over.Count == 0 ? $"{count.Count(kv => kv.Value.Count == 2)} terminals take 2 conductors (twin ferrule)" : string.Join("; ", over));
             var tb = c.terminals.Where(t => t.id.StartsWith("TB") || t.id.Contains("BUS")).Select(t => t.id).ToList();
-            r.Check("F2 No terminal blocks or virtual bus nodes in the netlist (only the L / N distribution blocks XL, XN)", tb.Count == 0, string.Join(", ", tb));
+            r.Check("F2 No terminal blocks or virtual bus nodes in the netlist (only the L / N busbars XL, XN)", tb.Count == 0, string.Join(", ", tb));
             var uf = new UF(c.terminals.Count);
             foreach (var w in c.wires)
                 if (!w.notConnected) uf.Union(w.a.index, w.b.index);

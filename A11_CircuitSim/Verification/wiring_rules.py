@@ -20,7 +20,7 @@ from collections import defaultdict
 # Terminal-block nodes of rev 0.5 and their block count (§ 4.1, § 6).
 TB_BLOCKS = {"TB1.T": 1, "TB2.T": 1, "TB24P.T": 2, "TB24C.T": 1, "TB24S.T": 2, "TB0V.T": 4, "TBHL.T": 1, "DINTB.T": 1}
 VIRTUAL = {"LBUS.T": "L bus", "NBUS.T": "N bus"}          # § 8 endpoints with no part in § 2 / § 6
-MULTI = {"PEBAR.BAR": 12, "XL.T": 6, "XN.T": 6}           # earth bar: 12 screws; 230 V L / N distribution blocks: 6 points
+MULTI = {"PEBAR.BAR": 8, "PEBAR.BAR2": 8, "XL.T": 12, "XN.T": 12}  # earth bars: 4 points x 2 conductors (owner decision 2026-10-26); 230 V L / N busbars: 12 points
 
 # Internal conducting paths of parts (for protection analysis: contacts assumed closed, fuses / MCBs are boundaries).
 THROUGH = [("Z1.LIN", "Z1.LOUT"), ("Z1.NIN", "Z1.NOUT"), ("KM1.1L1", "KM1.2T1"), ("KM1.3L2", "KM1.4T2"), ("KM1.43", "KM1.44"),
