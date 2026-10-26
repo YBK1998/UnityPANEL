@@ -1,7 +1,7 @@
 # Wiring rule check — rev 0.7
 
 109 numbered conductors.
-**9 problem(s).**
+**0 problem(s).**
 
 ## R1 Conductors per terminal
 
@@ -29,13 +29,6 @@
 
 | Wire | Section | Ampacity | Protected by | Result |
 |---|---|---|---|---|
-| 103 | 2.5 mm² | 18.3 A | 25 A | **FAIL** |
-| 105 | 2.5 mm² | 18.3 A | 25 A | **FAIL** |
-| 111 | 2.5 mm² | 18.3 A | 25 A | **FAIL** |
-| 109 | 2.5 mm² | 18.3 A | 25 A | **FAIL** |
-| 114 | 2.5 mm² | 18.3 A | 25 A | **FAIL** |
-| 117 | 2.5 mm² | 18.3 A | 25 A | **FAIL** |
-| 120 | 2.5 mm² | 18.3 A | 25 A | **FAIL** |
 | 150 | 1.5 mm² | 13.5 A | 15 A | WARN |
 | 152 | 1.5 mm² | 13.5 A | 15 A | WARN |
 | 154 | 1.5 mm² | 13.5 A | 15 A | WARN |
@@ -46,8 +39,8 @@
 
 | Wire | Section | Ampacity | Branches behind it | Load | Result |
 |---|---|---|---|---|---|
-| 104 | 2.5 mm² | 18.3 A | G1.N, G2.N, KM1.A1, U1.N, XS1.N | 25 A | **FAIL** |
-| 106 | 2.5 mm² | 18.3 A | G1.N, G2.N, KM1.A1, U1.N, XS1.N | 25 A | **FAIL** |
+| 104 | 4.0 mm² | 25.0 A | G1.N, G2.N, KM1.A1, U1.N, XS1.N | 25 A | PASS |
+| 106 | 4.0 mm² | 25.0 A | G1.N, G2.N, KM1.A1, U1.N, XS1.N | 25 A | PASS |
 
 ## R4 Every endpoint is a real part
 

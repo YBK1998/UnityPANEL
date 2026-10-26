@@ -8,21 +8,21 @@ Colours (IEC 60204-1 13.2.4): L **black**, N **light blue**, PE **green/yellow**
 |---|---|---|---|---|
 | 101 | Mains (gland) L | Main CB 1 | 2.5 mm² black | was 2.5 mm² brown |
 | 102 | Mains (gland) N | Main CB 3 | 2.5 mm² light blue | was 2.5 mm² blue |
-| 103 | Main CB 2 | EMI filter LIN | 2.5 mm² black | was 2.5 mm² brown |
-| 104 | Main CB 4 | EMI filter NIN | 2.5 mm² light blue | was 2.5 mm² blue |
-| 105 | EMI filter LOUT (2×) | Contactor 1L1 | 2.5 mm² black | was EMI filter LOUT → TB1; was 2.5 mm² brown |
-| 106 | EMI filter NOUT | N busbar XN | 2.5 mm² light blue | was EMI filter NOUT → TB2; was 2.5 mm² blue |
-| 109 | Contactor 2T1 | L busbar XL | 2.5 mm² black | was Contactor 2T1 → LBUS; was 2.5 mm² brown |
-| 111 | EMI filter LOUT (2×) | CB-24V 1 | 2.5 mm² black | was TB1 → CB-24V 1; was 1.5 mm² brown |
+| 103 | Main CB 2 | EMI filter LIN | 4 mm² black | was 2.5 mm² brown |
+| 104 | Main CB 4 | EMI filter NIN | 4 mm² light blue | was 2.5 mm² blue |
+| 105 | EMI filter LOUT (2×) | Contactor 1L1 | 4 mm² black | was EMI filter LOUT → TB1; was 2.5 mm² brown |
+| 106 | EMI filter NOUT | N busbar XN | 4 mm² light blue | was EMI filter NOUT → TB2; was 2.5 mm² blue |
+| 109 | Contactor 2T1 | L busbar XL | 4 mm² black | was Contactor 2T1 → LBUS; was 2.5 mm² brown |
+| 111 | EMI filter LOUT (2×) | CB-24V 1 | 4 mm² black | was TB1 → CB-24V 1; was 1.5 mm² brown |
 | 112 | CB-24V 2 (2×) | PSU 24V L | 1.5 mm² black | was 1.5 mm² brown |
 | 113 | N busbar XN | PSU 24V N | 1.5 mm² light blue | was TB2 → PSU 24V N; was 1.5 mm² blue |
-| 114 | L busbar XL | CB-VFD 1 | 2.5 mm² black | was LBUS → CB-VFD 1; was 2.5 mm² brown |
+| 114 | L busbar XL | CB-VFD 1 | 4 mm² black | was LBUS → CB-VFD 1; was 2.5 mm² brown |
 | 115 | CB-VFD 2 | VFD L | 2.5 mm² black | was 2.5 mm² brown |
 | 116 | N busbar XN | VFD N | 2.5 mm² light blue | was NBUS → VFD N; was 2.5 mm² blue |
-| 117 | L busbar XL | CB-48V 1 | 2.5 mm² black | was LBUS → CB-48V 1; was 1.5 mm² brown |
+| 117 | L busbar XL | CB-48V 1 | 4 mm² black | was LBUS → CB-48V 1; was 1.5 mm² brown |
 | 118 | CB-48V 2 | PSU 48V L | 1.5 mm² black | was 1.5 mm² brown |
 | 119 | N busbar XN | PSU 48V N | 1.5 mm² light blue | was NBUS → PSU 48V N; was 1.5 mm² blue |
-| 120 | L busbar XL | CB-PUMP 1 | 2.5 mm² black | was LBUS → CB-PUMP 1; was 1.5 mm² brown |
+| 120 | L busbar XL | CB-PUMP 1 | 4 mm² black | was LBUS → CB-PUMP 1; was 1.5 mm² brown |
 | 121 | CB-PUMP 2 | Schuko L | 1.5 mm² black | was 1.5 mm² brown |
 | 122 | N busbar XN | Schuko N | 1.5 mm² light blue | was NBUS → Schuko N; was 1.5 mm² blue |
 | 123 | VFD U | HDC-HA 1 | 1.5 mm² brown, core of W1 4G1.5 shielded | was 1.5 mm² shielded |

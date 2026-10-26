@@ -410,7 +410,7 @@ namespace A11Sim
             Section(x, ref y, w, "DISPLAY", "F fit view");
             if (SwitchRow(x, ref y, w, "", "Wire numbers", view.showNumbers, Ui.Accent, Ui.Accent)) view.showNumbers = !view.showNumbers;
             if (SwitchRow(x, ref y, w, "", "Current-flow animation", view.showFlow, Ui.Accent, Ui.Accent)) view.showFlow = !view.showFlow;
-            if (SwitchRow(x, ref y, w, "", "Cautions C1–C13 + C14 reminder", view.showCautions, Ui.Accent, Ui.Warn)) view.showCautions = !view.showCautions;
+            if (SwitchRow(x, ref y, w, "", "Cautions C1–C14", view.showCautions, Ui.Accent, Ui.Warn)) view.showCautions = !view.showCautions;
         }
 
         GUIStyle sBtnLeft;

@@ -1,15 +1,15 @@
 no,from,to,spec,routed_m,door
 101,Mains.L,QF0.1,"2.5 mm² black",1.195,0
 102,Mains.N,QF0.3,"2.5 mm² light blue",1.218,0
-103,QF0.2,Z1.LIN,"2.5 mm² black",0.133,0
-104,QF0.4,Z1.NIN,"2.5 mm² light blue",0.128,0
-105,Z1.LOUT,KM1.1L1,"2.5 mm² black",0.237,0
-111,Z1.LOUT,QF4.1,"2.5 mm² black",0.336,0
-106,Z1.NOUT,XN.T,"2.5 mm² light blue",0.644,0
-109,KM1.2T1,XL.T,"2.5 mm² black",0.525,0
-114,XL.T,QF1.1,"2.5 mm² black",0.372,0
-117,XL.T,QF2.1,"2.5 mm² black",0.401,0
-120,XL.T,QF3.1,"2.5 mm² black",0.445,0
+103,QF0.2,Z1.LIN,"4 mm² black",0.132,0
+104,QF0.4,Z1.NIN,"4 mm² light blue",0.128,0
+105,Z1.LOUT,KM1.1L1,"4 mm² black",0.235,0
+111,Z1.LOUT,QF4.1,"4 mm² black",0.334,0
+106,Z1.NOUT,XN.T,"4 mm² light blue",0.641,0
+109,KM1.2T1,XL.T,"4 mm² black",0.523,0
+114,XL.T,QF1.1,"4 mm² black",0.371,0
+117,XL.T,QF2.1,"4 mm² black",0.400,0
+120,XL.T,QF3.1,"4 mm² black",0.444,0
 113,XN.T,G2.N,"1.5 mm² light blue",0.604,0
 132,XN.T,KM1.A1,"1.5 mm² light blue",0.428,0
 116,XN.T,U1.N,"2.5 mm² light blue",0.985,0

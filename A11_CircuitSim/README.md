@@ -23,8 +23,8 @@ Rev 0.7 changes (from a wire-by-wire review against the part datasheets, `Verifi
   (right: stepper motor cables), on the spare plate width.
 - Wire colours to IEC 60204-1: L black, N light blue, PE green/yellow, KM1 coil red, 48 V and brake resistor black,
   +24 V / signals dark blue, 0 V blue/white.
-- **Reminder C14 (not fixed):** read the FC300 nameplate input current and size QF0, Z1, QF1 and the 2.5 mm² supply path
-  together before you buy.
+- **C14 resolved (2026-10-26):** FC300 nameplate input 11 A (owner reading), so QF1 C16 and the 20 A EMI filter are
+  adequate; every conductor behind the C25 main (103–106, 109, 111, 114, 117, 120) is now 4 mm².
 
 ## Run
 
@@ -104,7 +104,7 @@ See `Verification/A11_Circuit_Verification.md`:
 - The rev 0.5 netlist matches all 115 rows of § 8 in the PDF (`verify_netlist.py`, read with pdfplumber).
 - `wiring_rules.py` checks conductors per terminal, PE coverage, cross-section vs protection (IEC 60204-1 Table 6),
   neutral conductors and real endpoints. It found 21 problems in rev 0.5. Rev 0.7 leaves 9, all the 2.5 mm² supply path
-  behind the C25 main (reminder C14). It also lists every net that differs from rev 0.5 (all intended).
+  behind the C25 main (reminder C14, resolved by the 4 mm² supply path). It also lists every net that differs from rev 0.5 (all intended).
 - 62 / 62 self-tests pass on rev 0.7: the § 7.1 dead tests, § 7.2 power-up, functions, short-circuit scans, drawing
   geometry and wiring rules (*A11 Sim → 4 · Run circuit self-test*).
 - The document also lists the design findings (F2 sizing, category-0 spindle stop, VFD supply rating, …).

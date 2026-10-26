@@ -66,7 +66,11 @@ def quantities():
 
 def build(out):
     q = quantities()
-    w = lambda key: f"{q.get(key, 0):g} m"  # noqa: E731
+    listed = set()
+
+    def w(key):
+        listed.add(key)
+        return f"{q.get(key, 0):g} m"
     sections = [
         ("BOUGHT", [
             (TICK, "Enclosure 800 W × 1000 H × 250 D mm, steel, swing door hinged on the left, mounting plate included, no removable panels", "x1", "wall mount"),
@@ -117,22 +121,26 @@ def build(out):
             (BOX, "2.5 mm² H07V-K light blue (N)", w("2.5 mm² light blue"), ""),
             (BOX, "2.5 mm² H07V-K dark blue (+24 V PSU → F1 / F2)", w("2.5 mm² dark blue"), ""),
             (BOX, "2.5 mm² H07V-K green/yellow", w("2.5 mm² G/Y"), ""),
+            (BOX, "4 mm² H07V-K black (L, supply path behind QF0)", w("4 mm² black"), ""),
+            (BOX, "4 mm² H07V-K light blue (N, supply path behind QF0)", w("4 mm² light blue"), ""),
             (BOX, "4 mm² H07V-K green/yellow", w("4 mm² G/Y"), ""),
         ]),
         ("FINISHING & TOOLS", [
-            (BOX, "Insulated ferrules: 0.5 ×100, 1.0 ×50, 1.5 ×100, 2.5 ×50, 4 ×10", "1 box each", ""),
-            (BOX, "Twin ferrules: 2 × 0.5 ×50, 2 × 1.5 ×10, 2 × 2.5 ×10", "1 box each", ""),
+            (BOX, "Insulated ferrules: 0.5 ×100, 1.0 ×50, 1.5 ×100, 2.5 ×50, 4 ×50", "1 box each", ""),
+            (BOX, "Twin ferrules: 2 × 0.5 ×50, 2 × 1.5 ×10, 2 × 2.5 ×10, 2 × 4 ×10 (EMI filter LOAD L: 105 + 111)", "1 box each", ""),
             (BOX, "Wire number markers 0-9, for 0.5-4 mm²", "1 set", ""),
             (BOX, "Spiral wrap 10 mm (door hinge loop)", "1 m", ""),
             (BOX, "Knock-out punches / step drill: 16.2 (GX16), 20.5 (M20), 22.5 (door devices); nibbler or jigsaw for 2 × 124 × 124", "if needed", "bottom wall / door"),
         ]),
-        ("DECIDE BEFORE ORDERING (reminder C14 - not fixed in rev 0.7)", [
-            (BOX, "Supply path: read the FC300 nameplate input current (2.2 kW 1~ ≈ 22–27 A) vs QF1 C16, Z1 20 A, QF0 C25 and the 2.5 mm² path "
-                  "(≈ 18 A). Size together; 4 mm² black / light blue for 25–32 A (+ 4 mm² ferrules).", "-", ""),
+        ("DECIDE BEFORE ORDERING", [
+            (BOX, "Check that the EMI filter LOAD L terminal takes 105 + 111 as a 2 × 4 mm² twin ferrule (supply path is 4 mm², C14 resolved).", "-", ""),
             (BOX, "48 V drive feeds in 2.5 mm² instead of 1.5 (or fuse each drive)", "black 4 m", ""),
-            (BOX, "Measure the mounting plate: the simulator assumes 750 × 955 (Cabinet3D.PlateW / PlateH)", "-", ""),
         ]),
     ]
+    # Every wire spec in the netlist needs its own row, or its metres silently drop off the list.
+    unlisted = sorted(k for k in q if k not in listed and k not in ("motor", "step", "spindle", "n"))
+    if unlisted:
+        raise SystemExit(f"wire specs with no row in the WIRE section: {unlisted}")
 
     title = ParagraphStyle("t", fontName="Helvetica-Bold", fontSize=16, leading=19)
     sub = ParagraphStyle("s", fontName="Helvetica", fontSize=8, leading=10)

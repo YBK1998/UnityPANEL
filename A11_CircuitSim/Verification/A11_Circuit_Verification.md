@@ -79,7 +79,7 @@ schedule, `A11_WiringRules_rev07.md` the rule check.
 | 3 | Leadshine's DMA860H manual shows no ALM output. | The drives on hand have ALM+ / ALM− (checked by the owner). Wires 315–320 stay; the polarity test (C9, § 7.4 test 3) stays. |
 | 4 | **Spindle power and unfiltered mains shared ducts** with the step / sensor wires (manual § 6 rule 4; Leadshine: PUL / DIR ≥ 10 cm from motor wires). | New **power lane VP** (40 × 60 duct on the spare plate width, far left): only the incoming mains (101, 102, 140) and the VFD cable W1. Mains gland and HDC-HA moved to the bottom wall under it. New **motor lane VM** (far right): only the three stepper motor cables, GX16-6 connectors under it. Sensor connectors moved next to the A11 board. |
 | 5 | Spindle cable shield bonded at the VFD end only (pin 4). | 123–126 are the cores of **one 4G1.5 shielded cable W1**; its shield (127) is clamped **360° at both ends**: EMC clamp on the plate (bonded to VFD PE) and the HDC-HA metal hood; EMC gland at the spindle. Pin 4 is not used. |
-| 6 | Supply path rating (2.5 mm² behind C25, 20 A filter, C16 for a ≈ 22–27 A VFD). | **Not changed — reminder C14** on the schematic, in the QF0 / QF1 / VFD tooltips, the parts list and here. R3 / R6 list 103–106, 109, 111, 114, 117, 120. |
+| 6 | Supply path rating (2.5 mm² behind C25, 20 A filter, C16 for a ≈ 22–27 A VFD). | **Resolved 2026-10-26 (C14):** FC300 nameplate input 11 A; the path behind QF0 is 4 mm². Before that: reminder C14 on the schematic, in the QF0 / QF1 / VFD tooltips, the parts list and here. R3 / R6 list 103–106, 109, 111, 114, 117, 120. |
 | 8 | Neutral 116 (1.5 mm²) carried the N of the pump outlet and the 48 V PSU; the 48 V PSU N passed through the outlet screw. | **N distribution block XN** (6 points): every N conductor has its own point (106 in; 113, 116, 119, 122, 132 out). **L distribution block XL** (switched L): 109 in; 114, 117, 120 out. KM1 switches L only (pole 3L2-4T2 unused; allowed in TN, the loads are dead when L opens). New rule R6 checks every N conductor against the branches behind it. |
 | 10 | KM1 coil circuit protected only by the C25 main (130 / 131 had to be 2.5 mm², too big for the M3.5 coil terminal, 1.25–2 mm²). | 130 now starts at **QF4 out (C6)**; 130 / 131 are 1.5 mm². Self-test F7. |
 | 11 | K1 (55.34, 4-pole) has **basic** insulation only between adjacent contacts (2.5 kV, OVC II) and coil–contacts; 24 V on pole 1 sat next to 230 V on pole 2. | Cheap improvement: **230 V moved to pole 4** (41-44), **pole 3 left empty** as the gap, pole 2 spare. Self-test F8. |
@@ -96,7 +96,7 @@ protection module: a Schneider RXM040W diode module (6–250 V DC) would give K1
 C11 now warns that NEMA 14 is the coil A2: wire 206 (IEC 14) landed there would short the coil when ON is pushed; K1 contact numbers are 11-14 / 21-24 / 41-44 (open item
 9.1-8 closed); the drives keep one feed each from the 48 V PSU (Leadshine: do not daisy-chain the drive supplies).
 
-Still open: the supply path (C14), F2 vs the A11 3 A rating, stop category 0 / Z drop (F3, F4), and the items in § 9.1
+Still open: F2 vs the A11 3 A rating, stop category 0 / Z drop (F3, F4), and the items in § 9.1
 that need measurements (Y-output rating, pulse current, ALM polarity, S-grade bit order).
 
 ## Cabinet fit at real component sizes (from the 3D model)
@@ -116,4 +116,4 @@ Findings from the earlier 600 × 800 model (rev 0.5):
 | L4 | **TB24C, the L/N bus and the DIN-rail PE terminal (147) are not in the § 6 DIN row.** | Gone: no terminal blocks. 147 now goes to an earth stud on the rail. |
 | L5 | **Depth** | 250 mm leaves ≈ 60 mm between the VFD front and the door. The door contact blocks sit in front of row A, not the VFD. |
 
-Open items in § 9.1 stay open (the simulator only assumes results): EMI filter 20 A vs C25 (reminder C14), Y-output rating, pulse current, ALM polarity, S-grade bit order and the 48 V PSU screw count. Closed by rev 0.7: KM1 coil inrush (200 VA ≤ 350 VA AC15), K1 contact numbers (55.34: 11-14 / 21-24 / 41-44), X8 (the over-travel now acts on X7 through K1 pole 2).
+Open items in § 9.1 stay open (the simulator only assumes results): Y-output rating, pulse current, ALM polarity, S-grade bit order and the 48 V PSU screw count. Closed by rev 0.7: KM1 coil inrush (200 VA ≤ 350 VA AC15), K1 contact numbers (55.34: 11-14 / 21-24 / 41-44), X8 (the over-travel now acts on X7 through K1 pole 2).

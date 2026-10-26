@@ -62,13 +62,12 @@ the bottom wall.
 
 ## Open items found by the wiring checks (decide before ordering)
 
-- **VFD supply rating.** 2.2 kW single-phase drives draw ≈ 24 A at full load and their manuals ask for 30 A protection
-  ([OneFinity forum, quoting drive manuals](https://forum.onefinitycnc.com/t/simple-answer-on-breaker-size/28670)). The FC300 sits
-  behind QF1 **C16**, a **20 A** EMI filter and the **C25** main. Read the FC300 nameplate input current and re-rate QF1, Z1, QF0
-  and the 2.5 mm² supply path together (4 mm² for 25–32 A).
-- **2.5 mm² behind the C25 main** (L: 103, 105, 109, 111, 114, 117, 120; N: 104, 106): IEC 60204-1 Table 6 (B2) gives 18.3 A.
-  Either the supply path goes to 4 mm², or the main comes down — which conflicts with the VFD current above. This is
-  **reminder C14** (schematic, tooltips, parts list); rev 0.7 does not change it. The KM1 coil circuit (130, 131) is now
+- **VFD supply rating — resolved 2026-10-26.** The FC300 nameplate gives **11 A input** (owner reading; typical 2.2 kW
+  single-phase drives list ≈ 23 A input, so confirm it is the input line and not the ≈ 10 A output). With 11 A, QF1 C16 and the
+  20 A filter are adequate (worst-case load behind Z1 ≈ 19 A: VFD 11 + PSUs ≈ 6.5 + pump).
+- **Supply path behind the C25 main — resolved 2026-10-26 (C14):** 103–106, 109, 111, 114, 117, 120 are now **4 mm²**
+  (25 A, IEC 60204-1 Table 6 B2). A smaller main does not help: 2.5 mm² (18.3 A) fails even behind C20, and C16 is too
+  tight for the ≈ 19 A worst-case load. Check that the EMI filter LOAD L terminal takes 2 × 4 mm² (105 + 111). The KM1 coil circuit (130, 131) is now
   behind QF4 (C6) and passes.
 - **48 V drive feeds** 150–155 are 1.5 mm² (13.5 A) on an unfused 15 A supply: use 2.5 mm² or one fuse per drive.
 

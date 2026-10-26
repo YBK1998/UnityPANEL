@@ -18,7 +18,7 @@ namespace A11Sim
 
             // ================= E1 — 220 V power distribution =================
             c.Add(new MainsSupply());
-            c.Add(new Breaker("QF0", "Main CB C25 2P", "Incomer. Switches L and N. REMINDER C14 (open): the EMI filter is only 20 A, the 2.5 mm² path behind QF0 ≈ 18 A, and a 2.2 kW VFD draws ≈ 22–27 A — read the FC300 nameplate and size QF0, Z1, QF1 and the wires together.",
+            c.Add(new Breaker("QF0", "Main CB C25 2P", "Incomer. Switches L and N. C14 (resolved 2026-10-26): FC300 nameplate input 11 A (owner reading), so Z1 20 A and QF1 C16 are adequate; every conductor behind QF0 (103–106, 109, 111, 114, 117, 120) is 4 mm² (25 A).",
                 288, 280, false, new Vector2(17, 284), TA.Left, 10, 14));
             c.Add(new EmiFilter());
             c.Add(new Breaker("QF4", "CB-24V C6A", "24 V PSU branch — on the UNSWITCHED side so the A11 stays on and senses the E-stop.",
@@ -29,7 +29,7 @@ namespace A11Sim
                 new[] { new Vector2(42, 218), new Vector2(46, 218) }, new[] { new Vector2(30, 218), new Vector2(34, 218) }, Pot.P24, Pot.Z0));
             c.Add(new RelayK1());
             c.Add(new Contactor());
-            c.Add(new Breaker("QF1", "CB-VFD C16A", "VFD branch. REMINDER C14: C16 may be too small for the FC300 input current (≈ 22–27 A for 2.2 kW 1-phase) — read the nameplate.", 202, 194, true, new Vector2(134, 198), TA.Right, 136));
+            c.Add(new Breaker("QF1", "CB-VFD C16A", "VFD branch. FC300 nameplate input 11 A (owner reading, 2026-10-26): C16 is adequate (C curve rides through the DC-bus charging inrush).", 202, 194, true, new Vector2(134, 198), TA.Right, 136));
             var vfd = c.Add(new Vfd());
             var r1 = c.Add(new BrakeResistor());
             r1.vfd = vfd;
@@ -102,22 +102,22 @@ namespace A11Sim
             // ---- 220 V power ----
             c.W("101", "Mains.L", "QF0.1", K.AC, "Mains L (gland) → Main CB L in · Mains L", "2.5 mm² black", 10, 296, 10, 288);
             c.W("102", "Mains.N", "QF0.3", K.AC, "Mains N (gland) → Main CB N in · Mains N", "2.5 mm² light blue", 14, 296, 14, 288);
-            c.W("103", "QF0.2", "Z1.LIN", K.AC, "Main CB L out → EMI L-IN", "2.5 mm² black", 10, 280, 10, 270);
-            c.W("104", "QF0.4", "Z1.NIN", K.AC, "Main CB N out → EMI N-IN", "2.5 mm² light blue", 14, 280, 14, 270);
+            c.W("103", "QF0.2", "Z1.LIN", K.AC, "Main CB L out → EMI L-IN", "4 mm² black", 10, 280, 10, 270);
+            c.W("104", "QF0.4", "Z1.NIN", K.AC, "Main CB N out → EMI N-IN", "4 mm² light blue", 14, 280, 14, 270);
             // L-UNSW: EMI L-OUT feeds KM1 1L1 and QF4. All N conductors meet on the N distribution block XN.
             c.Bus("Z1.LOUT", K.AC, 10, 254, 96, 254);
             c.Bus("XN.T", K.AC, 14, 249, 112, 249);
             c.Bus("XN.T", K.AC, 112, 249, 112, 205);
-            c.W("105", "Z1.LOUT", "KM1.1L1", K.AC, "EMI L-OUT → Contactor 1L1 · Unswitched L", "2.5 mm² black", 10, 262, 10, 254, 96, 254, 96, 246);
-            c.W("111", "Z1.LOUT", "QF4.1", K.AC, "EMI L-OUT → CB-24V in · 24 V PSU L (unswitched)", "2.5 mm² black", 10, 262, 10, 254, 30, 254, 30, 246);
-            c.W("106", "Z1.NOUT", "XN.T", K.AC, "EMI N-OUT → N distribution block XN · N in", "2.5 mm² light blue", 14, 262, 14, 249, 112, 249, 112, 205);
+            c.W("105", "Z1.LOUT", "KM1.1L1", K.AC, "EMI L-OUT → Contactor 1L1 · Unswitched L", "4 mm² black", 10, 262, 10, 254, 96, 254, 96, 246);
+            c.W("111", "Z1.LOUT", "QF4.1", K.AC, "EMI L-OUT → CB-24V in · 24 V PSU L (unswitched)", "4 mm² black", 10, 262, 10, 254, 30, 254, 30, 246);
+            c.W("106", "Z1.NOUT", "XN.T", K.AC, "EMI N-OUT → N busbar XN · N in", "4 mm² light blue", 14, 262, 14, 249, 112, 249, 112, 205);
             // Switched side: KM1 2T1 → L distribution block XL → the three MCB inputs.
             c.Bus("XL.T", K.AC, 124, 210, 334, 210);
             c.Bus("XN.T", K.AC, 112, 205, 340, 205);
-            c.W("109", "KM1.2T1", "XL.T", K.AC, "Contactor 2T1 → L distribution block XL · Switched L in", "2.5 mm² black", 96, 238, 96, 210, 124, 210);
-            c.W("114", "XL.T", "QF1.1", K.AC, "XL → CB-VFD in · Switched L", "2.5 mm² black", 124, 210, 136, 210, 136, 202);
-            c.W("117", "XL.T", "QF2.1", K.AC, "XL → CB-48V in · Switched L", "2.5 mm² black", 124, 210, 334, 210, 334, 202);
-            c.W("120", "XL.T", "QF3.1", K.AC, "XL → CB-PUMP in · Switched L", "2.5 mm² black", 124, 210, 290, 210, 290, 202);
+            c.W("109", "KM1.2T1", "XL.T", K.AC, "Contactor 2T1 → L busbar XL · Switched L in", "4 mm² black", 96, 238, 96, 210, 124, 210);
+            c.W("114", "XL.T", "QF1.1", K.AC, "XL → CB-VFD in · Switched L", "4 mm² black", 124, 210, 136, 210, 136, 202);
+            c.W("117", "XL.T", "QF2.1", K.AC, "XL → CB-48V in · Switched L", "4 mm² black", 124, 210, 334, 210, 334, 202);
+            c.W("120", "XL.T", "QF3.1", K.AC, "XL → CB-PUMP in · Switched L", "4 mm² black", 124, 210, 290, 210, 290, 202);
             c.W("113", "XN.T", "G2.N", K.AC, "XN → PSU 24V N", "1.5 mm² light blue", 112, 205, 112, 249, 38, 249, 38, 230);
             c.W("132", "XN.T", "KM1.A1", K.AC, "XN → Contactor A1 · Coil N", "1.5 mm² light blue", 112, 205, 112, 249, 66, 249, 66, 224, 60, 224);
             c.W("116", "XN.T", "U1.N", K.AC, "XN → VFD N", "2.5 mm² light blue", 112, 205, 142, 205, 142, 188);
@@ -324,7 +324,7 @@ namespace A11Sim
                 "Coil suppression (optional): only if the socket has a module slot and is a genuine RXZE2S114M, a Schneider RXM040W diode module plugs in\n" +
                 "(observe its polarity marking, A1 = +24 V). Twin ferrules: keep to 2 × 1 mm² per screw (A1 takes 204 + 206, 2 × 0.5 mm²).");
             c.Caution("C12", 112f, 185.5f, "Before you set CB-VFD ON for the first time: R1 connects to VFD terminals P+ and PB only.\nRead the terminal labels on the VFD.\nRisk: damage to the VFD.");
-            c.Caution("C14", 40f, 284f, "REMINDER — supply path rating (open item, not fixed): read the FC300 nameplate input current.\n2.2 kW 1-phase VFDs draw ≈ 22–27 A; QF1 is C16, the EMI filter Z1 is 20 A, QF0 is C25, and the 2.5 mm² path behind QF0\n(101–106, 109, 111, 114, 117, 120) is good for ≈ 18 A. Size QF0, Z1, QF1 and the wires together before you buy (4 mm² for 25–32 A).");
+            c.Caution("C14", 40f, 284f, "Supply path (resolved 2026-10-26): FC300 nameplate input 11 A (owner reading) — QF1 C16 and Z1 20 A are adequate.\nEvery conductor behind QF0 C25 (103–106, 109, 111, 114, 117, 120) is 4 mm² (25 A).\nBefore you wire Z1: check that its LOAD L terminal takes 105 + 111 (2 × 4 mm², twin ferrule).");
             c.Caution("C13", 162f, 192f, "Before you cut material with S commands: do § 7.4 test 4 (S-grade bit order).\nExpected: S1 = 000 … S8 = 111 (Y4 Y3 Y2). If different, change only P030–P037.\nRisk: wrong spindle speed; tool damage.");
         }
 
