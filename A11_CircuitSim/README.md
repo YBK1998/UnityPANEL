@@ -23,8 +23,10 @@ Rev 0.7 changes (from a wire-by-wire review against the part datasheets, `Verifi
   (right: stepper motor cables), on the spare plate width.
 - Wire colours to IEC 60204-1: L black, N light blue, PE green/yellow, KM1 coil red, 48 V and brake resistor black,
   +24 V / signals dark blue, 0 V blue/white.
-- **C14 resolved (2026-10-26):** FC300 nameplate input 11 A (owner reading), so QF1 C16 and the 20 A EMI filter are
-  adequate; every conductor behind the C25 main (103–106, 109, 111, 114, 117, 120) is now 4 mm².
+- Every conductor behind the C25 main (103–106, 109, 111, 114, 117, 120) is 4 mm².
+- **Reminder C14 (open):** the FC300 nameplate's 11 A is the rated **output** current. The drive draws ≈ 22–24 A input at
+  full spindle load, so QF1 C16 trips on long full-power cuts, the 20 A EMI filter is overloaded and QF0 C25 is marginal.
+  Light cuts are fine. Fix (owner's decision): QF1 C25 with 115 / 116 in 4 mm² and a ≈ 30 A filter.
 
 ## Run
 

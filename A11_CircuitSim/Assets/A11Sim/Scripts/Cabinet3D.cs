@@ -752,7 +752,7 @@ namespace A11Sim
             Click(g, new Vector3(xc, yc, Zb - d / 2), new Vector3(w + 0.02f, h, d),
                 () => vfd.Tip() + Dims(w, h, d, "2.2 kW 1-phase class; FC300 outline not published") +
                       $"\n<color=#7dffa0>{clear:0} mm clear above the VFD (§ 6 asks for 100 mm) · 50 mm to the PSU on its right.</color>" +
-                      "\n<color=#7dffa0>Nameplate input 11 A (owner reading, 2026-10-26): QF1 C16 and Z1 20 A are adequate; the supply path behind QF0 C25 is 4 mm².</color>" +
+                      "\n<color=#ffb050>REMINDER C14 (open): the nameplate's 11 A is the OUTPUT current — input ≈ 22–24 A at full load. QF1 C16 trips on long full-power cuts, Z1 20 A is overloaded, QF0 C25 marginal; the supply path behind QF0 is 4 mm².</color>" +
                       "\nOutput: one 4G1.5 shielded cable W1 down the power lane, shield 360° at both ends (EMC clamp + HDC-HA hood).");
 
             Psu(C.Get<Psu>("G1"), 0.0225f, 0.124f, 0.238f, 0.065f, "S-720-48", "48 V  15 A",

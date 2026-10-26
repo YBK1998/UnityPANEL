@@ -84,8 +84,7 @@ def build(out):
             (TICK, "Slotted wire duct 40 W × 60 H with cover, 2 m", "x2", "screws to plate"),
         ]),
         ("ENCLOSURE & MOUNTING", [
-            (BOX, "DIN rail TS35 × 7.5, slotted: one 330 mm piece (row A, right of the plate-mounted EMI filter)", "0.5 m", "screws to plate"),
-            (BOX, "DIN rail end stops", "x4", "DIN"),
+            (BOX, "DIN rail TS35 × 7.5, slotted: one 330 mm piece (row A, right of the plate-mounted EMI filter), + 4 end stops", "0.5 m + x4", "screws to plate"),
             (BOX, "Slotted wire duct 40 W × 60 H with cover, 2 m: the third length (motor lane VM shortened to 455 mm; cut list in A11_Enclosure_Selection.md)", "x1", "screws to plate"),
             (BOX, "DIN rail earth clamp, M6 stud", "x1", "DIN"),
             (BOX, f"Door earth strap, braided ≥ 6 mm², {w('6 mm² braided strap')}, M6 lugs (door stud → earth bar, through the hinge loop)", "x1", "-"),
@@ -95,8 +94,7 @@ def build(out):
         ]),
         ("EMC (spindle cable W1 and stepper motor cables)", [
             (BOX, "EMC shield clamp (saddle) for Ø 8–12 mm, screwed to the plate: W1 at the power lane (wire 127)", "x1", "plate"),
-            (BOX, "HDC-HA metal hood + metal housing with EMC cable gland (360° shield): spindle connector X1, both halves", "x1 set", "bottom wall"),
-            (BOX, "EMC cable gland (brass, 360° shield) at the spindle motor terminal box", "x1", "spindle"),
+            (BOX, "HDC-HA metal hood + housing with EMC cable gland (360° shield), both halves; + brass EMC gland at the spindle terminal box", "x1 set + x1", "bottom wall / spindle"),
             (BOX, "Shield clamps for the motor cables at the drives (LiYCY braid to the plate)", "x3", "plate"),
         ]),
         ("CONTROL PARTS", [
@@ -128,12 +126,11 @@ def build(out):
         ("FINISHING & TOOLS", [
             (BOX, "Insulated ferrules: 0.5 ×100, 1.0 ×50, 1.5 ×100, 2.5 ×50, 4 ×50", "1 box each", ""),
             (BOX, "Twin ferrules: 2 × 0.5 ×50, 2 × 1.5 ×10, 2 × 2.5 ×10, 2 × 4 ×10 (EMI filter LOAD L: 105 + 111)", "1 box each", ""),
-            (BOX, "Wire number markers 0-9, for 0.5-4 mm²", "1 set", ""),
-            (BOX, "Spiral wrap 10 mm (door hinge loop)", "1 m", ""),
+            (BOX, "Wire number markers 0-9 for 0.5-4 mm²; spiral wrap 10 mm (door hinge loop)", "1 set + 1 m", ""),
             (BOX, "Knock-out punches / step drill: 16.2 (GX16), 20.5 (M20), 22.5 (door devices); nibbler or jigsaw for 2 × 124 × 124", "if needed", "bottom wall / door"),
         ]),
         ("DECIDE BEFORE ORDERING", [
-            (BOX, "Check that the EMI filter LOAD L terminal takes 105 + 111 as a 2 × 4 mm² twin ferrule (supply path is 4 mm², C14 resolved).", "-", ""),
+            (BOX, "C14 open: FC300 input ≈ 22–24 A at full load (11 A is output). Full power needs QF1 C25 + 115/116 4 mm² + 30 A filter. Z1 LOAD L: 2 × 4 mm²?", "-", ""),
             (BOX, "48 V drive feeds in 2.5 mm² instead of 1.5 (or fuse each drive)", "black 4 m", ""),
         ]),
     ]

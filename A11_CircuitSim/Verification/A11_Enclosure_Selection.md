@@ -62,12 +62,14 @@ the bottom wall.
 
 ## Open items found by the wiring checks (decide before ordering)
 
-- **VFD supply rating — resolved 2026-10-26.** The FC300 nameplate gives **11 A input** (owner reading; typical 2.2 kW
-  single-phase drives list ≈ 23 A input, so confirm it is the input line and not the ≈ 10 A output). With 11 A, QF1 C16 and the
-  20 A filter are adequate (worst-case load behind Z1 ≈ 19 A: VFD 11 + PSUs ≈ 6.5 + pump).
-- **Supply path behind the C25 main — resolved 2026-10-26 (C14):** 103–106, 109, 111, 114, 117, 120 are now **4 mm²**
-  (25 A, IEC 60204-1 Table 6 B2). A smaller main does not help: 2.5 mm² (18.3 A) fails even behind C20, and C16 is too
-  tight for the ≈ 19 A worst-case load. Check that the EMI filter LOAD L terminal takes 2 × 4 mm² (105 + 111). The KM1 coil circuit (130, 131) is now
+- **VFD supply rating — OPEN again (reminder C14, 2026-10-26).** The full nameplate (FC300-2.2G-S2-B4C, 2.2 kW, 220 V 1~ in,
+  0–220 V 3~ out) lists **11 A as the rated output current**, not the input. A 2.2 kW single-phase drive draws ≈ 22–24 A input at
+  full load (Delta VFD022EL21A: 11 A out, 24 A in). Worst case behind Z1 ≈ 28–30 A (VFD 24 + PSUs ≈ 4–6.5 + pump). At full spindle
+  load QF1 C16 trips, the 20 A filter is overloaded and QF0 C25 is marginal; light cuts (≈ 1 kW, ≈ 10–12 A input) are within all
+  ratings. Options, owner's decision: QF1 → C25 with 115 / 116 in 4 mm² and a ≈ 30 A filter, or keep the parts and avoid long
+  full-power cuts.
+- **Supply path behind the C25 main:** 103–106, 109, 111, 114, 117, 120 are **4 mm²** (25 A, IEC 60204-1 Table 6 B2), so the
+  conductors suit C25 — the open part of C14 is the device ratings (QF1, Z1, QF0) against the real input current above. Check that the EMI filter LOAD L terminal takes 2 × 4 mm² (105 + 111). The KM1 coil circuit (130, 131) is now
   behind QF4 (C6) and passes.
 - **48 V drive feeds** 150–155 are 1.5 mm² (13.5 A) on an unfused 15 A supply: use 2.5 mm² or one fuse per drive.
 

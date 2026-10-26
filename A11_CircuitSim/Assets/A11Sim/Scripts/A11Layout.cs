@@ -18,7 +18,7 @@ namespace A11Sim
 
             // ================= E1 — 220 V power distribution =================
             c.Add(new MainsSupply());
-            c.Add(new Breaker("QF0", "Main CB C25 2P", "Incomer. Switches L and N. C14 (resolved 2026-10-26): FC300 nameplate input 11 A (owner reading), so Z1 20 A and QF1 C16 are adequate; every conductor behind QF0 (103–106, 109, 111, 114, 117, 120) is 4 mm² (25 A).",
+            c.Add(new Breaker("QF0", "Main CB C25 2P", "Incomer. Switches L and N. Every conductor behind QF0 (103–106, 109, 111, 114, 117, 120) is 4 mm² (25 A). REMINDER C14 (open): the FC300's 11 A is its OUTPUT current; it draws ≈ 22–24 A input at full load, so C25 is marginal with everything at full load (≈ 28–30 A).",
                 288, 280, false, new Vector2(17, 284), TA.Left, 10, 14));
             c.Add(new EmiFilter());
             c.Add(new Breaker("QF4", "CB-24V C6A", "24 V PSU branch — on the UNSWITCHED side so the A11 stays on and senses the E-stop.",
@@ -29,7 +29,7 @@ namespace A11Sim
                 new[] { new Vector2(42, 218), new Vector2(46, 218) }, new[] { new Vector2(30, 218), new Vector2(34, 218) }, Pot.P24, Pot.Z0));
             c.Add(new RelayK1());
             c.Add(new Contactor());
-            c.Add(new Breaker("QF1", "CB-VFD C16A", "VFD branch. FC300 nameplate input 11 A (owner reading, 2026-10-26): C16 is adequate (C curve rides through the DC-bus charging inrush).", 202, 194, true, new Vector2(134, 198), TA.Right, 136));
+            c.Add(new Breaker("QF1", "CB-VFD C16A", "VFD branch. REMINDER C14 (open): the FC300 nameplate's 11 A is the OUTPUT current; input ≈ 22–24 A at full spindle load, so C16 trips on long cuts near 2.2 kW (light cuts ≈ 10–12 A are fine). If QF1 goes to C25, wires 115 / 116 must be 4 mm².", 202, 194, true, new Vector2(134, 198), TA.Right, 136));
             var vfd = c.Add(new Vfd());
             var r1 = c.Add(new BrakeResistor());
             r1.vfd = vfd;
@@ -324,7 +324,10 @@ namespace A11Sim
                 "Coil suppression (optional): only if the socket has a module slot and is a genuine RXZE2S114M, a Schneider RXM040W diode module plugs in\n" +
                 "(observe its polarity marking, A1 = +24 V). Twin ferrules: keep to 2 × 1 mm² per screw (A1 takes 204 + 206, 2 × 0.5 mm²).");
             c.Caution("C12", 112f, 185.5f, "Before you set CB-VFD ON for the first time: R1 connects to VFD terminals P+ and PB only.\nRead the terminal labels on the VFD.\nRisk: damage to the VFD.");
-            c.Caution("C14", 40f, 284f, "Supply path (resolved 2026-10-26): FC300 nameplate input 11 A (owner reading) — QF1 C16 and Z1 20 A are adequate.\nEvery conductor behind QF0 C25 (103–106, 109, 111, 114, 117, 120) is 4 mm² (25 A).\nBefore you wire Z1: check that its LOAD L terminal takes 105 + 111 (2 × 4 mm², twin ferrule).");
+            c.Caution("C14", 40f, 284f, "REMINDER — VFD supply rating (open): the FC300 nameplate's 11 A is the rated OUTPUT current. A 2.2 kW single-phase drive draws ≈ 22–24 A INPUT at full load\n" +
+                "(Delta VFD022EL21A: 11 A out, 24 A in). At full spindle load QF1 C16 trips, Z1 (20 A) is overloaded and QF0 C25 is marginal (≈ 28–30 A with the PSUs and pump).\n" +
+                "Light cuts (≈ 1 kW, ≈ 10–12 A) are within all ratings. The 4 mm² path behind QF0 is fine for C25; if QF1 goes to C25, 115 / 116 must be 4 mm² too.\n" +
+                "Before you wire Z1: check that its LOAD L terminal takes 105 + 111 (2 × 4 mm², twin ferrule).");
             c.Caution("C13", 162f, 192f, "Before you cut material with S commands: do § 7.4 test 4 (S-grade bit order).\nExpected: S1 = 000 … S8 = 111 (Y4 Y3 Y2). If different, change only P030–P037.\nRisk: wrong spindle speed; tool damage.");
         }
 
