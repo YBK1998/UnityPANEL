@@ -52,13 +52,10 @@ def quantities():
             by["motor:" + r["to"].split(".")[0]].append(r)
         elif "W1" in s:   # VFD -> HDC-HA: U, V, W, PE cores and the shield (127), one 4G1.5 shielded cable
             by["spindle:"].append(r)
-        elif s.endswith("twisted"):   # 5V / PULSE / DIR, one 3-core cable per drive
-            by["step:" + r["to"].split(".")[0]].append(r)
-        else:
-            by[s].append(r)
+        else:   # single wires, by reel: "1 mm² yellow, band dark blue, twisted" is cut from the 1 mm² yellow
+            by[s.split(",")[0].strip()].append(r)
     q = {k: length_m(v) for k, v in by.items() if ":" not in k}
     q["motor"] = cable_m([v for k, v in by.items() if k.startswith("motor:")])
-    q["step"] = cable_m([v for k, v in by.items() if k.startswith("step:")])
     q["spindle"] = cable_m([by["spindle:"]])
     q["n"] = len(rows)
     return q
@@ -81,11 +78,10 @@ def build(out):
             (TICK, "230 V busbar 160 × 16 × 42 mm, 12 points, on insulators: XL (switched L) and XN (all N); vertical, right of the right vertical duct", "x2", "screws to plate"),
             (TICK, "Earth bar, copper 150 × 25 mm on two 17 mm red insulators, 4 points: PE 1 and PE 2, linked by wire 138. Up to 2 conductors per point "
                    "(owner decision; IEC 60204-1 asks for one protective conductor per point - a 12-point bar removes the deviation)", "x2", "bottom wall"),
-            (TICK, "Slotted wire duct 40 W × 60 H with cover, 2 m", "x2", "screws to plate"),
+            (TICK, "Slotted wire duct 40 W × 60 H with cover, 2 m (cut list in A11_Enclosure_Selection.md; motor lane VM 230 mm)", "x3", "screws to plate"),
         ]),
         ("ENCLOSURE & MOUNTING", [
             (TICK, "DIN rail TS35 × 7.5, slotted: one 330 mm piece (row A, right of the plate-mounted EMI filter), + 4 end stops", "0.5 m + x4", "screws to plate"),
-            (BOX, "Slotted wire duct 40 W × 60 H with cover, 2 m: the third length (motor lane VM shortened to 230 mm; cut list in A11_Enclosure_Selection.md)", "x1", "screws to plate"),
             (BOX, "DIN rail earth clamp, M6 stud", "x1", "DIN"),
             (BOX, f"Door earth strap, braided ≥ 6 mm², {w('6 mm² braided strap')}, M6 lugs (door stud → earth bar, through the hinge loop)", "x1", "-"),
             (TICK, "M6 earth stud kit (bolt, 2 nuts, serrated washers): body (wire 139) and plate (wire 141), only where the enclosure has none", "x2", "body / plate"),
@@ -103,38 +99,39 @@ def build(out):
             (BOX, "NC contact block Schneider ZB2-BE102 (or the clone's 1 NC block) clipped onto the E-stop base: NC2 → A11 X7", "x1", "door"),
             (BOX, "GX16-5 plug with pins 3-4 bridged: dummy plug when the tool setter is unplugged (over-travel is in the X7 loop)", "x1", "XT"),
         ]),
-        (f"WIRE - colours IEC 60204-1 (3D routing in the 800-wide enclosure, {q['n']} conductors, +10 % +15 cm each, rounded up)", [
-            (BOX, "0.5 mm² H05V-K dark blue (+24 V, DC control, signals)", w("0.5 mm² dark blue"), ""),
-            (BOX, "0.5 mm² H05V-K blue/white (0 V)", w("0.5 mm² blue/white"), ""),
-            (BOX, "Control cable LiYY 3 × 0.5, cores twisted (5V / PULSE / DIR, 1 per axis)", f"{q['step']:g} m", ""),
+        (f"WIRE - colours IEC 60204-1 (3D routing, {q['n']} conductors, +10 % +15 cm each, rounded up); "
+         "stock bought 2026-10-27; per-wire marking in A11_Wire_List.pdf", [
+            (TICK, f"1 mm² H05V-K yellow, 90 m: every control, signal and 230 V branch wire; function colour as a band at both ends "
+                   f"(black L / 48 V, blue N, red KM1 coil, dark blue +24 V / signals, blue + white 0 V); 5V / PULSE / DIR twisted in threes. "
+                   f"Needs {w('1 mm² yellow')}", "90 m", ""),
+            (TICK, f"2.5 mm² H07V-K black (mains L 101, VFD L 115): needs {w('2.5 mm² black')}", "4 m", ""),
+            (TICK, f"2.5 mm² H07V-K blue (mains N 102, VFD N 116): needs {w('2.5 mm² blue')}", "4 m", ""),
+            (TICK, f"2.5 mm² H07V-K brown + dark-blue band (+24 V PSU → F1 / F2, 162 / 164): needs {w('2.5 mm² brown')}", "4 m", ""),
+            (TICK, f"2.5 mm² H07V-K green/yellow (PE): needs {w('2.5 mm² G/Y')}", "4 m", ""),
+            (BOX, "2.5 mm² (or 1.5 mm²) H07V-K green/yellow: the rest of the PE wires (stock check in A11_Wire_List.pdf)", "5 m", ""),
+            (TICK, f"4 mm² H07V-K black (L, supply path behind QF0): needs {w('4 mm² black')}", "5 m", ""),
+            (TICK, f"4 mm² H07V-K blue (N, supply path behind QF0): needs {w('4 mm² blue')}", "5 m", ""),
+            (TICK, f"4 mm² H07V-K green/yellow (PE): needs {w('4 mm² G/Y')}", "5 m", ""),
+            (TICK, "4 mm² H07V-K brown: not used (spare)", "5 m", ""),
+            (BOX, "Coloured sleeves or tape for the 1 mm² bands: black, blue, red, dark blue, white (with blue for 0 V)", "1 set", ""),
             (BOX, "Control cable LiYCY 4 × 1.0 shielded (drive → motor connector, 1 per axis; also for the motor side)", f"{q['motor']:g} m", "motor lane"),
             (BOX, "Shielded cable 4G1.5, e.g. ÖLFLEX CLASSIC 110 CY (W1: VFD → spindle connector)", f"{q['spindle']:g} m", "power lane"),
-            (BOX, "1.5 mm² H07V-K black (L to the PSUs / outlet, 48 V +/−)", w("1.5 mm² black"), ""),
-            (BOX, "1.5 mm² H07V-K light blue (N)", w("1.5 mm² light blue"), ""),
-            (BOX, "1.5 mm² H07V-K red (KM1 coil circuit, 230 V AC control)", w("1.5 mm² red"), ""),
-            (BOX, "1.5 mm² silicone, black, heat resistant (braking resistor)", w("1.5 mm² black, silicone"), ""),
-            (BOX, "1.5 mm² H07V-K green/yellow", w("1.5 mm² G/Y"), ""),
-            (BOX, "2.5 mm² H07V-K black (L)", w("2.5 mm² black"), ""),
-            (BOX, "2.5 mm² H07V-K light blue (N)", w("2.5 mm² light blue"), ""),
-            (BOX, "2.5 mm² H07V-K dark blue (+24 V PSU → F1 / F2)", w("2.5 mm² dark blue"), ""),
-            (BOX, "2.5 mm² H07V-K green/yellow", w("2.5 mm² G/Y"), ""),
-            (BOX, "4 mm² H07V-K black (L, supply path behind QF0)", w("4 mm² black"), ""),
-            (BOX, "4 mm² H07V-K light blue (N, supply path behind QF0)", w("4 mm² light blue"), ""),
-            (BOX, "4 mm² H07V-K green/yellow", w("4 mm² G/Y"), ""),
         ]),
         ("FINISHING & TOOLS", [
             (TICK, "Insulated ferrules: 0.5 ×100, 1.0 ×50, 1.5 ×100, 2.5 ×50, 4 ×50", "1 box each", ""),
+            (BOX, "1 mm² ferrules: the yellow wire needs more than the box of 50 (count in A11_Wire_List.pdf)", "1 box ×100", ""),
             (TICK, "Twin ferrules: 2 × 0.5 ×50, 2 × 1.5 ×10, 2 × 2.5 ×10, 2 × 4 ×10 (EMI filter LOAD L: 105 + 111)", "1 box each", ""),
+            (BOX, "Twin ferrules 2 × 1 mm² (the 2 × 0.5 box no longer fits the 1 mm² wire)", "1 box ×50", ""),
             (TICK, "Wire number markers 0-9 for 0.5-4 mm²; spiral wrap 10 mm (door hinge loop)", "1 set + 1 m", ""),
             (TICK, "Knock-out punches / step drill: 16.2 (GX16), 20.5 (M20), 22.5 (door devices); nibbler or jigsaw for 2 × 80 × 80 (fan, outlet)", "if needed", "bottom wall / door"),
         ]),
         ("DECIDE BEFORE ORDERING", [
             (BOX, "C14 open: FC300 input ≈ 22–24 A at full load (11 A is output). Z1 fixed at 20 A (no larger filter): cap the spindle at ≈ 1.5 kW in the VFD (≈ 15 A input), check with a clamp meter. Z1 LOAD L: 2 × 4 mm²?", "-", ""),
-            (BOX, "48 V drive feeds in 2.5 mm² instead of 1.5 (or fuse each drive)", "black 4 m", ""),
+            (BOX, "48 V drive feeds 150-155 are 1 mm² (10.4 A) on the 15 A PSU: fuse each drive (3 × 6.3 A + holders) or wire them in 1.5-2.5 mm²", "x3 or 6 m", ""),
         ]),
     ]
     # Every wire spec in the netlist needs its own row, or its metres silently drop off the list.
-    unlisted = sorted(k for k in q if k not in listed and k not in ("motor", "step", "spindle", "n"))
+    unlisted = sorted(k for k in q if k not in listed and k not in ("motor", "spindle", "n"))
     if unlisted:
         raise SystemExit(f"wire specs with no row in the WIRE section: {unlisted}")
 

@@ -1,7 +1,7 @@
 # Wiring rule check — rev 0.7
 
 109 numbered conductors.
-**0 problem(s).**
+**3 problem(s).**
 
 ## R1 Conductors per terminal
 
@@ -29,9 +29,9 @@
 
 | Wire | Section | Ampacity | Protected by | Result |
 |---|---|---|---|---|
-| 150 | 1.5 mm² | 13.5 A | 15 A | WARN |
-| 152 | 1.5 mm² | 13.5 A | 15 A | WARN |
-| 154 | 1.5 mm² | 13.5 A | 15 A | WARN |
+| 150 | 1.0 mm² | 10.4 A | 15 A | **FAIL** |
+| 152 | 1.0 mm² | 10.4 A | 15 A | **FAIL** |
+| 154 | 1.0 mm² | 10.4 A | 15 A | **FAIL** |
 | 162 | 2.5 mm² | 18.3 A | 20 A | WARN |
 | 164 | 2.5 mm² | 18.3 A | 20 A | WARN |
 
@@ -44,22 +44,4 @@
 
 ## R4 Every endpoint is a real part
 
-
-## R5 Electrical equivalence with rev 0.5
-
-- CHANGED `A1.DCGND`: rev 0.5 net {A1.DCGND, A1.GND, A1.OGND, A2.ALM-, A3.ALM-, A4.ALM-, BKP.T, DOOR.T, G1.PE, G2.-V, G2.PE, H1.-, K1.A2, M2.-, Mains.PE, PEBAR.BAR, S0.3, U1.COM, U1.PEc, X-LIM.3, XT.2, XT.4, Y-LIM.3, Z-LIM.3, Z1.GND} → now {A1.DCGND, A1.GND, A1.OGND, A2.ALM-, A3.ALM-, A4.ALM-, BKP.T, BODY.T, DOOR.T, G1.PE, G2.-V, G2.PE, H1.-, K1.A2, M2.-, Mains.PE, PEBAR.BAR, PEBAR.BAR2, U1.COM, U1.PEc, X-LIM.3, XS1.PE, XT.2, XT.4, Y-LIM.3, Z-LIM.3, Z1.GND}
-- CHANGED `F1.in`: rev 0.5 net {F1.in, F2.in, G2.+V, M2.+} → now {F1.in, F2.in, G2.+V}
-- CHANGED `F1.out`: rev 0.5 net {F1.out, H2.+, H3.+, KM1.43, S0.1} → now {F1.out, H2.+, H3.+, KM1.43, M2.+, S0.1}
-- CHANGED `G1.N`: rev 0.5 net {G1.N, KM1.4T2, U1.N, XS1.N} → now {G1.N, G2.N, KM1.A1, U1.N, XN.T, XS1.N, Z1.NOUT}
-- CHANGED `G2.L`: rev 0.5 net {G2.L, QF4.2} → now {G2.L, K1.41, QF4.2}
-- CHANGED `K1.21`: rev 0.5 net {K1.21, KM1.1L1, QF4.1, Z1.LOUT} → now {K1.21}
-- CHANGED `K1.24`: rev 0.5 net {K1.24, KM1.A2} → now {K1.24}
-- CHANGED `K1.44`: rev 0.5 net {K1.44} → now {K1.44, KM1.A2}
-- CHANGED `KM1.1L1`: rev 0.5 net {K1.21, KM1.1L1, QF4.1, Z1.LOUT} → now {KM1.1L1, QF4.1, Z1.LOUT}
-- CHANGED `KM1.2T1`: rev 0.5 net {KM1.2T1, QF1.1, QF2.1, QF3.1} → now {KM1.2T1, QF1.1, QF2.1, QF3.1, XL.T}
-- CHANGED `KM1.3L2`: rev 0.5 net {G2.N, KM1.3L2, KM1.A1, Z1.NOUT} → now {KM1.3L2}
-- CHANGED `KM1.4T2`: rev 0.5 net {G1.N, KM1.4T2, U1.N, XS1.N} → now {KM1.4T2}
-- CHANGED `S0.3`: rev 0.5 net {A1.DCGND, A1.GND, A1.OGND, A2.ALM-, A3.ALM-, A4.ALM-, BKP.T, DOOR.T, G1.PE, G2.-V, G2.PE, H1.-, K1.A2, M2.-, Mains.PE, PEBAR.BAR, S0.3, U1.COM, U1.PEc, X-LIM.3, XT.2, XT.4, Y-LIM.3, Z-LIM.3, Z1.GND} → now {S0.3, XT.3}
-- CHANGED `U1.PEb`: rev 0.5 net {U1.PEb, X1.4} → now {U1.PEb, X1.SH}
-- CHANGED `X1.4`: rev 0.5 net {U1.PEb, X1.4} → now {X1.4}
 

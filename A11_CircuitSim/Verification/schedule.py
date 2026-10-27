@@ -39,8 +39,10 @@ def main():
              "Generated from the simulator netlist (`netlist_rev07.json`). Max. 2 conductors per device terminal; "
              "\"2×\" = twin ferrule. XL and XN (12-point busbars) take one conductor per point; the two 4-point earth bars take up to 2 per point "
              "(owner decision 2026-10-26) and are linked by 138. Changes against the rev 0.5 schedule (§ 8) are marked.", "",
-             "Colours (IEC 60204-1 13.2.4): L **black**, N **light blue**, PE **green/yellow**, AC control (KM1 coil) **red**, "
+             "Colours (IEC 60204-1 13.2.4): L **black**, N **blue**, PE **green/yellow**, AC control (KM1 coil) **red**, "
              "DC power (48 V, brake resistor) **black**, +24 V / DC control / signals **dark blue**, 0 V **blue/white**. "
+             "The 2.5 / 4 mm² wires carry the colour in the insulation (+24 V 162 / 164: brown with a dark-blue band); all "
+             "1 mm² wire is **yellow** (owner's stock, 2026-10-27) with the colour as a **band** at both ends. PE is always G/Y. "
              "The spindle cable W1 is one 4G1.5 shielded cable (cores brown / black / grey / G/Y).", "",
              "| No. | From | To | Spec | Change vs rev 0.5 |", "|---|---|---|---|---|"]
     for no in sorted(n, key=int):

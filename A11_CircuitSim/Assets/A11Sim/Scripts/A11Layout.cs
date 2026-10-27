@@ -95,22 +95,23 @@ namespace A11Sim
         /// Every other former terminal block / bus is a daisy chain, max. 2 conductors per terminal
         /// (twin ferrule). Each physical wire is drawn along the net lines from its own terminal to the
         /// terminal it lands on. Unnumbered "Bus" lines are drawings of a net only (a = b, no connection).
-        /// Colours (IEC 60204-1 13.2.4): L black, N light blue, PE green/yellow, AC control red, DC power black,
-        /// DC control and signals dark blue, 0 V blue/white.
+        /// Colours (IEC 60204-1 13.2.4): L black, N blue, PE green/yellow, AC control red, DC power black,
+        /// DC control and signals dark blue, 0 V blue/white. 2.5 / 4 mm² wires have the colour in the insulation; the
+        /// 1 mm² wires are all yellow (owner's stock) and carry that colour as a band at both ends. PE is always G/Y wire.
         static void Wires(Circuit c, Machine m, Vfd vfd)
         {
             // ---- 220 V power ----
             c.W("101", "Mains.L", "QF0.1", K.AC, "Mains L (gland) → Main CB L in · Mains L", "2.5 mm² black", 10, 296, 10, 288);
-            c.W("102", "Mains.N", "QF0.3", K.AC, "Mains N (gland) → Main CB N in · Mains N", "2.5 mm² light blue", 14, 296, 14, 288);
+            c.W("102", "Mains.N", "QF0.3", K.AC, "Mains N (gland) → Main CB N in · Mains N", "2.5 mm² blue", 14, 296, 14, 288);
             c.W("103", "QF0.2", "Z1.LIN", K.AC, "Main CB L out → EMI L-IN", "4 mm² black", 10, 280, 10, 270);
-            c.W("104", "QF0.4", "Z1.NIN", K.AC, "Main CB N out → EMI N-IN", "4 mm² light blue", 14, 280, 14, 270);
+            c.W("104", "QF0.4", "Z1.NIN", K.AC, "Main CB N out → EMI N-IN", "4 mm² blue", 14, 280, 14, 270);
             // L-UNSW: EMI L-OUT feeds KM1 1L1 and QF4. All N conductors meet on the N distribution block XN.
             c.Bus("Z1.LOUT", K.AC, 10, 254, 96, 254);
             c.Bus("XN.T", K.AC, 14, 249, 112, 249);
             c.Bus("XN.T", K.AC, 112, 249, 112, 205);
             c.W("105", "Z1.LOUT", "KM1.1L1", K.AC, "EMI L-OUT → Contactor 1L1 · Unswitched L", "4 mm² black", 10, 262, 10, 254, 96, 254, 96, 246);
             c.W("111", "Z1.LOUT", "QF4.1", K.AC, "EMI L-OUT → CB-24V in · 24 V PSU L (unswitched)", "4 mm² black", 10, 262, 10, 254, 30, 254, 30, 246);
-            c.W("106", "Z1.NOUT", "XN.T", K.AC, "EMI N-OUT → N busbar XN · N in", "4 mm² light blue", 14, 262, 14, 249, 112, 249, 112, 205);
+            c.W("106", "Z1.NOUT", "XN.T", K.AC, "EMI N-OUT → N busbar XN · N in", "4 mm² blue", 14, 262, 14, 249, 112, 249, 112, 205);
             // Switched side: KM1 2T1 → L distribution block XL → the three MCB inputs.
             c.Bus("XL.T", K.AC, 124, 210, 334, 210);
             c.Bus("XN.T", K.AC, 112, 205, 340, 205);
@@ -118,15 +119,15 @@ namespace A11Sim
             c.W("114", "XL.T", "QF1.1", K.AC, "XL → CB-VFD in · Switched L", "4 mm² black", 124, 210, 136, 210, 136, 202);
             c.W("117", "XL.T", "QF2.1", K.AC, "XL → CB-48V in · Switched L", "4 mm² black", 124, 210, 334, 210, 334, 202);
             c.W("120", "XL.T", "QF3.1", K.AC, "XL → CB-PUMP in · Switched L", "4 mm² black", 124, 210, 290, 210, 290, 202);
-            c.W("113", "XN.T", "G2.N", K.AC, "XN → PSU 24V N", "1.5 mm² light blue", 112, 205, 112, 249, 38, 249, 38, 230);
-            c.W("132", "XN.T", "KM1.A1", K.AC, "XN → Contactor A1 · Coil N", "1.5 mm² light blue", 112, 205, 112, 249, 66, 249, 66, 224, 60, 224);
-            c.W("116", "XN.T", "U1.N", K.AC, "XN → VFD N", "2.5 mm² light blue", 112, 205, 142, 205, 142, 188);
-            c.W("119", "XN.T", "G1.N", K.AC, "XN → PSU 48V N", "1.5 mm² light blue", 112, 205, 340, 205, 340, 188);
-            c.W("122", "XN.T", "XS1.N", K.AC, "XN → Schuko N · Pump", "1.5 mm² light blue", 112, 205, 296, 205, 296, 188);
-            c.W("112", "QF4.2", "G2.L", K.AC, "CB-24V out → PSU 24V L", "1.5 mm² black", 30, 238, 30, 230);
+            c.W("113", "XN.T", "G2.N", K.AC, "XN → PSU 24V N", "1 mm² yellow, band blue", 112, 205, 112, 249, 38, 249, 38, 230);
+            c.W("132", "XN.T", "KM1.A1", K.AC, "XN → Contactor A1 · Coil N", "1 mm² yellow, band blue", 112, 205, 112, 249, 66, 249, 66, 224, 60, 224);
+            c.W("116", "XN.T", "U1.N", K.AC, "XN → VFD N", "2.5 mm² blue", 112, 205, 142, 205, 142, 188);
+            c.W("119", "XN.T", "G1.N", K.AC, "XN → PSU 48V N", "1 mm² yellow, band blue", 112, 205, 340, 205, 340, 188);
+            c.W("122", "XN.T", "XS1.N", K.AC, "XN → Schuko N · Pump", "1 mm² yellow, band blue", 112, 205, 296, 205, 296, 188);
+            c.W("112", "QF4.2", "G2.L", K.AC, "CB-24V out → PSU 24V L", "1 mm² yellow, band black", 30, 238, 30, 230);
             c.W("115", "QF1.2", "U1.L", K.AC, "CB-VFD out → VFD L", "2.5 mm² black", 136, 194, 136, 188);
-            c.W("118", "QF2.2", "G1.L", K.AC, "CB-48V out → PSU 48V L", "1.5 mm² black", 334, 194, 334, 188);
-            c.W("121", "QF3.2", "XS1.L", K.AC, "CB-PUMP out → Schuko L · Pump", "1.5 mm² black", 290, 194, 290, 188);
+            c.W("118", "QF2.2", "G1.L", K.AC, "CB-48V out → PSU 48V L", "1 mm² yellow, band black", 334, 194, 334, 188);
+            c.W("121", "QF3.2", "XS1.L", K.AC, "CB-PUMP out → Schuko L · Pump", "1 mm² yellow, band black", 290, 194, 290, 188);
             // Spindle: one 4G1.5 shielded cable W1 (VFD → HDC-HA) in the left power lane, shield 360° at both ends.
             var w123 = c.W("123", "U1.U", "X1.1", K.Phase, "VFD U → HDC-HA pin 1 · Spindle U (cable W1)", "1.5 mm² brown, core of W1 4G1.5 shielded", 172, 184, 182, 184);
             var w124 = c.W("124", "U1.V", "X1.2", K.Phase, "VFD V → HDC-HA pin 2 · Spindle V (cable W1)", "1.5 mm² black, core of W1 4G1.5 shielded", 172, 180, 182, 180);
@@ -134,11 +135,11 @@ namespace A11Sim
             c.W("126", "U1.PE", "X1.PE", K.PE, "VFD PE → HDC-HA PE · Spindle PE (cable W1)", "1.5 mm² G/Y, core of W1 4G1.5 shielded", 172, 170, 182, 170);
             c.W("127", "X1.SH", "U1.PEb", K.PE, "Cable W1 shield: 360° in the HDC-HA metal hood → 360° EMC clamp at the VFD (bonded to VFD PE). Both ends, no pigtail",
                 "W1 braided shield, 360° clamp both ends", 182, 166, 172, 166);
-            c.W("128", "U1.P+", "R1.T1", K.Brake, "VFD P+ → Braking resistor T1", "1.5 mm² black, silicone", 128, 182, 118, 182);
-            c.W("129", "U1.PB", "R1.T2", K.Brake, "VFD PB → Braking resistor T2", "1.5 mm² black, silicone", 128, 174, 118, 174);
+            c.W("128", "U1.P+", "R1.T1", K.Brake, "VFD P+ → Braking resistor T1", "1 mm² yellow, band black", 128, 182, 118, 182);
+            c.W("129", "U1.PB", "R1.T2", K.Brake, "VFD PB → Braking resistor T2", "1 mm² yellow, band black", 128, 174, 118, 174);
             // KM1 coil: from QF4 out (C6), through K1 pole 4 (pole 3 left empty as the gap to the 24 V poles).
-            c.W("130", "QF4.2", "K1.41", K.AC, "CB-24V out → K1 pole-4 COM · Coil supply L (protected by QF4 C6)", "1.5 mm² red", 30, 238, 30, 234, 56, 234, 56, 250, 60, 250, 60, 246);
-            c.W("131", "K1.44", "KM1.A2", K.AC, "K1 pole-4 NO → Contactor A2 · Switched coil L", "1.5 mm² red", 60, 238, 60, 232);
+            c.W("130", "QF4.2", "K1.41", K.AC, "CB-24V out → K1 pole-4 COM · Coil supply L (protected by QF4 C6)", "1 mm² yellow, band red", 30, 238, 30, 234, 56, 234, 56, 250, 60, 250, 60, 246);
+            c.W("131", "K1.44", "KM1.A2", K.AC, "K1 pole-4 NO → Contactor A2 · Switched coil L", "1 mm² yellow, band red", 60, 238, 60, 232);
 
             // Spindle cable cores, shield and pump cord (not numbered).
             foreach (var w in new[]
@@ -165,10 +166,10 @@ namespace A11Sim
             NoLabel(c.W("147", "RAIL.T", "PEBAR.BAR2", K.PE, "DIN-rail earth stud → Earth bar (ring lug, no terminal block)", "2.5 mm² G/Y", 255, 276.5f, 255, 280));
             Stub(c, "143", "Z1.GND", "EMI filter ground lug → Earth bar", "4 mm² G/Y", 30, 266, 34, 266);
             Stub(c, "144", "U1.PEc", "VFD PE → Earth bar", "2.5 mm² G/Y", 172, 162, 176, 162);
-            Stub(c, "145", "G1.PE", "PSU 48V PE → Earth bar 2", "1.5 mm² G/Y", 362, 178, 366, 178, "PEBAR.BAR2");
-            Stub(c, "146", "G2.PE", "PSU 24V PE → Earth bar 2", "1.5 mm² G/Y", 48, 224, 52, 224, "PEBAR.BAR2");
-            Stub(c, "149", "XS1.PE", "Schuko outlet PE → Earth bar 2 · NEW: missing in rev 0.5 (pump was unearthed)", "1.5 mm² G/Y", 302, 183, 306, 183, "PEBAR.BAR2");
-            var w148 = c.W("148", "G2.-V2", "PEBAR.BAR2", K.PE, "PSU 24V −V (screw 2) → Earth bar · PELV bond: the only 0 V to PE bond", "1.5 mm² G/Y", 10, 8, 10, 4);
+            Stub(c, "145", "G1.PE", "PSU 48V PE → Earth bar 2", "2.5 mm² G/Y", 362, 178, 366, 178, "PEBAR.BAR2");
+            Stub(c, "146", "G2.PE", "PSU 24V PE → Earth bar 2", "2.5 mm² G/Y", 48, 224, 52, 224, "PEBAR.BAR2");
+            Stub(c, "149", "XS1.PE", "Schuko outlet PE → Earth bar 2 · NEW: missing in rev 0.5 (pump was unearthed)", "2.5 mm² G/Y", 302, 183, 306, 183, "PEBAR.BAR2");
+            var w148 = c.W("148", "G2.-V2", "PEBAR.BAR2", K.PE, "PSU 24V −V (screw 2) → Earth bar · PELV bond: the only 0 V to PE bond", "2.5 mm² G/Y", 10, 8, 10, 4);
             w148.labelText = "148 PELV bond → PE bar";
             w148.labelAt = new Vector2(11.2f, 4.6f);
             w148.stub = true;
@@ -177,32 +178,34 @@ namespace A11Sim
             w138.labelAt = new Vector2(217, 281.2f);
 
             // ---- DC power ----
-            c.W("150", "G1.+V1", "A2.AC1", K.DC48, "PSU 48V +V (screw 1) → DMA860H-X AC 1 · 48 V", "1.5 mm² black", 334, 168, 334, 150, 272, 150, 272, 140);
-            c.W("151", "G1.-V1", "A2.AC2", K.DC48, "PSU 48V −V (screw 1) → DMA860H-X AC 2", "1.5 mm² black", 338, 168, 338, 147, 278, 147, 278, 140);
-            c.W("152", "G1.+V2", "A3.AC1", K.DC48, "PSU 48V +V (screw 2) → DMA860H-Y AC 1", "1.5 mm² black", 344, 168, 344, 110, 272, 110, 272, 104);
-            c.W("153", "G1.-V2", "A3.AC2", K.DC48, "PSU 48V −V (screw 2) → DMA860H-Y AC 2", "1.5 mm² black", 348, 168, 348, 107, 278, 107, 278, 104);
-            c.W("154", "G1.+V3", "A4.AC1", K.DC48, "PSU 48V +V (screw 3) → DMA860H-Z AC 1", "1.5 mm² black", 354, 168, 354, 74, 272, 74, 272, 68);
-            c.W("155", "G1.-V3", "A4.AC2", K.DC48, "PSU 48V −V (screw 3) → DMA860H-Z AC 2", "1.5 mm² black", 358, 168, 358, 71, 278, 71, 278, 68);
+            c.W("150", "G1.+V1", "A2.AC1", K.DC48, "PSU 48V +V (screw 1) → DMA860H-X AC 1 · 48 V", "1 mm² yellow, band black", 334, 168, 334, 150, 272, 150, 272, 140);
+            c.W("151", "G1.-V1", "A2.AC2", K.DC48, "PSU 48V −V (screw 1) → DMA860H-X AC 2", "1 mm² yellow, band black", 338, 168, 338, 147, 278, 147, 278, 140);
+            c.W("152", "G1.+V2", "A3.AC1", K.DC48, "PSU 48V +V (screw 2) → DMA860H-Y AC 1", "1 mm² yellow, band black", 344, 168, 344, 110, 272, 110, 272, 104);
+            c.W("153", "G1.-V2", "A3.AC2", K.DC48, "PSU 48V −V (screw 2) → DMA860H-Y AC 2", "1 mm² yellow, band black", 348, 168, 348, 107, 278, 107, 278, 104);
+            c.W("154", "G1.+V3", "A4.AC1", K.DC48, "PSU 48V +V (screw 3) → DMA860H-Z AC 1", "1 mm² yellow, band black", 354, 168, 354, 74, 272, 74, 272, 68);
+            c.W("155", "G1.-V3", "A4.AC2", K.DC48, "PSU 48V −V (screw 3) → DMA860H-Z AC 2", "1 mm² yellow, band black", 358, 168, 358, 71, 278, 71, 278, 68);
             // +24 V straight from the PSU screws to the two fuses (no TB24+).
             c.Bus("G2.+V1", K.DC24, 24, 148, 56, 148);
-            c.W("162", "G2.+V1", "F1.in", K.DC24, "PSU 24V +V → F1 in · Control fuse (short, 2.5 mm²: unfused PSU side)", "2.5 mm² dark blue", 42, 218, 42, 148, 24, 148, 24, 144);
-            c.W("164", "G2.+V2", "F2.in", K.DC24, "PSU 24V +V (screw 2) → F2 in · Signal fuse (short, 2.5 mm²: unfused PSU side)", "2.5 mm² dark blue", 46, 218, 46, 148, 56, 148, 56, 144);
+            c.W("162", "G2.+V1", "F1.in", K.DC24, "PSU 24V +V → F1 in · Control fuse (short, 2.5 mm²: unfused PSU side)", "2.5 mm² brown, band dark blue", 42, 218, 42, 148, 24, 148, 24, 144);
+            c.W("164", "G2.+V2", "F2.in", K.DC24, "PSU 24V +V (screw 2) → F2 in · Signal fuse (short, 2.5 mm²: unfused PSU side)", "2.5 mm² brown, band dark blue", 46, 218, 46, 148, 56, 148, 56, 144);
             // +24 V CONTROL (after F1) and +24 V SIGNAL (after F2).
             c.Bus("F1.out", K.DC24, 16, 128, 94, 128);
             c.Bus("F2.out", K.DC24, 56, 136, 124, 136, 124, 80);
-            c.W("166", "F2.out", "A1.DC24V", K.DC24, "F2 out → A11 board power + (J10)", "0.5 mm² dark blue", 56, 136, 124, 136, 200, 136);
-            c.W("168", "F2.out", "A1.24V", K.DC24, "F2 out → A11 input 24V+ (J8) · Sensor/input supply", "0.5 mm² dark blue", 56, 136, 124, 136, 124, 132, 200, 132);
+            c.W("166", "F2.out", "A1.DC24V", K.DC24, "F2 out → A11 board power + (J10)", "1 mm² yellow, band dark blue", 56, 136, 124, 136, 200, 136);
+            c.W("168", "F2.out", "A1.24V", K.DC24, "F2 out → A11 input 24V+ (J8) · Sensor/input supply", "1 mm² yellow, band dark blue", 56, 136, 124, 136, 124, 132, 200, 132);
             // 0 V straight from the PSU −V screws, then daisy-chained (no TB0V).
             c.Bus("G2.-V1", K.DC24, 6, 8, 236, 8);
             c.Bus("G2.-V1", K.DC24, 128, 8, 128, 126);
             c.Bus("G2.-V1", K.DC24, 30, 218, 30, 214, 6, 214, 6, 8);
-            c.W("167", "G2.-V1", "A1.DCGND", K.DC24, "PSU 24V −V → A11 board power − (J10)", "0.5 mm² blue/white", 30, 218, 30, 214, 6, 214, 6, 8, 128, 8, 128, 34, 200, 34);
-            c.W("169", "G2.-V2", "A1.GND", K.DC24, "PSU 24V −V (screw 2) → A11 input GND (J8)", "0.5 mm² blue/white", 34, 218, 34, 214, 6, 214, 6, 8, 128, 8, 128, 38, 200, 38);
-            c.W("170", "KM1.43", "M2.+", K.DC24, "Contactor aux 43 → Fan + · NEW: fan behind F1 (was unfused on TB24+)", "0.5 mm² dark blue", 60, 124, 60, 128, 16, 128, 16, 124);
-            c.W("171", "A1.DCGND", "M2.-", K.DC24, "A11 J10 GND → Fan − (loop)", "0.5 mm² blue/white", 200, 34, 128, 34, 128, 8, 16, 8, 16, 118);
+            c.W("167", "G2.-V1", "A1.DCGND", K.DC24, "PSU 24V −V → A11 board power − (J10)", "1 mm² yellow, band blue/white", 30, 218, 30, 214, 6, 214, 6, 8, 128, 8, 128, 34, 200, 34);
+            c.W("169", "G2.-V2", "A1.GND", K.DC24, "PSU 24V −V (screw 2) → A11 input GND (J8)", "1 mm² yellow, band blue/white", 34, 218, 34, 214, 6, 214, 6, 8, 128, 8, 128, 38, 200, 38);
+            c.W("170", "KM1.43", "M2.+", K.DC24, "Contactor aux 43 → Fan + · NEW: fan behind F1 (was unfused on TB24+)", "1 mm² yellow, band dark blue", 60, 124, 60, 128, 16, 128, 16, 124);
+            c.W("171", "A1.DCGND", "M2.-", K.DC24, "A11 J10 GND → Fan − (loop)", "1 mm² yellow, band blue/white", 200, 34, 128, 34, 128, 8, 16, 8, 16, 118);
 
             // ---- 24 V control and lamps ----
-            const string dc = "0.5 mm² dark blue", z0 = "0.5 mm² blue/white";
+            // Owner's stock (2026-10-27): all control and 230 V branch wiring is 1 mm² yellow; the function colour is a band
+            // (sleeve or tape) at both ends, next to the number sleeve.
+            const string dc = "1 mm² yellow, band dark blue", z0 = "1 mm² yellow, band blue/white";
             c.W("201", "F1.out", "S0.1", K.DC24, "F1 out → E-stop NC in · Chain", dc, 24, 136, 24, 128, 36, 128, 36, 124);
             c.W("202", "S0.2", "S1.1", K.DC24, "E-stop NC out → OFF (NC) in · Chain", dc, 36, 116, 36, 112);
             c.W("203", "S1.2", "S2.1", K.DC24, "OFF out (Node X) → ON (NO) in · Chain", dc, 36, 104, 36, 98);
@@ -230,10 +233,10 @@ namespace A11Sim
                 string a = ax[i], d = "A" + (i + 2);
                 float y = y0[i];
                 int axis = i;
-                c.W((n).ToString(), $"A1.{a}_5V", $"{d}.PUL+", K.Sig5, $"A11 {a}-axis 5V → DMA860H-{a} PUL+", "0.5 mm² dark blue, twisted", 226, y + 22, 250, y + 22);
-                var pul = c.W((n + 1).ToString(), $"A1.{a}_PUL", $"{d}.PUL-", K.Pulse, $"A11 {a}-axis PULSE → DMA860H-{a} PUL−", "0.5 mm² dark blue, twisted", 226, y + 18, 250, y + 18);
+                c.W((n).ToString(), $"A1.{a}_5V", $"{d}.PUL+", K.Sig5, $"A11 {a}-axis 5V → DMA860H-{a} PUL+", "1 mm² yellow, band dark blue, twisted", 226, y + 22, 250, y + 22);
+                var pul = c.W((n + 1).ToString(), $"A1.{a}_PUL", $"{d}.PUL-", K.Pulse, $"A11 {a}-axis PULSE → DMA860H-{a} PUL−", "1 mm² yellow, band dark blue, twisted", 226, y + 18, 250, y + 18);
                 pul.speedOf = () => Mathf.Abs(m.vel[axis]) + 1f;
-                c.W((n + 2).ToString(), $"A1.{a}_DIR", $"{d}.DIR-", K.Dir, $"A11 {a}-axis DIR → DMA860H-{a} DIR−", "0.5 mm² dark blue, twisted", 226, y + 10, 250, y + 10);
+                c.W((n + 2).ToString(), $"A1.{a}_DIR", $"{d}.DIR-", K.Dir, $"A11 {a}-axis DIR → DMA860H-{a} DIR−", "1 mm² yellow, band dark blue, twisted", 226, y + 10, 250, y + 10);
                 var j = c.W((n + 3).ToString(), $"{d}.PUL+", $"{d}.DIR+", K.Sig5, $"DMA860H-{a} PUL+ → DMA860H-{a} DIR+ · Jumper", dc, 250, y + 22, 252, y + 22, 252, y + 14, 250, y + 14);
                 j.labelAt = new Vector2(250.4f, y + 12.6f);
                 n += 4;
@@ -322,7 +325,7 @@ namespace A11Sim
             c.Caution("C11", 44.6f, 80.4f, "K1 socket (looks like a Schneider RXZE2S114M; exact part not confirmed): each screw has two labels, IEC on top (arrow up), NEMA below (arrow down). Use the TOP number: A1 = 13, A2 = 14, 11 = 9, 14 = 5, 41 = 12, 44 = 8.\n" +
                 "NEMA 14 is the coil A2 — wire 206 (IEC 14, pole 1 NO) on NEMA 14 shorts the coil when ON is pushed and F1 opens.\n" +
                 "Coil suppression (optional): only if the socket has a module slot and is a genuine RXZE2S114M, a Schneider RXM040W diode module plugs in\n" +
-                "(observe its polarity marking, A1 = +24 V). Twin ferrules: keep to 2 × 1 mm² per screw (A1 takes 204 + 206, 2 × 0.5 mm²).");
+                "(observe its polarity marking, A1 = +24 V). Twin ferrules: keep to 2 × 1 mm² per screw (A1 takes 204 + 206, 2 × 1 mm²).");
             c.Caution("C12", 112f, 185.5f, "Before you set CB-VFD ON for the first time: R1 connects to VFD terminals P+ and PB only.\nRead the terminal labels on the VFD.\nRisk: damage to the VFD.");
             c.Caution("C14", 40f, 284f, "REMINDER — VFD supply rating (open): the FC300 nameplate's 11 A is the rated OUTPUT current. A 2.2 kW single-phase drive draws ≈ 22–24 A INPUT at full load\n" +
                 "(Delta VFD022EL21A: 11 A out, 24 A in). At full spindle load QF1 C16 trips, Z1 (20 A) is overloaded and QF0 C25 is marginal (≈ 28–30 A with the PSUs and pump).\n" +

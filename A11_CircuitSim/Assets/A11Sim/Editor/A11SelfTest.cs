@@ -644,7 +644,7 @@ namespace A11Sim.EditorTools
                 if (w.number == "") continue;
                 if (!first) sb.Append(",\n");
                 first = false;
-                sb.Append($"  {{\"no\": \"{w.number}\", \"from\": \"{w.a.id}\", \"to\": \"{w.b.id}\", \"kind\": \"{w.kind}\", \"spec\": \"{Esc(w.spec)}\", \"notConnected\": {(w.notConnected ? "true" : "false")}}}");
+                sb.Append($"  {{\"no\": \"{w.number}\", \"from\": \"{w.a.id}\", \"to\": \"{w.b.id}\", \"kind\": \"{w.kind}\", \"spec\": \"{Esc(w.spec)}\", \"desc\": \"{Esc(w.desc)}\", \"notConnected\": {(w.notConnected ? "true" : "false")}}}");
             }
             sb.Append("\n]\n");
             File.WriteAllText("Verification/netlist.json", sb.ToString());

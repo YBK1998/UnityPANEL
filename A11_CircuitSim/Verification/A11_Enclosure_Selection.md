@@ -95,7 +95,7 @@ the bottom wall.
 - **Braking resistor:** the 800W100RJ tube (Ø 60 × 300) stands vertically on the right wall on its two brackets, below
   the outlet so its heat leaves the box, 25 mm below the busbars and ≥ 50 mm in front of the VR duct (the motor lane VM
   starts 175 mm below it). Its surface
-  gets very hot while braking: silicone leads (128, 129), nothing plastic touching it.
+  gets very hot while braking: the leads 128, 129 are 1 mm² PVC (owner's choice, 2026-10-27), so keep them and anything plastic off the tube.
 - **Body earth:** M6 stud on the inside of the left wall (wire 139 to the earth bar). Use the body's own earth stud if it
   has one.
 - **Segregation:** VP (far left) carries only the incoming mains and the shielded VFD cable W1 (shield 360° at the EMC clamp

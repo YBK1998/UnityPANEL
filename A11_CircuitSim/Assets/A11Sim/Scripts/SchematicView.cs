@@ -161,7 +161,7 @@ namespace A11Sim
             for (int i = 0; i < args.Length - 1; i++)
                 if (args[i] == "-a11lengths")
                 {
-                    File.WriteAllText(args[i + 1], panel.Cabinet.LengthReport());
+                    File.WriteAllText(args[i + 1], panel.Cabinet.LengthReport(guide));
                     Application.Quit();
                 }
         }

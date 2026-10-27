@@ -227,16 +227,23 @@ namespace A11Sim
 
         readonly List<Wire> external = new();
 
-        /// Routed length of every conductor (CSV), for the cutting list.
-        public string LengthReport()
+        /// Routed length of every conductor (CSV), for the cutting list and the wire list: with the build guide also the
+        /// function, the termination of each end and the build-guide group.
+        public string LengthReport(BuildGuide guide = null)
         {
-            var sb = new System.Text.StringBuilder("no,from,to,spec,routed_m,door\n");
-            static string Q(string s) => "\"" + (s ?? "").Replace("\"", "\"\"") + "\""; // specs may contain commas
+            var sb = new System.Text.StringBuilder("no,from,to,spec,routed_m,door,desc,end_from,end_to,group\n");
+            static string Q(string s) => "\"" + System.Text.RegularExpressions.Regex.Replace(s ?? "", "<[^>]+>", "").Replace("\"", "\"\"") + "\""; // specs may contain commas
+            string Extra(Wire w)
+            {
+                if (guide == null) return ",,,";
+                var it = guide.items.Find(i => i.w == w);
+                return $",{Q(w.desc)},{Q(guide.Termination(w.a, w))},{Q(guide.Termination(w.b, w))},{Q(it != null ? BuildGuide.Groups[it.group] : "")}";
+            }
             foreach (var wv in wires)
                 if (wv.w != null)
-                    sb.Append($"{wv.w.number},{wv.w.a.id},{wv.w.b.id},{Q(wv.w.spec)},{wv.len.ToString("0.000", System.Globalization.CultureInfo.InvariantCulture)},{(wv.door ? 1 : 0)}\n");
+                    sb.Append($"{wv.w.number},{wv.w.a.id},{wv.w.b.id},{Q(wv.w.spec)},{wv.len.ToString("0.000", System.Globalization.CultureInfo.InvariantCulture)},{(wv.door ? 1 : 0)}{Extra(wv.w)}\n");
             foreach (var w in external)
-                sb.Append($"{w.number},{w.a.id},{w.b.id},{Q(w.spec)},external,0\n");
+                sb.Append($"{w.number},{w.a.id},{w.b.id},{Q(w.spec)},external,0{Extra(w)}\n");
             return sb.ToString();
         }
 
@@ -842,39 +849,44 @@ namespace A11Sim
         void RowD()
         {
             // RichAuto A11E interface board, measured 153 × 90, 20 high from the plate (35 with the green screw terminals).
-            // Landscape, terminal strips along both long edges.
+            // Landscape, as on the owner's board (2026-10-27): CN1 50-pin handheld header on the left edge; top strip (left →
+            // right) Y1–Y8, GND (outputs), X1–X8, 24V, GND, SHIELD (inputs), 24V, GND (board power); bottom strip 5V, PULSE,
+            // DIR, SHIELD for the X, Y, Z and C axes. Which 24V / GND pair is the board supply is assumed (same nets either way).
             var a11 = C.Get<A11Board>("A1");
             var g = Group("A1 A11E board");
             float xc = -0.145f, yc = A11y, w = 0.153f, h = 0.09f, zp = Zb - 0.012f;
             Box(g, new Vector3(xc, yc, zp), new Vector3(w, h, 0.0016f), mPcb);
             foreach (var (dx, dy) in new[] { (-1, -1), (1, -1), (-1, 1), (1, 1) })
                 Cyl(g, new Vector3(xc + dx * (w / 2 - 0.004f), yc + dy * (h / 2 - 0.004f), zp + 0.006f), 0.005f, 0.011f, mBrass, new Vector3(90, 0, 0));
-            Box(g, new Vector3(xc, yc + h / 2 - 0.007f, zp - 0.0118f), new Vector3(w * 0.96f, 0.01f, 0.022f), mPlug);
-            Box(g, new Vector3(xc - 0.012f, yc - h / 2 + 0.007f, zp - 0.0118f), new Vector3(w * 0.78f, 0.01f, 0.022f), mPlug);
-            Box(g, new Vector3(xc - 0.02f, yc + 0.012f, zp - 0.005f), new Vector3(0.066f, 0.009f, 0.009f), mBlack);
-            Label(g, "CN1  50-pin → handheld", new Vector3(xc - 0.02f, yc + 0.021f, zp - 0.0012f), 0.0032f, Color.white);
-            Box(g, new Vector3(xc + 0.04f, yc - 0.01f, zp - 0.002f), new Vector3(0.02f, 0.02f, 0.003f), mBlack);
-            Label(g, "RichAuto A11E", new Vector3(xc + 0.02f, yc + 0.032f, zp - 0.0012f), 0.0055f, Color.white, true);
-            Label(g, "A1", new Vector3(xc + 0.058f, yc + 0.032f, zp - 0.0012f), 0.006f, new Color(1f, 0.9f, 0.4f), true);
-            Led(g, new Vector3(xc + 0.062f, yc + 0.012f, zp - 0.002f), new Color(0.2f, 1f, 0.3f), () => a11.powered);
-            Led(g, new Vector3(xc + 0.062f, yc + 0.003f, zp - 0.002f), new Color(1f, 0.15f, 0.1f), () => a11.powered && a11.Alarm != null);
-            var topIds = new List<string> { "A1.DC24V", "A1.DCGND" };
-            foreach (var a in new[] { "X", "Y", "Z" }) topIds.AddRange(new[] { $"A1.{a}_5V", $"A1.{a}_PUL", $"A1.{a}_DIR" });
-            topIds.AddRange(new[] { "A1.Y1", "A1.Y2", "A1.Y3", "A1.Y4", "A1.Y5", "A1.Y6", "A1.OGND" });
+            var topIds = new List<string> { "A1.Y1", "A1.Y2", "A1.Y3", "A1.Y4", "A1.Y5", "A1.Y6", "A1.Y7", "A1.Y8", "A1.OGND",
+                "A1.X1", "A1.X2", "A1.X3", "A1.X4", "A1.X5", "A1.X6", "A1.X7", "A1.X8", "A1.24V", "A1.GND", "A1.Shield", "A1.DC24V", "A1.DCGND" };
+            var bot = new List<string>();
+            foreach (var a in new[] { "X", "Y", "Z", "C" }) bot.AddRange(new[] { $"A1.{a}_5V", $"A1.{a}_PUL", $"A1.{a}_DIR", $"A1.{a}_SH" });
+            // Both strips use the same screw pitch; the bottom strip is drawn centred (its position on the board is assumed).
             float step = w * 0.94f / topIds.Count;
+            Box(g, new Vector3(xc, yc + h / 2 - 0.007f, zp - 0.0118f), new Vector3(w * 0.96f, 0.01f, 0.022f), mPlug);
+            Box(g, new Vector3(xc, yc - h / 2 + 0.007f, zp - 0.0118f), new Vector3(step * bot.Count + w * 0.02f, 0.01f, 0.022f), mPlug);
+            float xCn = xc - w / 2 + 0.009f;
+            Box(g, new Vector3(xCn, yc, zp - 0.005f), new Vector3(0.009f, 0.058f, 0.009f), mBlack);
+            Label(g, "CN1 50-pin", new Vector3(xCn + 0.016f, yc + 0.02f, zp - 0.0012f), 0.0032f, Color.white);
+            Box(g, new Vector3(xc + 0.04f, yc - 0.01f, zp - 0.002f), new Vector3(0.02f, 0.02f, 0.003f), mBlack);
+            Label(g, "RichAuto A11E", new Vector3(xc + 0.01f, yc + 0.022f, zp - 0.0012f), 0.0055f, Color.white, true);
+            Label(g, "A1", new Vector3(xc + 0.058f, yc + 0.022f, zp - 0.0012f), 0.006f, new Color(1f, 0.9f, 0.4f), true);
+            Led(g, new Vector3(xc + 0.062f, yc + 0.006f, zp - 0.002f), new Color(0.2f, 1f, 0.3f), () => a11.powered);
+            Led(g, new Vector3(xc + 0.062f, yc - 0.003f, zp - 0.002f), new Color(1f, 0.15f, 0.1f), () => a11.powered && a11.Alarm != null);
             for (int i = 0; i < topIds.Count; i++)
             {
                 Anchor(topIds[i], new Vector3(xc - w * 0.47f + step * (i + 0.5f), yc + h / 2 + 0.002f, zp - 0.016f), 3);
                 Anchor(topIds[i], new Vector3(xc - w * 0.47f + step * (i + 0.5f) + 0.0012f, yc + h / 2 + 0.002f, zp - 0.013f), 3);
             }
-            string[] bot = { "A1.X1", "A1.X2", "A1.X3", "A1.X4", "A1.X5", "A1.X6", "A1.X7", "A1.X8", "A1.24V", "A1.GND", "A1.Shield" };
-            float stepB = w * 0.76f / bot.Length;
-            for (int i = 0; i < bot.Length; i++)
+            float x0B = xc - step * bot.Count / 2;
+            for (int i = 0; i < bot.Count; i++)
             {
-                Anchor(bot[i], new Vector3(xc - 0.012f - w * 0.38f + stepB * (i + 0.5f), yc - h / 2 - 0.002f, zp - 0.016f), 4);
-                Anchor(bot[i], new Vector3(xc - 0.012f - w * 0.38f + stepB * (i + 0.5f) + 0.0012f, yc - h / 2 - 0.002f, zp - 0.013f), 4);
+                Anchor(bot[i], new Vector3(x0B + step * (i + 0.5f), yc - h / 2 - 0.002f, zp - 0.016f), 4);
+                Anchor(bot[i], new Vector3(x0B + step * (i + 0.5f) + 0.0012f, yc - h / 2 - 0.002f, zp - 0.013f), 4);
             }
-            Anchor("A1.HH", new Vector3(xc - 0.02f, yc + 0.012f, zp - 0.01f), 3);
+            // The handheld cable comes over the hinge on the left, so CN1 is fed from the left vertical duct.
+            Anchor("A1.HH", new Vector3(xCn - 0.006f, yc, zp - 0.01f), VL);
             Solid("A1", new Vector3(xc, yc, Zb - 0.0175f), new Vector3(w, h, 0.035f));
             Click(g, new Vector3(xc, yc, Zb - 0.0175f), new Vector3(w, h, 0.035f), () => a11.Tip() + Dims(w, h, 0.035f, "measured; 20 high without the screw terminals"));
         }
@@ -1020,7 +1032,7 @@ namespace A11Sim
             Solid("R1", new Vector3((wall + rx - rd / 2) / 2, ryc, rz), new Vector3(wall - rx + rd / 2, rl, rd));
             Click(r, new Vector3(rx, ryc, rz), new Vector3(rd, rl, rd),
                 () => C.Get<BrakeResistor>("R1").Tip() + "\nTube resistor on two brackets, vertical on the right side wall, below the air outlet so the heat leaves the box. " +
-                      "<color=#ffb050>Bare and very hot while braking: keep ≥ 50 mm to ducts, busbars and wires, use the silicone leads.</color>" +
+                      "<color=#ffb050>Bare and very hot while braking: keep ≥ 50 mm to ducts, busbars and wires; the 1 mm² PVC leads 128 / 129 must not touch the tube.</color>" +
                       Dims(rd, rl, rd, "Ø 60 × 300 measured, axis 60 mm off the wall"));
         }
 
@@ -1137,6 +1149,7 @@ namespace A11Sim
             if (spec.StartsWith("4")) return 4f;
             if (spec.StartsWith("2.5")) return 2.5f;
             if (spec.StartsWith("1.5")) return 1.5f;
+            if (spec.StartsWith("1 ")) return 1f;
             if (spec.StartsWith("0.5")) return 0.5f;
             return 1.5f;
         }
@@ -1146,6 +1159,9 @@ namespace A11Sim
             string s = w.spec ?? "";
             if (s.Contains("shield,") || s.StartsWith("W1 braided")) return mCopper; // cable shield (braid)
             if (w.kind == WireKind.PE || s.Contains("G/Y")) return mGY;
+            int band = s.IndexOf(", band");
+            if (band >= 0) s = s.Substring(0, band); // the insulation colour; the band is only at the ends
+            if (s.Contains("yellow")) return InsMat("yellow", new Color(0.92f, 0.78f, 0.1f));
             if (s.Contains("blue/white"))
             {
                 if (!insMats.TryGetValue("blue/white", out var bw))

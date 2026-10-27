@@ -21,8 +21,10 @@ Rev 0.7 changes (from a wire-by-wire review against the part datasheets, `Verifi
   NPN NO, so do the hard-limit check after any connector work.
 - **Power lane VP** (left: mains in, shielded VFD cable W1 with the shield 360° at both ends) and **motor lane VM**
   (right: stepper motor cables), on the spare plate width.
-- Wire colours to IEC 60204-1: L black, N light blue, PE green/yellow, KM1 coil red, 48 V and brake resistor black,
-  +24 V / signals dark blue, 0 V blue/white.
+- Wire colours to IEC 60204-1: L black, N blue, PE green/yellow, KM1 coil red, 48 V and brake resistor black,
+  +24 V / signals dark blue, 0 V blue/white. Owner's stock (2026-10-27): every former 0.5 / 1.5 mm² wire is **1 mm² yellow**
+  with that colour as a band at both ends; 2.5 / 4 mm² in black, blue, brown (+24 V 162 / 164, dark-blue band) and G/Y;
+  PE always G/Y. Per-wire list with marking and cut lengths: `A11_Wire_List.pdf` (`Verification/make_wire_list.py`).
 - Every conductor behind the C25 main (103–106, 109, 111, 114, 117, 120) is 4 mm².
 - **Reminder C14 (open):** the FC300 nameplate's 11 A is the rated **output** current. The drive draws ≈ 22–24 A input at
   full spindle load, so QF1 C16 trips on long full-power cuts, the 20 A EMI filter is overloaded and QF0 C25 is marginal.

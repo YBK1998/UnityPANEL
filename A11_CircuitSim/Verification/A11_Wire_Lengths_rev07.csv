@@ -1,134 +1,134 @@
-no,from,to,spec,routed_m,door
-101,Mains.L,QF0.1,"2.5 mm² black",1.200,0
-102,Mains.N,QF0.3,"2.5 mm² light blue",1.231,0
-103,QF0.2,Z1.LIN,"4 mm² black",0.136,0
-104,QF0.4,Z1.NIN,"4 mm² light blue",0.140,0
-105,Z1.LOUT,KM1.1L1,"4 mm² black",0.235,0
-111,Z1.LOUT,QF4.1,"4 mm² black",0.334,0
-106,Z1.NOUT,XN.T,"4 mm² light blue",0.641,0
-109,KM1.2T1,XL.T,"4 mm² black",0.523,0
-114,XL.T,QF1.1,"4 mm² black",0.371,0
-117,XL.T,QF2.1,"4 mm² black",0.400,0
-120,XL.T,QF3.1,"4 mm² black",0.444,0
-113,XN.T,G2.N,"1.5 mm² light blue",0.617,0
-132,XN.T,KM1.A1,"1.5 mm² light blue",0.428,0
-116,XN.T,U1.N,"2.5 mm² light blue",0.993,0
-119,XN.T,G1.N,"1.5 mm² light blue",0.707,0
-122,XN.T,XS1.N,"1.5 mm² light blue",0.246,0
-112,QF4.2,G2.L,"1.5 mm² black",0.745,0
-115,QF1.2,U1.L,"2.5 mm² black",0.767,0
-118,QF2.2,G1.L,"1.5 mm² black",0.888,0
-121,QF3.2,XS1.L,"1.5 mm² black",0.202,0
-123,U1.U,X1.1,"1.5 mm² brown, core of W1 4G1.5 shielded",0.752,0
-124,U1.V,X1.2,"1.5 mm² black, core of W1 4G1.5 shielded",0.760,0
-125,U1.W,X1.3,"1.5 mm² grey, core of W1 4G1.5 shielded",0.772,0
-126,U1.PE,X1.PE,"1.5 mm² G/Y, core of W1 4G1.5 shielded",0.792,0
-127,X1.SH,U1.PEb,"W1 braided shield, 360° clamp both ends",0.782,0
-128,U1.P+,R1.T1,"1.5 mm² black, silicone",0.994,0
-129,U1.PB,R1.T2,"1.5 mm² black, silicone",0.724,0
-130,QF4.2,K1.41,"1.5 mm² red",0.614,0
-131,K1.44,KM1.A2,"1.5 mm² red",0.153,0
-140,Mains.PE,PEBAR.BAR,"4 mm² G/Y",0.426,0
-139,BODY.T,PEBAR.BAR,"4 mm² G/Y",0.564,0
-141,BKP.T,PEBAR.BAR,"4 mm² G/Y",0.266,0
-142,DOOR.T,PEBAR.BAR,"6 mm² braided strap",1.096,1
-147,RAIL.T,PEBAR.BAR2,"2.5 mm² G/Y",1.342,0
-143,Z1.GND,PEBAR.BAR,"4 mm² G/Y",1.280,0
-144,U1.PEc,PEBAR.BAR,"2.5 mm² G/Y",0.896,0
-145,G1.PE,PEBAR.BAR2,"1.5 mm² G/Y",1.048,0
-146,G2.PE,PEBAR.BAR2,"1.5 mm² G/Y",0.896,0
-149,XS1.PE,PEBAR.BAR2,"1.5 mm² G/Y",1.193,0
-148,G2.-V2,PEBAR.BAR2,"1.5 mm² G/Y",0.924,0
-138,PEBAR.BAR,PEBAR.BAR2,"4 mm² G/Y",0.376,0
-150,G1.+V1,A2.AC1,"1.5 mm² black",0.746,0
-151,G1.-V1,A2.AC2,"1.5 mm² black",0.690,0
-152,G1.+V2,A3.AC1,"1.5 mm² black",0.841,0
-153,G1.-V2,A3.AC2,"1.5 mm² black",0.785,0
-154,G1.+V3,A4.AC1,"1.5 mm² black",0.734,0
-155,G1.-V3,A4.AC2,"1.5 mm² black",0.768,0
-162,G2.+V1,F1.in,"2.5 mm² dark blue",0.821,0
-164,G2.+V2,F2.in,"2.5 mm² dark blue",0.746,0
-166,F2.out,A1.DC24V,"0.5 mm² dark blue",1.021,0
-168,F2.out,A1.24V,"0.5 mm² dark blue",1.264,0
-167,G2.-V1,A1.DCGND,"0.5 mm² blue/white",0.737,0
-169,G2.-V2,A1.GND,"0.5 mm² blue/white",0.915,0
-170,KM1.43,M2.+,"0.5 mm² dark blue",1.084,0
-171,A1.DCGND,M2.-,"0.5 mm² blue/white",0.491,0
-201,F1.out,S0.1,"0.5 mm² dark blue",1.559,1
-202,S0.2,S1.1,"0.5 mm² dark blue",0.157,1
-203,S1.2,S2.1,"0.5 mm² dark blue",0.072,1
-204,S2.2,K1.A1,"0.5 mm² dark blue",1.394,1
-205,S1.2,K1.11,"0.5 mm² dark blue",1.522,1
-206,K1.14,K1.A1,"0.5 mm² dark blue",0.569,0
-207,G2.-V1,K1.A2,"0.5 mm² blue/white",0.690,0
-210,S0.4,A1.X7,"0.5 mm² dark blue",1.819,1
-220,F1.out,KM1.43,"0.5 mm² dark blue",0.805,0
-221,KM1.44,H1.+,"0.5 mm² dark blue",1.400,1
-222,K1.A2b,H1.-,"0.5 mm² blue/white",1.431,1
-223,S0.1,H2.+,"0.5 mm² dark blue",0.307,1
-224,H2.-,A1.Y6,"0.5 mm² dark blue",1.738,1
-225,H2.+,H3.+,"0.5 mm² dark blue",0.128,1
-226,H3.-,A1.Y5,"0.5 mm² dark blue",1.777,1
-301,A1.X_5V,A2.PUL+,"0.5 mm² dark blue, twisted",0.437,0
-302,A1.X_PUL,A2.PUL-,"0.5 mm² dark blue, twisted",0.447,0
-303,A1.X_DIR,A2.DIR-,"0.5 mm² dark blue, twisted",0.487,0
-304,A2.PUL+,A2.DIR+,"0.5 mm² dark blue",0.024,0
-,A2.A+,XM-X.1,"",0.873,0
-,A2.A-,XM-X.2,"",0.891,0
-,A2.B+,XM-X.3,"",0.891,0
-,A2.B-,XM-X.4,"",0.893,0
-305,A1.Y_5V,A3.PUL+,"0.5 mm² dark blue, twisted",0.582,0
-306,A1.Y_PUL,A3.PUL-,"0.5 mm² dark blue, twisted",0.591,0
-307,A1.Y_DIR,A3.DIR-,"0.5 mm² dark blue, twisted",0.606,0
-308,A3.PUL+,A3.DIR+,"0.5 mm² dark blue",0.024,0
-,A3.A+,XM-Y.1,"",0.767,0
-,A3.A-,XM-Y.2,"",0.760,0
-,A3.B+,XM-Y.3,"",0.759,0
-,A3.B-,XM-Y.4,"",0.763,0
-309,A1.Z_5V,A4.PUL+,"0.5 mm² dark blue, twisted",0.703,0
-310,A1.Z_PUL,A4.PUL-,"0.5 mm² dark blue, twisted",0.750,0
-311,A1.Z_DIR,A4.DIR-,"0.5 mm² dark blue, twisted",0.765,0
-312,A4.PUL+,A4.DIR+,"0.5 mm² dark blue",0.024,0
-,A4.A+,XM-Z.1,"",0.718,0
-,A4.A-,XM-Z.2,"",0.707,0
-,A4.B+,XM-Z.3,"",0.703,0
-,A4.B-,XM-Z.4,"",0.711,0
-315,A2.ALM+,A1.X5,"0.5 mm² dark blue",0.678,0
-317,A3.ALM+,A2.ALM+,"0.5 mm² dark blue",0.351,0
-319,A4.ALM+,A3.ALM+,"0.5 mm² dark blue",0.354,0
-316,A1.OGND,A2.ALM-,"0.5 mm² blue/white",0.597,0
-318,A2.ALM-,A3.ALM-,"0.5 mm² blue/white",0.362,0
-320,A3.ALM-,A4.ALM-,"0.5 mm² blue/white",0.315,0
-325,A1.Y1,U1.X1,"0.5 mm² dark blue",0.584,0
-326,A1.OGND,U1.COM,"0.5 mm² blue/white",0.663,0
-327,A1.Y2,U1.X2,"0.5 mm² dark blue",0.589,0
-328,A1.Y3,U1.X3,"0.5 mm² dark blue",0.600,0
-329,A1.Y4,U1.X4,"0.5 mm² dark blue",0.611,0
-330,X-LIM.1,A1.X1,"0.5 mm² dark blue",0.149,0
-331,Y-LIM.1,A1.X2,"0.5 mm² dark blue",0.201,0
-332,Z-LIM.2,A1.X3,"0.5 mm² dark blue",0.219,0
-336,X-LIM.2,A1.X6,"0.5 mm² dark blue",0.162,0
-334,X-LIM.2,Y-LIM.2,"0.5 mm² dark blue",0.214,0
-335,Y-LIM.2,Z-LIM.1,"0.5 mm² dark blue",0.225,0
-337,A1.GND,X-LIM.3,"0.5 mm² blue/white",0.210,0
-338,X-LIM.3,Y-LIM.3,"0.5 mm² blue/white",0.225,0
-339,Y-LIM.3,Z-LIM.3,"0.5 mm² blue/white",0.227,0
-340,A1.24V,X-LIM.4,"0.5 mm² dark blue",0.193,0
-341,X-LIM.4,Y-LIM.4,"0.5 mm² dark blue",0.187,0
-342,Y-LIM.4,Z-LIM.4,"0.5 mm² dark blue",0.190,0
-345,XT.1,A1.X4,"0.5 mm² dark blue",0.243,0
-346,Z-LIM.3,XT.2,"0.5 mm² blue/white",0.183,0
-347,XT.3,S0.3,"0.5 mm² dark blue",1.967,1
-348,XT.2,XT.4,"0.5 mm² blue/white",0.020,0
-,XM-X.1,XM-X.m1,"",external,0
-,XM-X.2,XM-X.m2,"",external,0
-,XM-X.3,XM-X.m3,"",external,0
-,XM-X.4,XM-X.m4,"",external,0
-,XM-Y.1,XM-Y.m1,"",external,0
-,XM-Y.2,XM-Y.m2,"",external,0
-,XM-Y.3,XM-Y.m3,"",external,0
-,XM-Y.4,XM-Y.m4,"",external,0
-,XM-Z.1,XM-Z.m1,"",external,0
-,XM-Z.2,XM-Z.m2,"",external,0
-,XM-Z.3,XM-Z.m3,"",external,0
-,XM-Z.4,XM-Z.m4,"",external,0
+no,from,to,spec,routed_m,door,desc,end_from,end_to,group
+101,Mains.L,QF0.1,"2.5 mm² black",1.200,0,"Mains L (gland) → Main CB L in · Mains L","supply cable core from the gland","ferrule 2.5 mm²","2 · 230 V power and VFD"
+102,Mains.N,QF0.3,"2.5 mm² blue",1.231,0,"Mains N (gland) → Main CB N in · Mains N","supply cable core from the gland","ferrule 2.5 mm²","2 · 230 V power and VFD"
+103,QF0.2,Z1.LIN,"4 mm² black",0.136,0,"Main CB L out → EMI L-IN","ferrule 4 mm²","ferrule 4 mm²","2 · 230 V power and VFD"
+104,QF0.4,Z1.NIN,"4 mm² blue",0.140,0,"Main CB N out → EMI N-IN","ferrule 4 mm²","ferrule 4 mm²","2 · 230 V power and VFD"
+105,Z1.LOUT,KM1.1L1,"4 mm² black",0.235,0,"EMI L-OUT → Contactor 1L1 · Unswitched L","twin ferrule 2 × 4 mm² + wire 111","ferrule 4 mm²","2 · 230 V power and VFD"
+111,Z1.LOUT,QF4.1,"4 mm² black",0.334,0,"EMI L-OUT → CB-24V in · 24 V PSU L (unswitched)","twin ferrule 2 × 4 mm² + wire 105","ferrule 4 mm²","2 · 230 V power and VFD"
+106,Z1.NOUT,XN.T,"4 mm² blue",0.641,0,"EMI N-OUT → N busbar XN · N in","ferrule 4 mm²","ferrule 4 mm² (own point on the distribution block)","2 · 230 V power and VFD"
+109,KM1.2T1,XL.T,"4 mm² black",0.523,0,"Contactor 2T1 → L busbar XL · Switched L in","ferrule 4 mm²","ferrule 4 mm² (own point on the distribution block)","2 · 230 V power and VFD"
+114,XL.T,QF1.1,"4 mm² black",0.371,0,"XL → CB-VFD in · Switched L","ferrule 4 mm² (own point on the distribution block)","ferrule 4 mm²","2 · 230 V power and VFD"
+117,XL.T,QF2.1,"4 mm² black",0.400,0,"XL → CB-48V in · Switched L","ferrule 4 mm² (own point on the distribution block)","ferrule 4 mm²","2 · 230 V power and VFD"
+120,XL.T,QF3.1,"4 mm² black",0.444,0,"XL → CB-PUMP in · Switched L","ferrule 4 mm² (own point on the distribution block)","ferrule 4 mm²","2 · 230 V power and VFD"
+113,XN.T,G2.N,"1 mm² yellow, band blue",0.619,0,"XN → PSU 24V N","ferrule 1 mm² (own point on the distribution block)","insulated fork lug","2 · 230 V power and VFD"
+132,XN.T,KM1.A1,"1 mm² yellow, band blue",0.431,0,"XN → Contactor A1 · Coil N","ferrule 1 mm² (own point on the distribution block)","ferrule 1 mm²","2 · 230 V power and VFD"
+116,XN.T,U1.N,"2.5 mm² blue",0.993,0,"XN → VFD N","ferrule 2.5 mm² (own point on the distribution block)","ferrule 2.5 mm²","2 · 230 V power and VFD"
+119,XN.T,G1.N,"1 mm² yellow, band blue",0.710,0,"XN → PSU 48V N","ferrule 1 mm² (own point on the distribution block)","insulated fork lug","2 · 230 V power and VFD"
+122,XN.T,XS1.N,"1 mm² yellow, band blue",0.247,0,"XN → Schuko N · Pump","ferrule 1 mm² (own point on the distribution block)","ferrule 1 mm²","2 · 230 V power and VFD"
+112,QF4.2,G2.L,"1 mm² yellow, band black",0.748,0,"CB-24V out → PSU 24V L","twin ferrule 2 × 1 mm² + wire 130","insulated fork lug","2 · 230 V power and VFD"
+115,QF1.2,U1.L,"2.5 mm² black",0.767,0,"CB-VFD out → VFD L","ferrule 2.5 mm²","ferrule 2.5 mm²","2 · 230 V power and VFD"
+118,QF2.2,G1.L,"1 mm² yellow, band black",0.892,0,"CB-48V out → PSU 48V L","ferrule 1 mm²","insulated fork lug","2 · 230 V power and VFD"
+121,QF3.2,XS1.L,"1 mm² yellow, band black",0.204,0,"CB-PUMP out → Schuko L · Pump","ferrule 1 mm²","ferrule 1 mm²","2 · 230 V power and VFD"
+123,U1.U,X1.1,"1.5 mm² brown, core of W1 4G1.5 shielded",0.752,0,"VFD U → HDC-HA pin 1 · Spindle U (cable W1)","ferrule 1.5 mm²","crimp contact (HDC-HA insert)","2 · 230 V power and VFD"
+124,U1.V,X1.2,"1.5 mm² black, core of W1 4G1.5 shielded",0.760,0,"VFD V → HDC-HA pin 2 · Spindle V (cable W1)","ferrule 1.5 mm²","crimp contact (HDC-HA insert)","2 · 230 V power and VFD"
+125,U1.W,X1.3,"1.5 mm² grey, core of W1 4G1.5 shielded",0.772,0,"VFD W → HDC-HA pin 3 · Spindle W (cable W1)","ferrule 1.5 mm²","crimp contact (HDC-HA insert)","2 · 230 V power and VFD"
+126,U1.PE,X1.PE,"1.5 mm² G/Y, core of W1 4G1.5 shielded",0.792,0,"VFD PE → HDC-HA PE · Spindle PE (cable W1)","ferrule 1.5 mm²","crimp contact (HDC-HA insert)","1 · Protective earth"
+127,X1.SH,U1.PEb,"W1 braided shield, 360° clamp both ends",0.782,0,"Cable W1 shield: 360° in the HDC-HA metal hood → 360° EMC clamp at the VFD (bonded to VFD PE). Both ends, no pigtail","360° clamp in the HDC-HA metal hood (no pigtail)","360° EMC clamp on the bared braid, bonded to VFD PE","1 · Protective earth"
+128,U1.P+,R1.T1,"1 mm² yellow, band black",0.997,0,"VFD P+ → Braking resistor T1","ferrule 1 mm²","ring lug (resistor stud)","2 · 230 V power and VFD"
+129,U1.PB,R1.T2,"1 mm² yellow, band black",0.728,0,"VFD PB → Braking resistor T2","ferrule 1 mm²","ring lug (resistor stud)","2 · 230 V power and VFD"
+130,QF4.2,K1.41,"1 mm² yellow, band red",0.618,0,"CB-24V out → K1 pole-4 COM · Coil supply L (protected by QF4 C6)","twin ferrule 2 × 1 mm² + wire 112","ferrule 1 mm²","2 · 230 V power and VFD"
+131,K1.44,KM1.A2,"1 mm² yellow, band red",0.154,0,"K1 pole-4 NO → Contactor A2 · Switched coil L","ferrule 1 mm²","ferrule 1 mm²","2 · 230 V power and VFD"
+140,Mains.PE,PEBAR.BAR,"4 mm² G/Y",0.426,0,"Mains PE (gland) → Earth bar","supply cable core from the gland","ring lug M6","1 · Protective earth"
+139,BODY.T,PEBAR.BAR,"4 mm² G/Y",0.564,0,"Enclosure body (earth stud) → Earth bar · NEW: the body had no PE conductor","ring lug M6","ring lug M6","1 · Protective earth"
+141,BKP.T,PEBAR.BAR,"4 mm² G/Y",0.266,0,"Backplate bond → Earth bar","ring lug M6","ring lug M6","1 · Protective earth"
+142,DOOR.T,PEBAR.BAR,"6 mm² braided strap",1.096,1,"Door bond strap → Earth bar","ring lug M6","ring lug M6","1 · Protective earth"
+147,RAIL.T,PEBAR.BAR2,"2.5 mm² G/Y",1.342,0,"DIN-rail earth stud → Earth bar (ring lug, no terminal block)","ring lug M6","ring lug M6","1 · Protective earth"
+143,Z1.GND,PEBAR.BAR,"4 mm² G/Y",1.280,0,"EMI filter ground lug → Earth bar","ferrule 4 mm²","ring lug M6","1 · Protective earth"
+144,U1.PEc,PEBAR.BAR,"2.5 mm² G/Y",0.896,0,"VFD PE → Earth bar","ferrule 2.5 mm²","ring lug M6","1 · Protective earth"
+145,G1.PE,PEBAR.BAR2,"2.5 mm² G/Y",1.045,0,"PSU 48V PE → Earth bar 2","insulated fork lug","ring lug M6","1 · Protective earth"
+146,G2.PE,PEBAR.BAR2,"2.5 mm² G/Y",0.893,0,"PSU 24V PE → Earth bar 2","insulated fork lug","ring lug M6","1 · Protective earth"
+149,XS1.PE,PEBAR.BAR2,"2.5 mm² G/Y",1.190,0,"Schuko outlet PE → Earth bar 2 · NEW: missing in rev 0.5 (pump was unearthed)","ferrule 2.5 mm²","ring lug M6","1 · Protective earth"
+148,G2.-V2,PEBAR.BAR2,"2.5 mm² G/Y",0.921,0,"PSU 24V −V (screw 2) → Earth bar · PELV bond: the only 0 V to PE bond","2 fork lugs under one screw + wire 169","ring lug M6","1 · Protective earth"
+138,PEBAR.BAR,PEBAR.BAR2,"4 mm² G/Y",0.376,0,"Earth bar 1 → earth bar 2 · link (both bars sit on insulators)","ring lug M6","ring lug M6","1 · Protective earth"
+150,G1.+V1,A2.AC1,"1 mm² yellow, band black",0.751,0,"PSU 48V +V (screw 1) → DMA860H-X AC 1 · 48 V","insulated fork lug","ferrule 1 mm²","3 · 48 V drive supply"
+151,G1.-V1,A2.AC2,"1 mm² yellow, band black",0.694,0,"PSU 48V −V (screw 1) → DMA860H-X AC 2","insulated fork lug","ferrule 1 mm²","3 · 48 V drive supply"
+152,G1.+V2,A3.AC1,"1 mm² yellow, band black",0.846,0,"PSU 48V +V (screw 2) → DMA860H-Y AC 1","insulated fork lug","ferrule 1 mm²","3 · 48 V drive supply"
+153,G1.-V2,A3.AC2,"1 mm² yellow, band black",0.790,0,"PSU 48V −V (screw 2) → DMA860H-Y AC 2","insulated fork lug","ferrule 1 mm²","3 · 48 V drive supply"
+154,G1.+V3,A4.AC1,"1 mm² yellow, band black",0.738,0,"PSU 48V +V (screw 3) → DMA860H-Z AC 1","insulated fork lug","ferrule 1 mm²","3 · 48 V drive supply"
+155,G1.-V3,A4.AC2,"1 mm² yellow, band black",0.772,0,"PSU 48V −V (screw 3) → DMA860H-Z AC 2","insulated fork lug","ferrule 1 mm²","3 · 48 V drive supply"
+162,G2.+V1,F1.in,"2.5 mm² brown, band dark blue",0.821,0,"PSU 24V +V → F1 in · Control fuse (short, 2.5 mm²: unfused PSU side)","insulated fork lug","ferrule 2.5 mm²","4 · 24 V control"
+164,G2.+V2,F2.in,"2.5 mm² brown, band dark blue",0.746,0,"PSU 24V +V (screw 2) → F2 in · Signal fuse (short, 2.5 mm²: unfused PSU side)","insulated fork lug","ferrule 2.5 mm²","4 · 24 V control"
+166,F2.out,A1.DC24V,"1 mm² yellow, band dark blue",1.111,0,"F2 out → A11 board power + (J10)","twin ferrule 2 × 1 mm² + wire 168","ferrule 1 mm²","4 · 24 V control"
+168,F2.out,A1.24V,"1 mm² yellow, band dark blue",1.113,0,"F2 out → A11 input 24V+ (J8) · Sensor/input supply","twin ferrule 2 × 1 mm² + wire 166","twin ferrule 2 × 1 mm² + wire 340","4 · 24 V control"
+167,G2.-V1,A1.DCGND,"1 mm² yellow, band blue/white",0.709,0,"PSU 24V −V → A11 board power − (J10)","2 fork lugs under one screw + wire 207","twin ferrule 2 × 1 mm² + wire 171","4 · 24 V control"
+169,G2.-V2,A1.GND,"1 mm² yellow, band blue/white",0.731,0,"PSU 24V −V (screw 2) → A11 input GND (J8)","2 fork lugs under one screw + wire 148","twin ferrule 2 × 1 mm² + wire 337","4 · 24 V control"
+170,KM1.43,M2.+,"1 mm² yellow, band dark blue",1.084,0,"Contactor aux 43 → Fan + · NEW: fan behind F1 (was unfused on TB24+)","twin ferrule 2 × 1 mm² + wire 220","ferrule 1 mm²","4 · 24 V control"
+171,A1.DCGND,M2.-,"1 mm² yellow, band blue/white",0.619,0,"A11 J10 GND → Fan − (loop)","twin ferrule 2 × 1 mm² + wire 167","ferrule 1 mm²","4 · 24 V control"
+201,F1.out,S0.1,"1 mm² yellow, band dark blue",1.559,1,"F1 out → E-stop NC in · Chain","twin ferrule 2 × 1 mm² + wire 220","twin ferrule 2 × 1 mm² + wire 223","4 · 24 V control"
+202,S0.2,S1.1,"1 mm² yellow, band dark blue",0.157,1,"E-stop NC out → OFF (NC) in · Chain","ferrule 1 mm²","ferrule 1 mm²","4 · 24 V control"
+203,S1.2,S2.1,"1 mm² yellow, band dark blue",0.072,1,"OFF out (Node X) → ON (NO) in · Chain","twin ferrule 2 × 1 mm² + wire 205","ferrule 1 mm²","4 · 24 V control"
+204,S2.2,K1.A1,"1 mm² yellow, band dark blue",1.394,1,"ON out → K1 coil A1 · Start","ferrule 1 mm²","twin ferrule 2 × 1 mm² + wire 206","4 · 24 V control"
+205,S1.2,K1.11,"1 mm² yellow, band dark blue",1.522,1,"Node X (OFF out) → K1 pole-1 COM · Latch","twin ferrule 2 × 1 mm² + wire 203","ferrule 1 mm²","4 · 24 V control"
+206,K1.14,K1.A1,"1 mm² yellow, band dark blue",0.569,0,"K1 pole-1 NO → K1 coil A1 · Latch","ferrule 1 mm²","twin ferrule 2 × 1 mm² + wire 204","4 · 24 V control"
+207,G2.-V1,K1.A2,"1 mm² yellow, band blue/white",0.690,0,"PSU 24V −V → K1 coil A2 · Coil return","2 fork lugs under one screw + wire 167","ferrule 1 mm²","4 · 24 V control"
+210,S0.4,A1.X7,"1 mm² yellow, band dark blue",1.676,1,"E-stop NC2 → A11 X7 · E-stop signal to the controller","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+220,F1.out,KM1.43,"1 mm² yellow, band dark blue",0.805,0,"F1 out → Contactor aux 43 · Yellow lamp supply","twin ferrule 2 × 1 mm² + wire 201","twin ferrule 2 × 1 mm² + wire 170","4 · 24 V control"
+221,KM1.44,H1.+,"1 mm² yellow, band dark blue",1.400,1,"Contactor aux 44 → Yellow lamp +","ferrule 1 mm²","ferrule 1 mm²","4 · 24 V control"
+222,K1.A2b,H1.-,"1 mm² yellow, band blue/white",1.431,1,"K1 coil A2 (2nd screw) → Yellow lamp − · 0 V to the door","ferrule 1 mm²","ferrule 1 mm²","4 · 24 V control"
+223,S0.1,H2.+,"1 mm² yellow, band dark blue",0.307,1,"E-stop NC in → Green lamp + · +24 V CONTROL (door loop)","twin ferrule 2 × 1 mm² + wire 201","twin ferrule 2 × 1 mm² + wire 225","4 · 24 V control"
+224,H2.-,A1.Y6,"1 mm² yellow, band dark blue",1.642,1,"Green lamp − → A11 Y6 · Work","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+225,H2.+,H3.+,"1 mm² yellow, band dark blue",0.128,1,"Green lamp + → Red lamp + (door loop)","twin ferrule 2 × 1 mm² + wire 223","ferrule 1 mm²","4 · 24 V control"
+226,H3.-,A1.Y5,"1 mm² yellow, band dark blue",1.683,1,"Red lamp − → A11 Y5 · Alarm","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+301,A1.X_5V,A2.PUL+,"1 mm² yellow, band dark blue, twisted",0.616,0,"A11 X-axis 5V → DMA860H-X PUL+","ferrule 1 mm²","twin ferrule 2 × 1 mm² + wire 304","5 · Signals"
+302,A1.X_PUL,A2.PUL-,"1 mm² yellow, band dark blue, twisted",0.618,0,"A11 X-axis PULSE → DMA860H-X PUL−","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+303,A1.X_DIR,A2.DIR-,"1 mm² yellow, band dark blue, twisted",0.700,0,"A11 X-axis DIR → DMA860H-X DIR−","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+304,A2.PUL+,A2.DIR+,"1 mm² yellow, band dark blue",0.024,0,"DMA860H-X PUL+ → DMA860H-X DIR+ · Jumper","twin ferrule 2 × 1 mm² + wire 301","ferrule 1 mm²","5 · Signals"
+,A2.A+,XM-X.1,"",0.873,0,"Motor core A+ → GX16-6 pin 1 (LiYCY 4 × 1.0 shielded, right motor lane)","ferrule 1.0 mm²","solder cup (GX16 connector)","6 · Motor leads"
+,A2.A-,XM-X.2,"",0.891,0,"Motor core A- → GX16-6 pin 2 (LiYCY 4 × 1.0 shielded, right motor lane)","ferrule 1.0 mm²","solder cup (GX16 connector)","6 · Motor leads"
+,A2.B+,XM-X.3,"",0.891,0,"Motor core B+ → GX16-6 pin 3 (LiYCY 4 × 1.0 shielded, right motor lane)","ferrule 1.0 mm²","solder cup (GX16 connector)","6 · Motor leads"
+,A2.B-,XM-X.4,"",0.893,0,"Motor core B- → GX16-6 pin 4 (LiYCY 4 × 1.0 shielded, right motor lane)","ferrule 1.0 mm²","solder cup (GX16 connector)","6 · Motor leads"
+305,A1.Y_5V,A3.PUL+,"1 mm² yellow, band dark blue, twisted",0.785,0,"A11 Y-axis 5V → DMA860H-Y PUL+","ferrule 1 mm²","twin ferrule 2 × 1 mm² + wire 308","5 · Signals"
+306,A1.Y_PUL,A3.PUL-,"1 mm² yellow, band dark blue, twisted",0.785,0,"A11 Y-axis PULSE → DMA860H-Y PUL−","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+307,A1.Y_DIR,A3.DIR-,"1 mm² yellow, band dark blue, twisted",0.791,0,"A11 Y-axis DIR → DMA860H-Y DIR−","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+308,A3.PUL+,A3.DIR+,"1 mm² yellow, band dark blue",0.024,0,"DMA860H-Y PUL+ → DMA860H-Y DIR+ · Jumper","twin ferrule 2 × 1 mm² + wire 305","ferrule 1 mm²","5 · Signals"
+,A3.A+,XM-Y.1,"",0.767,0,"Motor core A+ → GX16-6 pin 1 (LiYCY 4 × 1.0 shielded, right motor lane)","ferrule 1.0 mm²","solder cup (GX16 connector)","6 · Motor leads"
+,A3.A-,XM-Y.2,"",0.760,0,"Motor core A- → GX16-6 pin 2 (LiYCY 4 × 1.0 shielded, right motor lane)","ferrule 1.0 mm²","solder cup (GX16 connector)","6 · Motor leads"
+,A3.B+,XM-Y.3,"",0.759,0,"Motor core B+ → GX16-6 pin 3 (LiYCY 4 × 1.0 shielded, right motor lane)","ferrule 1.0 mm²","solder cup (GX16 connector)","6 · Motor leads"
+,A3.B-,XM-Y.4,"",0.763,0,"Motor core B- → GX16-6 pin 4 (LiYCY 4 × 1.0 shielded, right motor lane)","ferrule 1.0 mm²","solder cup (GX16 connector)","6 · Motor leads"
+309,A1.Z_5V,A4.PUL+,"1 mm² yellow, band dark blue, twisted",0.878,0,"A11 Z-axis 5V → DMA860H-Z PUL+","ferrule 1 mm²","twin ferrule 2 × 1 mm² + wire 312","5 · Signals"
+310,A1.Z_PUL,A4.PUL-,"1 mm² yellow, band dark blue, twisted",0.970,0,"A11 Z-axis PULSE → DMA860H-Z PUL−","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+311,A1.Z_DIR,A4.DIR-,"1 mm² yellow, band dark blue, twisted",0.975,0,"A11 Z-axis DIR → DMA860H-Z DIR−","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+312,A4.PUL+,A4.DIR+,"1 mm² yellow, band dark blue",0.024,0,"DMA860H-Z PUL+ → DMA860H-Z DIR+ · Jumper","twin ferrule 2 × 1 mm² + wire 309","ferrule 1 mm²","5 · Signals"
+,A4.A+,XM-Z.1,"",0.718,0,"Motor core A+ → GX16-6 pin 1 (LiYCY 4 × 1.0 shielded, right motor lane)","ferrule 1.0 mm²","solder cup (GX16 connector)","6 · Motor leads"
+,A4.A-,XM-Z.2,"",0.707,0,"Motor core A- → GX16-6 pin 2 (LiYCY 4 × 1.0 shielded, right motor lane)","ferrule 1.0 mm²","solder cup (GX16 connector)","6 · Motor leads"
+,A4.B+,XM-Z.3,"",0.703,0,"Motor core B+ → GX16-6 pin 3 (LiYCY 4 × 1.0 shielded, right motor lane)","ferrule 1.0 mm²","solder cup (GX16 connector)","6 · Motor leads"
+,A4.B-,XM-Z.4,"",0.711,0,"Motor core B- → GX16-6 pin 4 (LiYCY 4 × 1.0 shielded, right motor lane)","ferrule 1.0 mm²","solder cup (GX16 connector)","6 · Motor leads"
+315,A2.ALM+,A1.X5,"1 mm² yellow, band dark blue",0.543,0,"DMA860H-X ALM+ → A11 X5 · Drive alarm (wire-OR)","twin ferrule 2 × 1 mm² + wire 317","ferrule 1 mm²","5 · Signals"
+317,A3.ALM+,A2.ALM+,"1 mm² yellow, band dark blue",0.351,0,"DMA860H-Y ALM+ → DMA860H-X ALM+ (loop) · NEW: X5 had 3 conductors","twin ferrule 2 × 1 mm² + wire 319","twin ferrule 2 × 1 mm² + wire 315","5 · Signals"
+319,A4.ALM+,A3.ALM+,"1 mm² yellow, band dark blue",0.354,0,"DMA860H-Z ALM+ → DMA860H-Y ALM+ (loop)","ferrule 1 mm²","twin ferrule 2 × 1 mm² + wire 317","5 · Signals"
+316,A1.OGND,A2.ALM-,"1 mm² yellow, band blue/white",0.513,0,"A11 J7 output GND → DMA860H-X ALM−","twin ferrule 2 × 1 mm² + wire 326","twin ferrule 2 × 1 mm² + wire 318","4 · 24 V control"
+318,A2.ALM-,A3.ALM-,"1 mm² yellow, band blue/white",0.362,0,"DMA860H-X ALM− → DMA860H-Y ALM− (loop)","twin ferrule 2 × 1 mm² + wire 316","twin ferrule 2 × 1 mm² + wire 320","4 · 24 V control"
+320,A3.ALM-,A4.ALM-,"1 mm² yellow, band blue/white",0.315,0,"DMA860H-Y ALM− → DMA860H-Z ALM− (loop)","twin ferrule 2 × 1 mm² + wire 318","ferrule 1 mm²","4 · 24 V control"
+325,A1.Y1,U1.X1,"1 mm² yellow, band dark blue",0.496,0,"A11 Y1 (S0) → VFD X1 · Spindle run (forward)","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+326,A1.OGND,U1.COM,"1 mm² yellow, band blue/white",0.578,0,"A11 output GND → VFD COM (digital) · Output common","twin ferrule 2 × 1 mm² + wire 316","ferrule 1 mm²","4 · 24 V control"
+327,A1.Y2,U1.X2,"1 mm² yellow, band dark blue",0.499,0,"A11 Y2 (S1) → VFD X2 · Multi-speed bit 1","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+328,A1.Y3,U1.X3,"1 mm² yellow, band dark blue",0.508,0,"A11 Y3 (S2) → VFD X3 · Multi-speed bit 2","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+329,A1.Y4,U1.X4,"1 mm² yellow, band dark blue",0.518,0,"A11 Y4 (S3) → VFD X4 · Multi-speed bit 3","ferrule 1 mm²","ferrule 1 mm²","5 · Signals"
+330,X-LIM.1,A1.X1,"1 mm² yellow, band dark blue",0.468,0,"X-LIM pin 1 → A11 X1 · X home (X−)","solder cup (GX16 connector)","ferrule 1 mm²","5 · Signals"
+331,Y-LIM.1,A1.X2,"1 mm² yellow, band dark blue",0.539,0,"Y-LIM pin 1 → A11 X2 · Y home (Y−)","solder cup (GX16 connector)","ferrule 1 mm²","5 · Signals"
+332,Z-LIM.2,A1.X3,"1 mm² yellow, band dark blue",0.574,0,"Z-LIM pin 2 → A11 X3 · Z home (Z+)","solder cup (GX16 connector)","ferrule 1 mm²","5 · Signals"
+336,X-LIM.2,A1.X6,"1 mm² yellow, band dark blue",0.501,0,"X-LIM pin 2 → A11 X6 · Hard limit (wire-OR)","solder cup (GX16 connector)","ferrule 1 mm²","5 · Signals"
+334,X-LIM.2,Y-LIM.2,"1 mm² yellow, band dark blue",0.214,0,"X-LIM pin 2 → Y-LIM pin 2 · Y+ limit (loop)","solder cup (GX16 connector)","solder cup (GX16 connector)","5 · Signals"
+335,Y-LIM.2,Z-LIM.1,"1 mm² yellow, band dark blue",0.225,0,"Y-LIM pin 2 → Z-LIM pin 1 · Z− limit (loop)","solder cup (GX16 connector)","solder cup (GX16 connector)","5 · Signals"
+337,A1.GND,X-LIM.3,"1 mm² yellow, band blue/white",0.525,0,"A11 J8 GND → X-LIM pin 3 · Sensor 0 V (BU)","twin ferrule 2 × 1 mm² + wire 169","solder cup (GX16 connector)","4 · 24 V control"
+338,X-LIM.3,Y-LIM.3,"1 mm² yellow, band blue/white",0.225,0,"X-LIM pin 3 → Y-LIM pin 3 · Sensor 0 V (loop)","solder cup (GX16 connector)","solder cup (GX16 connector)","4 · 24 V control"
+339,Y-LIM.3,Z-LIM.3,"1 mm² yellow, band blue/white",0.227,0,"Y-LIM pin 3 → Z-LIM pin 3 · Sensor 0 V (loop)","solder cup (GX16 connector)","solder cup (GX16 connector)","4 · 24 V control"
+340,A1.24V,X-LIM.4,"1 mm² yellow, band dark blue",0.522,0,"A11 J8 24V → X-LIM pin 4 · Sensor +24 V (BN)","twin ferrule 2 × 1 mm² + wire 168","solder cup (GX16 connector)","4 · 24 V control"
+341,X-LIM.4,Y-LIM.4,"1 mm² yellow, band dark blue",0.187,0,"X-LIM pin 4 → Y-LIM pin 4 · Sensor +24 V (loop)","solder cup (GX16 connector)","solder cup (GX16 connector)","4 · 24 V control"
+342,Y-LIM.4,Z-LIM.4,"1 mm² yellow, band dark blue",0.190,0,"Y-LIM pin 4 → Z-LIM pin 4 · Sensor +24 V (loop)","solder cup (GX16 connector)","solder cup (GX16 connector)","4 · 24 V control"
+345,XT.1,A1.X4,"1 mm² yellow, band dark blue",0.616,0,"TS pin 1 (red) → A11 X4 · Tool-setter touch","solder cup (GX16 connector)","ferrule 1 mm²","5 · Signals"
+346,Z-LIM.3,XT.2,"1 mm² yellow, band blue/white",0.183,0,"Z-LIM pin 3 → TS pin 2 (black) · 0 V (loop)","solder cup (GX16 connector)","solder cup (GX16 connector)","4 · 24 V control"
+347,XT.3,S0.3,"1 mm² yellow, band dark blue",1.967,1,"TS pin 3 (blue) → E-stop NC2 · Tool-setter over-travel (NC) in series with the E-stop NC2 → A11 X7 (door loop)","solder cup (GX16 connector)","ferrule 1 mm²","5 · Signals"
+348,XT.2,XT.4,"1 mm² yellow, band blue/white",0.020,0,"TS pin 2 → TS pin 4 (yellow) · 0 V to the over-travel switch (jumper in the connector)","solder cup (GX16 connector)","solder cup (GX16 connector)","4 · 24 V control"
+,XM-X.1,XM-X.m1,"",external,0,"Motor core A+ (LiYCY 4 × 1.0 shielded cable)","solder cup (GX16 connector)","solder cup (GX16 connector)",""
+,XM-X.2,XM-X.m2,"",external,0,"Motor core A- (LiYCY 4 × 1.0 shielded cable)","solder cup (GX16 connector)","solder cup (GX16 connector)",""
+,XM-X.3,XM-X.m3,"",external,0,"Motor core B+ (LiYCY 4 × 1.0 shielded cable)","solder cup (GX16 connector)","solder cup (GX16 connector)",""
+,XM-X.4,XM-X.m4,"",external,0,"Motor core B- (LiYCY 4 × 1.0 shielded cable)","solder cup (GX16 connector)","solder cup (GX16 connector)",""
+,XM-Y.1,XM-Y.m1,"",external,0,"Motor core A+ (LiYCY 4 × 1.0 shielded cable)","solder cup (GX16 connector)","solder cup (GX16 connector)",""
+,XM-Y.2,XM-Y.m2,"",external,0,"Motor core A- (LiYCY 4 × 1.0 shielded cable)","solder cup (GX16 connector)","solder cup (GX16 connector)",""
+,XM-Y.3,XM-Y.m3,"",external,0,"Motor core B+ (LiYCY 4 × 1.0 shielded cable)","solder cup (GX16 connector)","solder cup (GX16 connector)",""
+,XM-Y.4,XM-Y.m4,"",external,0,"Motor core B- (LiYCY 4 × 1.0 shielded cable)","solder cup (GX16 connector)","solder cup (GX16 connector)",""
+,XM-Z.1,XM-Z.m1,"",external,0,"Motor core A+ (LiYCY 4 × 1.0 shielded cable)","solder cup (GX16 connector)","solder cup (GX16 connector)",""
+,XM-Z.2,XM-Z.m2,"",external,0,"Motor core A- (LiYCY 4 × 1.0 shielded cable)","solder cup (GX16 connector)","solder cup (GX16 connector)",""
+,XM-Z.3,XM-Z.m3,"",external,0,"Motor core B+ (LiYCY 4 × 1.0 shielded cable)","solder cup (GX16 connector)","solder cup (GX16 connector)",""
+,XM-Z.4,XM-Z.m4,"",external,0,"Motor core B- (LiYCY 4 × 1.0 shielded cable)","solder cup (GX16 connector)","solder cup (GX16 connector)",""

@@ -47,7 +47,7 @@ def load():
             cables["Spindle cable W1 - 4G1.5 shielded (VFD → HDC-HA)"].append(r)
         elif s.endswith("twisted"):
             drv = r["to"].split(".")[0]
-            cables[f"PUL / DIR cable {AXIS.get(drv, drv)} - 3 × 0.5 mm² dark blue, twisted (A11 → {drv})"].append(r)
+            cables[f"PUL / DIR set {AXIS.get(drv, drv)} - 3 × {s.split(',')[0]}, twisted together (A11 → {drv})"].append(r)
         else:
             single[s].append(r)
     return single, cables, external
