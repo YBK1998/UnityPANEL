@@ -29,7 +29,7 @@ namespace A11Sim
                 new[] { new Vector2(42, 218), new Vector2(46, 218) }, new[] { new Vector2(30, 218), new Vector2(34, 218) }, Pot.P24, Pot.Z0));
             c.Add(new RelayK1());
             c.Add(new Contactor());
-            c.Add(new Breaker("QF1", "CB-VFD C16A", "VFD branch. REMINDER C14 (open): the FC300 nameplate's 11 A is the OUTPUT current; input ≈ 22–24 A at full spindle load, so C16 trips on long cuts near 2.2 kW (light cuts ≈ 10–12 A are fine). If QF1 goes to C25, wires 115 / 116 must be 4 mm².", 202, 194, true, new Vector2(134, 198), TA.Right, 136));
+            c.Add(new Breaker("QF1", "CB-VFD C16A", "VFD branch. REMINDER C14 (open): the FC300 nameplate's 11 A is the OUTPUT current; input ≈ 22–24 A at full spindle load, so C16 trips on long cuts near 2.2 kW (light cuts ≈ 10–12 A are fine). Z1 is fixed at 20 A (no larger filter available), so a bigger QF1 does not help: cap the spindle at ≈ 1.5 kW (≈ 15 A input) in the VFD instead — C16 then fits.", 202, 194, true, new Vector2(134, 198), TA.Right, 136));
             var vfd = c.Add(new Vfd());
             var r1 = c.Add(new BrakeResistor());
             r1.vfd = vfd;
@@ -326,7 +326,8 @@ namespace A11Sim
             c.Caution("C12", 112f, 185.5f, "Before you set CB-VFD ON for the first time: R1 connects to VFD terminals P+ and PB only.\nRead the terminal labels on the VFD.\nRisk: damage to the VFD.");
             c.Caution("C14", 40f, 284f, "REMINDER — VFD supply rating (open): the FC300 nameplate's 11 A is the rated OUTPUT current. A 2.2 kW single-phase drive draws ≈ 22–24 A INPUT at full load\n" +
                 "(Delta VFD022EL21A: 11 A out, 24 A in). At full spindle load QF1 C16 trips, Z1 (20 A) is overloaded and QF0 C25 is marginal (≈ 28–30 A with the PSUs and pump).\n" +
-                "Light cuts (≈ 1 kW, ≈ 10–12 A) are within all ratings. The 4 mm² path behind QF0 is fine for C25; if QF1 goes to C25, 115 / 116 must be 4 mm² too.\n" +
+                "Light cuts (≈ 1 kW, ≈ 10–12 A) are within all ratings. Z1 is fixed at 20 A (no larger filter available): limit the VFD current / power so the spindle stays at ≈ 1.5 kW\n" +
+                "(≈ 15 A input + ≈ 4 A PSUs + pump < 20 A) and check with a clamp meter on Z1 LINE L during a heavy cut. The 4 mm² path behind QF0 is fine for C25.\n" +
                 "Before you wire Z1: check that its LOAD L terminal takes 105 + 111 (2 × 4 mm², twin ferrule).");
             c.Caution("C13", 162f, 192f, "Before you cut material with S commands: do § 7.4 test 4 (S-grade bit order).\nExpected: S1 = 000 … S8 = 111 (Y4 Y3 Y2). If different, change only P030–P037.\nRisk: wrong spindle speed; tool damage.");
         }

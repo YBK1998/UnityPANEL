@@ -33,35 +33,36 @@ namespace A11Sim
         const float DuctHalf = 0.02f;
         const float Zd = Zb - DuctDepth * 0.5f;
         // Horizontal ducts D0…D4 (y centre) and vertical ducts at the plate edges (x centre).
-        // D0 and D4 sit on the plate's top and bottom edges. On the 930 plate rows A–C are 12.5 mm lower than on the
-        // old 955 assumption, and row D (A11 board) is 175 high instead of 200.
-        static readonly float[] HD = { 0.445f, 0.295f, -0.03f, -0.23f, -0.445f };
+        // D0 and D4 sit on the plate's top and bottom edges. D2 and D3 sit 25 mm lower than in commit 966028f so the
+        // measured VFD (205 high) keeps 100 mm clear above it; row D (A11 board, 90 high) is 150 high instead of 175.
+        static readonly float[] HD = { 0.445f, 0.295f, -0.055f, -0.255f, -0.445f };
         const float VLx = -0.2495f, VRx = 0.2495f;
         const float DuctX = 0.2295f;           // inner edge of the vertical ducts
         const int VL = 5, VR = 6;
         // Outer lanes on the spare plate width (40 × 60 duct): VP = power (mains in, VFD cable W1), VM = stepper motor cables.
         const float VPx = -0.3225f, VMx = 0.3225f;
-        // VM is shortened to 455 mm: it starts at the top edge of D2, where the motor cables enter it. That frees the strip
-        // above it for the L / N busbars.
-        const float VMTop = -0.01f;
+        // VM is shortened to 230 mm: it starts at the top edge of D3, where the motor cables (drive power plugs at the
+        // bottom) enter it. That frees the strip above it for the L / N busbars and the braking resistor on the right wall.
+        const float VMTop = -0.235f;
         const int VP = 7, VM = 8;
         static float VX(int d) => d == VL ? VLx : d == VR ? VRx : d == VP ? VPx : VMx;
         // Rows: A = DIN rail (220 V + control), B = VFD and PSUs, C = drives, D = A11 board.
         const float RailA = 0.37f;
         // TS35 rail ends: from 5 mm right of the plate-mounted EMI filter to just past the Schuko socket (330 mm).
         const float RailL = -0.1685f, RailR = 0.1615f;
-        const float RowBBottom = -0.005f;
-        const float DriveTop = -0.055f;
-        const float A11y = -0.3525f;
+        const float RowBBottom = -0.03f;
+        const float DriveTop = -0.08f;
+        const float A11y = -0.35f;
 
         // Hinge crossings (door-local on the door side, cabinet-local on the cabinet side); the door hangs on the left.
         static readonly Vector3 HingeDoorUpper = new(-0.372f, 0.2f, 0.045f), HingeCabUpper = new(-0.387f, 0.2f, 0.06f);
         static readonly Vector3 HingeDoorLower = new(-0.372f, -0.43f, 0.03f), HingeCabLower = new(-0.39f, -0.43f, 0.045f);
         const float DoorSpineX = -0.3f, DoorSpineZ = 0.052f;
-        // Rittal SK 3238.124 filter fan (24 V DC) in a 124 × 124 cut-out in the left wall, blowing in; SK 3238.200 outlet
-        // filter in the right wall. The cut-outs are made on assembly.
+        // Owner's 80 × 80 mm 24 V DC fan (measured; 25 mm deep assumed) in the left wall, blowing in, and an outlet in the
+        // right wall. Both carry the owner's plastic 80 mm filter adapter, a flanged housing slightly larger than the fan
+        // (drawn 95 × 95, 15 proud of the wall — assumed). Cut-outs 80 × 80, made on assembly.
         static readonly Vector3 FanAt = new(-EncW / 2, -0.12f, 0.092f), OutletAt = new(EncW / 2, 0.40f, 0.092f);
-        const float FanCut = 0.124f, FanFace = 0.1485f, FanDepth = 0.0585f;
+        const float FanCut = 0.08f, FanDepth = 0.025f, FilterFace = 0.095f, FilterProud = 0.015f;
 
         readonly Panel3D P;
         readonly SchematicView V;
@@ -460,7 +461,7 @@ namespace A11Sim
                 () => "<b>Power lane VP</b> (40 × 60 duct on the spare plate width, left)\nOnly the incoming mains (101, 102, 140) and the shielded VFD → spindle cable W1 (123–127). " +
                       "No 24 V or signal wire runs here; the door bundle crosses it at 90°.");
             Click(g, new Vector3(VMx, (VMTop - PlateH / 2) / 2, Zb - DuctDepth / 2), new Vector3(0.04f, VMTop + PlateH / 2, 0.06f),
-                () => "<b>Motor lane VM</b> (40 × 60 duct on the spare plate width, right; 455 mm, from the third horizontal duct down)\nOnly the three stepper motor cables (LiYCY 4 × 1.0 shielded, shield clamped at the drive end) " +
+                () => "<b>Motor lane VM</b> (40 × 60 duct on the spare plate width, right; 230 mm, from the fourth horizontal duct down)\nOnly the three stepper motor cables (LiYCY 4 × 1.0 shielded, shield clamped at the drive end) " +
                       "down to the GX16-6 motor connectors below it. PUL / DIR pairs stay in the inner ducts.");
             // 360° EMC clamp for the W1 shield on the plate where the cable enters the power lane (wire 127 bonds it to VFD PE).
             Box(g, new Vector3(VPx, HD[2] - 0.04f, Zb - 0.004f), new Vector3(0.03f, 0.008f, 0.008f), mGalv);
@@ -512,7 +513,7 @@ namespace A11Sim
                 () => C.Get<EmiFilter>("Z1").Tip() + "\nScrewed to the plate (not DIN rail). LINE side (L, N in) faces down, LOAD side (L, N out, PE) faces up." +
                       Dims(ew, eh, ed, "measured"));
 
-            Mcb(C.Get<Breaker>("QF0"), -0.1485f, 2, "C25");
+            Mcb(C.Get<Breaker>("QF0"), -0.14f, 2, "C25", 0.053f); // measured 53 wide
 
             Contactor();
 
@@ -520,9 +521,9 @@ namespace A11Sim
             string[] tags = { "QF1", "QF2", "QF3", "QF4" };
             string[] ratings = { "C16", "C10", "C10", "C6" };
             for (int i = 0; i < 4; i++) Mcb(C.Get<Breaker>(tags[i]), xs[i], 1, ratings[i]);
-            K1(0.0615f);
-            FuseTerm(C.Get<Fuse>("F1"), 0.0845f);
-            FuseTerm(C.Get<Fuse>("F2"), 0.1035f);
+            K1(0.062f);
+            FuseTerm(C.Get<Fuse>("F1"), 0.085f);
+            FuseTerm(C.Get<Fuse>("F2"), 0.1025f);
 
             // XS1: DIN-rail Schuko socket, Hager SNS016 class 44 × 75 × 66, terminals 2 × 2.5 mm².
             var xs1 = Group("XS1");
@@ -572,10 +573,10 @@ namespace A11Sim
             Click(g, new Vector3(xc, yc, Zb - d / 2), new Vector3(w, len, d), () => tip + Dims(w, len, d, "measured"));
         }
 
-        void Mcb(Breaker b, float xc, int poles, string rating)
+        void Mcb(Breaker b, float xc, int poles, string rating, float width = 0)
         {
-            // Acti9 iC60 class: 18 mm per pole, 85 mm high, ~75 mm deep from the rail.
-            float w = 0.018f * poles, h = 0.085f, d = 0.075f;
+            // Widths measured: 18 mm per pole (QF1–QF4), QF0 53 mm. Height 85 and depth ~75 from the rail: Acti9 iC60 class.
+            float w = width > 0 ? width : 0.018f * poles, h = 0.085f, d = 0.075f, pitch = w / poles;
             var g = Group(b.tag);
             Box(g, new Vector3(xc, RailA, Zr - 0.0225f), new Vector3(w - 0.0006f, h, 0.045f), mWhite);
             Box(g, new Vector3(xc, RailA, Zr - 0.06f), new Vector3(w - 0.0006f, 0.045f, 0.03f), mWhite);
@@ -584,7 +585,7 @@ namespace A11Sim
             Label(g, rating, new Vector3(xc, RailA - 0.014f, Zr - 0.0755f), 0.0045f, Color.black, true);
             for (int p = 0; p < poles; p++)
             {
-                float x = xc - w / 2 + 0.009f + p * 0.018f;
+                float x = xc - w / 2 + pitch / 2 + p * pitch;
                 ScrewHead(g, new Vector3(x, RailA + 0.023f, Zr - 0.0455f));
                 ScrewHead(g, new Vector3(x, RailA - 0.03f, Zr - 0.0455f));
                 Anchor($"{b.tag}.{2 * p + 1}", new Vector3(x, RailA + h / 2 - 0.002f, Zr - 0.035f), 0);
@@ -596,7 +597,7 @@ namespace A11Sim
             levers.Add((lever, () => b.closed));
             Solid(b.tag, new Vector3(xc, RailA, Zr - d / 2), new Vector3(w, h, d));
             Click(g, new Vector3(xc, RailA, Zr - 0.045f), new Vector3(w, h, 0.08f),
-                () => b.Tip() + Dims(w, h, d, "MCB class, e.g. Schneider Acti9 iC60: 18 mm/pole") + "\nClick to switch.", () => b.closed = !b.closed);
+                () => b.Tip() + Dims(w, h, d, "width measured; height / depth Acti9 iC60 class") + "\nClick to switch.", () => b.closed = !b.closed);
         }
 
         void Contactor()
@@ -649,10 +650,10 @@ namespace A11Sim
         void K1(float xc)
         {
             // Finder 55.34 relay (4 CO, 7 A) on the owner's socket, which looks like a Schneider RXZE2S114M (exact part not confirmed):
-            // drawn at the RXZE2S114M size 27 W × ≈ 80 H × 61 D, IEC + NEMA numbers, two A2 screws. Measure the real one.
+            // socket measured 28 W × 76 H; depth ≈ 70 with the relay (RXZE2S114M class). IEC + NEMA numbers, two A2 screws.
             var k1 = C.Get<RelayK1>("K1");
             var g = Group("K1");
-            float w = 0.027f, h = 0.08f, d = 0.07f;
+            float w = 0.028f, h = 0.076f, d = 0.07f;
             Box(g, new Vector3(xc, RailA, Zr - 0.015f), new Vector3(w, h, 0.03f), mGrey);
             Box(g, new Vector3(xc, RailA + 0.004f, Zr - 0.048f), new Vector3(0.021f, 0.0275f, 0.036f), mRelay);
             Label(g, "K1", new Vector3(xc, RailA + 0.01f, Zr - 0.0662f), 0.0048f, Color.white, true);
@@ -680,19 +681,19 @@ namespace A11Sim
             Click(g, new Vector3(xc, RailA, Zr - 0.035f), new Vector3(w, h, 0.07f),
                 () => k1.Tip() + "\nFinder 55.34.9.024.0000 on a socket that looks like a Schneider RXZE2S114M (exact part not confirmed; no diode fitted). The orange flag shows the state." +
                       "\n<color=#ffb050>Read the TOP label of each screw (IEC, arrow up), not the lower NEMA one (C11): NEMA 14 is the coil A2, not the pole 1 NO.</color>" +
-                      Dims(w, h, d, "drawn at RXZE2S114M size 27 × ≈ 80 × 61 + relay — measure yours; row order assumed"),
+                      Dims(w, h, d, "socket 28 × 76 measured; depth RXZE2S114M class + relay; row order assumed"),
                 () => k1.testLever = true, () => k1.testLever = false);
         }
 
         void FuseTerm(Fuse f, float xc)
         {
-            // RT18-32 1P DIN-rail holder (18 mm module, ~79 × 60) for a 10 × 38 mm gG fuse link; the front swings down to change it.
-            float w = 0.018f, h = 0.079f, d = 0.06f;
+            // RT18-32 1P DIN-rail holder (17 mm wide, measured; ~79 × 60) for a 10 × 38 mm gG fuse link; the front swings down to change it.
+            float w = 0.017f, h = 0.079f, d = 0.06f;
             var g = Group(f.tag);
             Box(g, new Vector3(xc, RailA, Zr - 0.02f), new Vector3(w - 0.0004f, h, 0.04f), mGrey);
             var carrier = Group("carrier", g);
             carrier.localPosition = new Vector3(xc, RailA - 0.025f, Zr - 0.04f);
-            Box(carrier, new Vector3(0, 0.025f, -0.01f), new Vector3(0.0165f, 0.05f, 0.02f), mBlack);
+            Box(carrier, new Vector3(0, 0.025f, -0.01f), new Vector3(0.0155f, 0.05f, 0.02f), mBlack);
             Label(carrier, f.tag, new Vector3(0, 0.038f, -0.0202f), 0.0034f, Color.white, true);
             Label(carrier, "gG 2A", new Vector3(0, 0.028f, -0.0202f), 0.0024f, Color.white);
             fuseCarriers.Add((carrier, () => f.inserted));
@@ -702,7 +703,7 @@ namespace A11Sim
             Solid(f.tag, new Vector3(xc, RailA, Zr - d / 2), new Vector3(w, h, d));
             Click(g, new Vector3(xc, RailA, Zr - 0.03f), new Vector3(w, h, 0.06f),
                 () => f.Tip() + "\nRT18-32 DIN-rail holder, 10 × 38 mm gG 2 A fuse link (not aM: an aM fuse does not protect against overload). " +
-                      "Click to open / close the holder." + Dims(w, h, d, "RT18-32 1P class"),
+                      "Click to open / close the holder." + Dims(w, h, d, "width measured; height / depth RT18-32 1P class"),
                 () => f.inserted = !f.inserted);
         }
 
@@ -712,8 +713,8 @@ namespace A11Sim
         {
             vfd = C.Get<Vfd>("U1");
             var g = Group("U1 VFD");
-            // 2.2 kW 1-phase VFD class: 130 × 175 × 175 (FC300 outline not published; HY02D223B measured).
-            float xc = -0.1545f, w = 0.13f, h = 0.175f, d = 0.175f, yc = RowBBottom + h / 2;
+            // BEST FC300-2.2G: 140 W × 205 H × 160 D (measured), left edge 10 mm from the left vertical duct.
+            float xc = -0.1495f, w = 0.14f, h = 0.205f, d = 0.16f, yc = RowBBottom + h / 2;
             float bottom = RowBBottom;
             Box(g, new Vector3(xc, yc, Zb - d / 2), new Vector3(w, h, d), mVfd);
             for (int i = 0; i < 10; i++)
@@ -750,17 +751,18 @@ namespace A11Sim
             Solid("U1", new Vector3(xc, yc, Zb - d / 2), new Vector3(w, h, d));
             float clear = (HD[1] - DuctHalf - (RowBBottom + h)) * 1000;
             Click(g, new Vector3(xc, yc, Zb - d / 2), new Vector3(w + 0.02f, h, d),
-                () => vfd.Tip() + Dims(w, h, d, "2.2 kW 1-phase class; FC300 outline not published") +
+                () => vfd.Tip() + Dims(w, h, d, "measured") +
                       $"\n<color=#7dffa0>{clear:0} mm clear above the VFD (§ 6 asks for 100 mm) · 50 mm to the PSU on its right.</color>" +
                       "\n<color=#ffb050>REMINDER C14 (open): the nameplate's 11 A is the OUTPUT current — input ≈ 22–24 A at full load. QF1 C16 trips on long full-power cuts, Z1 20 A is overloaded, QF0 C25 marginal; the supply path behind QF0 is 4 mm².</color>" +
                       "\nOutput: one 4G1.5 shielded cable W1 down the power lane, shield 360° at both ends (EMC clamp + HDC-HA hood).");
 
-            Psu(C.Get<Psu>("G1"), 0.0225f, 0.124f, 0.238f, 0.065f, "S-720-48", "48 V  15 A",
+            // PSUs upright, measured: G1 50 mm right of the VFD, G2 10 mm right of G1 (9 mm left to the right vertical duct).
+            Psu(C.Get<Psu>("G1"), 0.033f, 0.125f, 0.24f, 0.065f, "S-720-48", "48 V  15 A",
                 new[] { "G1.L", "G1.N", "G1.PE", "G1.-V1", "G1.-V2", "G1.-V3", "G1.+V1", "G1.+V2", "G1.+V3" },
-                new[] { "L", "N", "PE", "-V", "-V", "-V", "+V", "+V", "+V" }, "seller listing 238 × 124 × 65 mm");
-            Psu(C.Get<Psu>("G2"), 0.151f, 0.113f, 0.215f, 0.05f, "S-500-24", "24 V  20 A",
+                new[] { "L", "N", "PE", "-V", "-V", "-V", "+V", "+V", "+V" }, "measured");
+            Psu(C.Get<Psu>("G2"), 0.163f, 0.115f, 0.215f, 0.05f, "S-500-24", "24 V  20 A",
                 new[] { "G2.L", "G2.N", "G2.PE", "G2.-V1", "G2.-V2", "G2.+V1", "G2.+V2" },
-                new[] { "L", "N", "PE", "-V", "-V", "+V", "+V" }, "seller listing 215 × 113 × 50 mm");
+                new[] { "L", "N", "PE", "-V", "-V", "+V", "+V" }, "measured");
         }
 
         void Psu(Psu psu, float xc, float w, float h, float d, string model, string rating, string[] ids, string[] labels, string src)
@@ -801,48 +803,54 @@ namespace A11Sim
 
         void Drive(StepperDrive dr, float xc)
         {
-            // DMA860H: ≈ 97 × 151 × 48 mm (distributor data; Leadshine drawing is image-only).
+            // DMA860H side-mounted (measured on the plate 52 W × 150 H, 97 out from the plate). The terminals face the door in
+            // one column: signal connector at the top (PUL / DIR / ALM → D2), power connector at the bottom (AC, motor → D3),
+            // as on the owner's drives.
             var g = Group(dr.tag);
-            float w = 0.097f, h = 0.151f, d = 0.048f, top = DriveTop, yc = top - h / 2;
+            float w = 0.052f, h = 0.15f, d = 0.097f, top = DriveTop, yc = top - h / 2, zf = Zb - d;
             Box(g, new Vector3(xc, yc, Zb - d / 2), new Vector3(w, h, d), mDrive);
+            // Fins along the plate side, label on the left face.
             for (int i = 0; i < 6; i++)
-                Box(g, new Vector3(xc + w / 2 + 0.003f, yc, Zb - 0.006f - i * 0.0078f), new Vector3(0.006f, h * 0.92f, 0.0015f), mDrive);
-            Box(g, new Vector3(xc, yc - 0.01f, Zb - d - 0.0004f), new Vector3(0.075f, 0.08f, 0.001f), P.M(new Color(0.12f, 0.3f, 0.6f), 0, 0.5f));
-            Label(g, "Leadshine", new Vector3(xc, yc + 0.02f, Zb - d - 0.0011f), 0.006f, Color.white, true);
-            Label(g, "DMA860H", new Vector3(xc, yc + 0.008f, Zb - d - 0.0011f), 0.0075f, Color.white, true);
-            Label(g, dr.tag + " · " + "XYZ"[dr.axis] + " axis", new Vector3(xc, yc - 0.006f, Zb - d - 0.0011f), 0.0048f, new Color(0.85f, 0.9f, 1f));
-            Label(g, "1600 p/rev · 5.14 A", new Vector3(xc, yc - 0.018f, Zb - d - 0.0011f), 0.0036f, new Color(0.75f, 0.82f, 0.95f));
-            Box(g, new Vector3(xc - 0.02f, yc - 0.04f, Zb - d - 0.001f), new Vector3(0.026f, 0.008f, 0.002f), mRed);
-            Led(g, new Vector3(xc + 0.025f, yc - 0.04f, Zb - d - 0.001f), new Color(0.2f, 1f, 0.3f), () => dr.powered && !dr.fault);
-            Led(g, new Vector3(xc + 0.033f, yc - 0.04f, Zb - d - 0.001f), new Color(1f, 0.15f, 0.1f), () => dr.powered && dr.fault && Mathf.Repeat(Time.time, 0.5f) < 0.3f);
-            Box(g, new Vector3(xc - 0.022f, top + 0.006f, Zb - 0.026f), new Vector3(0.044f, 0.012f, 0.016f), mPlug);
-            Box(g, new Vector3(xc + 0.024f, top + 0.006f, Zb - 0.026f), new Vector3(0.044f, 0.012f, 0.016f), mPlug);
+                Box(g, new Vector3(xc - w * 0.35f + i * w * 0.14f, yc, Zb - 0.006f), new Vector3(0.0015f, h * 0.92f, 0.012f), mDrive);
+            float xs = xc - w / 2 - 0.0004f;
+            Box(g, new Vector3(xs, yc, Zb - d * 0.55f), new Vector3(0.001f, 0.1f, 0.07f), P.M(new Color(0.12f, 0.3f, 0.6f), 0, 0.5f));
+            foreach (var (text, dy, size) in new[] { ("Leadshine", 0.03f, 0.006f), ("DMA860H", 0.015f, 0.0075f), ("1600 p/rev · 5.14 A", -0.002f, 0.0036f) })
+                Label(g, text, new Vector3(xs - 0.0007f, yc + dy, Zb - d * 0.55f), size, Color.white, true).transform.localEulerAngles = new Vector3(0, 90, 0);
+            // Front: signal plug (top), tag and LEDs, power plug (bottom).
+            Box(g, new Vector3(xc, top - 0.021f, zf - 0.006f), new Vector3(0.016f, 0.038f, 0.012f), mPlug);
+            Box(g, new Vector3(xc, top - h + 0.027f, zf - 0.006f), new Vector3(0.016f, 0.05f, 0.012f), mPlug);
+            Label(g, dr.tag, new Vector3(xc, yc + 0.012f, zf - 0.0011f), 0.0055f, Color.white, true);
+            Label(g, "XYZ"[dr.axis] + " axis", new Vector3(xc, yc + 0.004f, zf - 0.0011f), 0.0036f, new Color(0.85f, 0.9f, 1f));
+            Box(g, new Vector3(xc, yc - 0.008f, zf - 0.001f), new Vector3(0.016f, 0.006f, 0.002f), mRed);
+            Led(g, new Vector3(xc - 0.006f, yc - 0.018f, zf - 0.001f), new Color(0.2f, 1f, 0.3f), () => dr.powered && !dr.fault);
+            Led(g, new Vector3(xc + 0.006f, yc - 0.018f, zf - 0.001f), new Color(1f, 0.15f, 0.1f), () => dr.powered && dr.fault && Mathf.Repeat(Time.time, 0.5f) < 0.3f);
             string[] sig = { "PUL+", "PUL-", "DIR+", "DIR-", "ALM+", "ALM-" };
             string[] pwr = { "AC1", "AC2", "A+", "A-", "B+", "B-" };
             for (int i = 0; i < 6; i++)
             {
-                float x1 = xc - 0.0395f + i * 0.0068f, x2 = xc + 0.0065f + i * 0.0068f;
-                P.Disc(g, new Vector3(x1, top + 0.0125f, Zb - 0.026f), 0.003f, 0.001f, mScrew).transform.localEulerAngles = Vector3.zero;
-                P.Disc(g, new Vector3(x2, top + 0.0125f, Zb - 0.026f), 0.003f, 0.001f, mScrew).transform.localEulerAngles = Vector3.zero;
-                Anchor($"{dr.tag}.{sig[i]}", new Vector3(x1, top + 0.012f, Zb - 0.034f), 2);
-                Anchor($"{dr.tag}.{sig[i]}", new Vector3(x1 + 0.0015f, top + 0.012f, Zb - 0.03f), 2);
-                Anchor($"{dr.tag}.{pwr[i]}", new Vector3(x2, top + 0.012f, Zb - 0.034f), 2);
+                float ys = top - 0.0063f - i * 0.0051f, yp = top - h + 0.008f + (5 - i) * 0.0076f;
+                P.Disc(g, new Vector3(xc + 0.004f, yp, zf - 0.0125f), 0.003f, 0.001f, mScrew);
+                P.Disc(g, new Vector3(xc + 0.004f, ys, zf - 0.0125f), 0.0022f, 0.001f, mScrew);
+                Anchor($"{dr.tag}.{pwr[i]}", new Vector3(xc - 0.004f, yp, zf - 0.014f), 3);
+                Anchor($"{dr.tag}.{sig[i]}", new Vector3(xc - 0.004f, ys, zf - 0.014f), 2);
+                Anchor($"{dr.tag}.{sig[i]}", new Vector3(xc - 0.0055f, ys, zf - 0.017f), 2);
             }
             Solid(dr.tag, new Vector3(xc, yc, Zb - d / 2), new Vector3(w, h, d));
-            Click(g, new Vector3(xc, yc, Zb - d / 2), new Vector3(w, h, d), () => dr.Tip() + Dims(w, h, d, "DMA860H, distributor data"), () => dr.fault = !dr.fault);
+            Click(g, new Vector3(xc, yc, Zb - d / 2), new Vector3(w, h, d), () => dr.Tip() + Dims(w, h, d, "measured, side-mounted; signals top, power bottom"), () => dr.fault = !dr.fault);
         }
 
         void RowD()
         {
-            // RichAuto A11E interface board: no published outline — 150 × 100 mm estimated from the board photos.
+            // RichAuto A11E interface board, measured 153 × 90, 20 high from the plate (35 with the green screw terminals).
+            // Landscape, terminal strips along both long edges.
             var a11 = C.Get<A11Board>("A1");
             var g = Group("A1 A11E board");
-            float xc = -0.1495f, yc = A11y, w = 0.15f, h = 0.1f, zp = Zb - 0.012f;
+            float xc = -0.145f, yc = A11y, w = 0.153f, h = 0.09f, zp = Zb - 0.012f;
             Box(g, new Vector3(xc, yc, zp), new Vector3(w, h, 0.0016f), mPcb);
             foreach (var (dx, dy) in new[] { (-1, -1), (1, -1), (-1, 1), (1, 1) })
                 Cyl(g, new Vector3(xc + dx * (w / 2 - 0.004f), yc + dy * (h / 2 - 0.004f), zp + 0.006f), 0.005f, 0.011f, mBrass, new Vector3(90, 0, 0));
-            Box(g, new Vector3(xc, yc + h / 2 - 0.007f, zp - 0.006f), new Vector3(w * 0.96f, 0.01f, 0.011f), mPlug);
-            Box(g, new Vector3(xc - 0.012f, yc - h / 2 + 0.007f, zp - 0.006f), new Vector3(w * 0.78f, 0.01f, 0.011f), mPlug);
+            Box(g, new Vector3(xc, yc + h / 2 - 0.007f, zp - 0.0118f), new Vector3(w * 0.96f, 0.01f, 0.022f), mPlug);
+            Box(g, new Vector3(xc - 0.012f, yc - h / 2 + 0.007f, zp - 0.0118f), new Vector3(w * 0.78f, 0.01f, 0.022f), mPlug);
             Box(g, new Vector3(xc - 0.02f, yc + 0.012f, zp - 0.005f), new Vector3(0.066f, 0.009f, 0.009f), mBlack);
             Label(g, "CN1  50-pin → handheld", new Vector3(xc - 0.02f, yc + 0.021f, zp - 0.0012f), 0.0032f, Color.white);
             Box(g, new Vector3(xc + 0.04f, yc - 0.01f, zp - 0.002f), new Vector3(0.02f, 0.02f, 0.003f), mBlack);
@@ -856,19 +864,19 @@ namespace A11Sim
             float step = w * 0.94f / topIds.Count;
             for (int i = 0; i < topIds.Count; i++)
             {
-                Anchor(topIds[i], new Vector3(xc - w * 0.47f + step * (i + 0.5f), yc + h / 2 + 0.002f, zp - 0.012f), 3);
-                Anchor(topIds[i], new Vector3(xc - w * 0.47f + step * (i + 0.5f) + 0.0012f, yc + h / 2 + 0.002f, zp - 0.009f), 3);
+                Anchor(topIds[i], new Vector3(xc - w * 0.47f + step * (i + 0.5f), yc + h / 2 + 0.002f, zp - 0.016f), 3);
+                Anchor(topIds[i], new Vector3(xc - w * 0.47f + step * (i + 0.5f) + 0.0012f, yc + h / 2 + 0.002f, zp - 0.013f), 3);
             }
             string[] bot = { "A1.X1", "A1.X2", "A1.X3", "A1.X4", "A1.X5", "A1.X6", "A1.X7", "A1.X8", "A1.24V", "A1.GND", "A1.Shield" };
             float stepB = w * 0.76f / bot.Length;
             for (int i = 0; i < bot.Length; i++)
             {
-                Anchor(bot[i], new Vector3(xc - 0.012f - w * 0.38f + stepB * (i + 0.5f), yc - h / 2 - 0.002f, zp - 0.012f), 4);
-                Anchor(bot[i], new Vector3(xc - 0.012f - w * 0.38f + stepB * (i + 0.5f) + 0.0012f, yc - h / 2 - 0.002f, zp - 0.009f), 4);
+                Anchor(bot[i], new Vector3(xc - 0.012f - w * 0.38f + stepB * (i + 0.5f), yc - h / 2 - 0.002f, zp - 0.016f), 4);
+                Anchor(bot[i], new Vector3(xc - 0.012f - w * 0.38f + stepB * (i + 0.5f) + 0.0012f, yc - h / 2 - 0.002f, zp - 0.013f), 4);
             }
             Anchor("A1.HH", new Vector3(xc - 0.02f, yc + 0.012f, zp - 0.01f), 3);
-            Solid("A1", new Vector3(xc, yc, zp - 0.004f), new Vector3(w, h, 0.016f));
-            Click(g, new Vector3(xc, yc, zp - 0.006f), new Vector3(w, h, 0.016f), () => a11.Tip() + Dims(w, h, 0.03f, "estimated — no published outline"));
+            Solid("A1", new Vector3(xc, yc, Zb - 0.0175f), new Vector3(w, h, 0.035f));
+            Click(g, new Vector3(xc, yc, Zb - 0.0175f), new Vector3(w, h, 0.035f), () => a11.Tip() + Dims(w, h, 0.035f, "measured; 20 high without the screw terminals"));
         }
 
         // ------------------------------------------------------------------ floor (gland plate, earth bar) and side walls
@@ -962,23 +970,15 @@ namespace A11Sim
         {
             fan = C.Get<Fan>("M2");
             var g = Group("M2 fan");
-            // Filter fan clipped into its cut-out in the left wall: frame outside, body reaching 'depth' into the cabinet.
-            float fs = FanCut, face = FanFace, depth = FanDepth, inw = 1f, x0 = FanAt.x, y = FanAt.y, z = FanAt.z;
-            const bool filter = true;
-            const string model = "Rittal TopTherm SK 3238.124 filter fan, 24 V DC";
-            float x = x0 + inw * depth / 2, k = fs / 0.08f;
+            // Owner's 80 × 80 fan screwed to the inside of the left wall over its cut-out, body reaching 'depth' into the cabinet.
+            float fs = FanCut, depth = FanDepth, inw = 1f, x0 = FanAt.x, y = FanAt.y, z = FanAt.z;
+            float x = x0 + Ts + inw * depth / 2, k = fs / 0.08f;
             foreach (float sgn in new[] { -1f, 1f })
             {
                 Box(g, new Vector3(x, y + sgn * (fs / 2 - 0.002f), z), new Vector3(depth, 0.004f, fs), mBlack);
                 Box(g, new Vector3(x, y, z + sgn * (fs / 2 - 0.002f)), new Vector3(depth, fs, 0.004f), mBlack);
             }
-            if (filter)
-            {
-                // Outside frame with louvres and filter mat (RAL 7035), 16 mm proud of the wall.
-                Box(g, new Vector3(x0 - inw * 0.008f, y, z), new Vector3(0.016f, face, face), mGrey);
-                for (int i = 1; i < 9; i++)
-                    Box(g, new Vector3(x0 - inw * 0.0163f, y - fs / 2 + i * fs / 9, z), new Vector3(0.001f, 0.003f, fs - 0.004f), mDark);
-            }
+            FilterHousing(g, x0, -inw, y, z);
             Cyl(g, new Vector3(x + inw * 0.002f, y, z), 0.032f * k, 0.018f, mBlack, new Vector3(0, 0, 90));
             fanRotor = Group("rotor", g);
             fanRotor.localPosition = new Vector3(x - inw * 0.004f, y, z);
@@ -991,42 +991,57 @@ namespace A11Sim
             Anchor("M2.+", new Vector3(x + inw * (depth / 2 + 0.0005f), y + 0.44f * fs, z - 0.375f * fs), inw > 0 ? VL : VR);
             Anchor("M2.-", new Vector3(x + inw * (depth / 2 + 0.0005f), y + 0.44f * fs, z - 0.31f * fs), inw > 0 ? VL : VR);
             Solid("M2", new Vector3(x, y, z), new Vector3(depth, fs, fs));
-            Click(g, new Vector3(x, y, z), new Vector3(depth + 0.005f, fs, fs), () => fan.Tip() + (filter
-                ? $"\n{model}: IP 54 filter fan, blowing in, clipped into a {fs * 1000:0} × {fs * 1000:0} mm cut-out (frame {face * 1000:0.#} mm outside)." + Dims(face, face, depth)
-                : $"\n{fs * 1000:0} mm square 24 V DC fan, flush in a square hole in the side wall." + Dims(fs, fs, depth)));
+            Click(g, new Vector3(x, y, z), new Vector3(depth + 0.005f, fs, fs), () => fan.Tip() +
+                $"\nOwner's {fs * 1000:0} × {fs * 1000:0} mm 24 V DC fan, blowing in, behind its plastic filter adapter (flanged, outside the left wall) in a {fs * 1000:0} × {fs * 1000:0} cut-out." +
+                Dims(fs, fs, depth, "80 × 80 measured; 25 deep assumed"));
             OutletGrille();
 
-            // R1: RXLG/600/100 aluminium-housed braking resistor, 232 × 107 × 50 (distributor data), on the right wall.
+            // R1: 800W100RJ tube braking resistor (100 Ω 800 W), measured Ø 60 × 300 with its axis 60 mm off the wall.
+            // Vertical on the right wall in front of the free plate strip above the motor lane; leads at both ends.
             var r = Group("R1 braking resistor");
-            float rl = 0.232f, rw = 0.107f, rt = 0.05f;
-            float rx = EncW / 2 - 0.002f - rt / 2, rz = 0.09f, ry0 = 0.054f, ry1 = ry0 + rl;
-            Box(r, new Vector3(rx, (ry0 + ry1) / 2, rz), new Vector3(rt, rl, rw * 0.62f), mAlu);
-            Box(r, new Vector3(rx + rt / 2 - 0.002f, (ry0 + ry1) / 2, rz), new Vector3(0.004f, rl, rw), mAlu);
-            for (int i = 0; i < 6; i++)
-                Box(r, new Vector3(rx - rt / 2 - 0.002f, (ry0 + ry1) / 2, rz - 0.028f + i * 0.0112f), new Vector3(0.004f, rl, 0.002f), mAlu);
-            Label(r, "100 Ω 600 W", new Vector3(rx - rt / 2 - 0.0045f, (ry0 + ry1) / 2, rz), 0.008f, Color.black, true).transform.localEulerAngles = new Vector3(0, 90, 90);
-            Anchor("R1.T1", new Vector3(rx - 0.01f, ry1 + 0.012f, rz - 0.012f), VR);
-            Anchor("R1.T2", new Vector3(rx - 0.01f, ry1 + 0.012f, rz + 0.012f), VR);
-            Cyl(r, new Vector3(rx - 0.01f, ry1 + 0.006f, rz - 0.012f), 0.004f, 0.012f, mBlack, Vector3.zero);
-            Cyl(r, new Vector3(rx - 0.01f, ry1 + 0.006f, rz + 0.012f), 0.004f, 0.012f, mBlack, Vector3.zero);
-            var hot = P.ME(new Color(0.78f, 0.79f, 0.8f), Color.black, 0.5f);
-            var hotBody = Box(r, new Vector3(rx - rt / 2 - 0.0002f, (ry0 + ry1) / 2, rz), new Vector3(0.0005f, rl - 0.01f, rw * 0.55f), hot);
+            const float rd = 0.06f, rl = 0.3f, off = 0.06f;
+            // 25 mm below the busbars, ≥ 50 mm in front of the right vertical duct VR; the motor lane starts below it.
+            float wall = EncW / 2 - Ts, rx = wall - off, rz = 0.08f, ry0 = -0.06f, ry1 = ry0 + rl, ryc = (ry0 + ry1) / 2;
+            var hot = P.ME(new Color(0.72f, 0.7f, 0.66f), Color.black, 0.5f);
+            var hotBody = Cyl(r, new Vector3(rx, ryc, rz), rd, rl - 0.03f, hot, Vector3.zero);
             leds.Add((hotBody.GetComponent<Renderer>(), new Color(1f, 0.25f, 0.05f), () => vfd != null && vfd.braking));
-            Solid("R1", new Vector3(rx, (ry0 + ry1) / 2, rz), new Vector3(rt, rl, rw));
-            Click(r, new Vector3(rx, (ry0 + ry1) / 2, rz), new Vector3(rt, rl, rw),
-                () => C.Get<BrakeResistor>("R1").Tip() + "\nAluminium-housed, on the right side wall away from the electronics." + Dims(rw, rl, rt, "RXLG/600/100, distributor data"));
+            foreach (float yb in new[] { ry0 + 0.008f, ry1 - 0.008f })
+            {
+                Box(r, new Vector3((wall + rx - 0.01f) / 2, yb, rz), new Vector3(wall - rx + 0.01f, 0.016f, 0.03f), mAlu); // bracket
+                Box(r, new Vector3(wall - 0.0015f, yb, rz), new Vector3(0.003f, 0.016f, 0.05f), mAlu);                       // flange
+            }
+            Label(r, "100 Ω 800 W", new Vector3(rx - rd / 2 - 0.001f, ryc, rz), 0.008f, Color.black, true).transform.localEulerAngles = new Vector3(0, 90, 90);
+            // Solder lugs at the tube ends, just inside the brackets.
+            foreach (var (id, yl) in new[] { ("R1.T1", ry1 - 0.02f), ("R1.T2", ry0 + 0.02f) })
+            {
+                Box(r, new Vector3(rx - rd / 2 + 0.004f, yl, rz), new Vector3(0.012f, 0.006f, 0.0015f), mBrass);
+                Anchor(id, new Vector3(rx - rd / 2 - 0.004f, yl, rz), VR);
+            }
+            Solid("R1", new Vector3((wall + rx - rd / 2) / 2, ryc, rz), new Vector3(wall - rx + rd / 2, rl, rd));
+            Click(r, new Vector3(rx, ryc, rz), new Vector3(rd, rl, rd),
+                () => C.Get<BrakeResistor>("R1").Tip() + "\nTube resistor on two brackets, vertical on the right side wall, below the air outlet so the heat leaves the box. " +
+                      "<color=#ffb050>Bare and very hot while braking: keep ≥ 50 mm to ducts, busbars and wires, use the silicone leads.</color>" +
+                      Dims(rd, rl, rd, "Ø 60 × 300 measured, axis 60 mm off the wall"));
         }
 
         /// SK 3238.200 outlet filter on the outside of its cut-out in the right wall; the cut-out stays open inside.
         void OutletGrille()
         {
             var g = Group("air outlet");
-            float s = FanFace, cut = FanCut, xo = OutletAt.x + 0.012f;
-            Box(g, new Vector3(xo, OutletAt.y, OutletAt.z), new Vector3(0.024f, s, s), mGrey);
-            for (int i = 1; i < 9; i++)
-                Box(g, new Vector3(xo + 0.0123f, OutletAt.y - cut / 2 + i * cut / 9, OutletAt.z), new Vector3(0.001f, 0.003f, cut - 0.004f), mDark);
-            Click(g, new Vector3(xo, OutletAt.y, OutletAt.z), new Vector3(0.026f, s, s),
-                () => $"<b>Air outlet</b>\nRittal TopTherm SK 3238.200: IP 54 outlet filter on a {cut * 1000:0} × {cut * 1000:0} mm cut-out (cut on assembly)." + Dims(s, s, 0.024f));
+            float s = FilterFace, cut = FanCut, xo = OutletAt.x + FilterProud / 2;
+            FilterHousing(g, OutletAt.x, 1, OutletAt.y, OutletAt.z);
+            Click(g, new Vector3(xo, OutletAt.y, OutletAt.z), new Vector3(FilterProud + 0.002f, s, s),
+                () => $"<b>Air outlet</b>\nOwner's plastic 80 mm filter adapter (flanged, same as on the fan, no fan) on a {cut * 1000:0} × {cut * 1000:0} mm cut-out in the right wall (cut on assembly)." +
+                      Dims(s, s, FilterProud, "flange size assumed — slightly larger than 80 × 80"));
+        }
+
+        /// Flanged plastic filter housing on the outside of a wall cut-out; 'outward' is −1 on the left wall, +1 on the right.
+        void FilterHousing(Transform g, float wallX, float outward, float y, float z)
+        {
+            float s = FilterFace, cut = FanCut, xo = wallX + outward * FilterProud / 2;
+            Box(g, new Vector3(xo, y, z), new Vector3(FilterProud, s, s), mGrey);
+            for (int i = 1; i < 7; i++)
+                Box(g, new Vector3(xo + outward * (FilterProud / 2 + 0.0003f), y - cut / 2 + i * cut / 7, z), new Vector3(0.001f, 0.003f, cut - 0.006f), mDark);
         }
 
         // ------------------------------------------------------------------ door rear (contact blocks, lamp holders)
@@ -1264,7 +1279,9 @@ namespace A11Sim
                 var wv = new WireVis { w = w, door = a.door || b.door };
                 if (!a.door && !b.door)
                 {
-                    var route = CabinetRoute(a, b, off);
+                    // A bridge between two close terminals of the same part (e.g. PUL+ → DIR+ on a drive plug) stays on the part.
+                    bool bridge = w.a.id.Split('.')[0] == w.b.id.Split('.')[0] && Vector3.Distance(a.p, b.p) < 0.03f;
+                    var route = bridge ? new List<Vector3> { a.p, a.p + Vector3.back * 0.008f, b.p + Vector3.back * 0.008f, b.p } : CabinetRoute(a, b, off);
                     routes.Add((key, route));
                     AddTube(wv, wroot, route, dia, mat);
                 }

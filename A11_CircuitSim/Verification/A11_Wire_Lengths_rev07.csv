@@ -1,8 +1,8 @@
 no,from,to,spec,routed_m,door
-101,Mains.L,QF0.1,"2.5 mm² black",1.195,0
-102,Mains.N,QF0.3,"2.5 mm² light blue",1.218,0
-103,QF0.2,Z1.LIN,"4 mm² black",0.132,0
-104,QF0.4,Z1.NIN,"4 mm² light blue",0.128,0
+101,Mains.L,QF0.1,"2.5 mm² black",1.200,0
+102,Mains.N,QF0.3,"2.5 mm² light blue",1.231,0
+103,QF0.2,Z1.LIN,"4 mm² black",0.136,0
+104,QF0.4,Z1.NIN,"4 mm² light blue",0.140,0
 105,Z1.LOUT,KM1.1L1,"4 mm² black",0.235,0
 111,Z1.LOUT,QF4.1,"4 mm² black",0.334,0
 106,Z1.NOUT,XN.T,"4 mm² light blue",0.641,0
@@ -10,116 +10,116 @@ no,from,to,spec,routed_m,door
 114,XL.T,QF1.1,"4 mm² black",0.371,0
 117,XL.T,QF2.1,"4 mm² black",0.400,0
 120,XL.T,QF3.1,"4 mm² black",0.444,0
-113,XN.T,G2.N,"1.5 mm² light blue",0.604,0
+113,XN.T,G2.N,"1.5 mm² light blue",0.617,0
 132,XN.T,KM1.A1,"1.5 mm² light blue",0.428,0
-116,XN.T,U1.N,"2.5 mm² light blue",0.985,0
-119,XN.T,G1.N,"1.5 mm² light blue",0.692,0
+116,XN.T,U1.N,"2.5 mm² light blue",0.993,0
+119,XN.T,G1.N,"1.5 mm² light blue",0.707,0
 122,XN.T,XS1.N,"1.5 mm² light blue",0.246,0
-112,QF4.2,G2.L,"1.5 mm² black",0.731,0
-115,QF1.2,U1.L,"2.5 mm² black",0.748,0
-118,QF2.2,G1.L,"1.5 mm² black",0.853,0
+112,QF4.2,G2.L,"1.5 mm² black",0.745,0
+115,QF1.2,U1.L,"2.5 mm² black",0.767,0
+118,QF2.2,G1.L,"1.5 mm² black",0.888,0
 121,QF3.2,XS1.L,"1.5 mm² black",0.202,0
-123,U1.U,X1.1,"1.5 mm² brown, core of W1 4G1.5 shielded",0.784,0
-124,U1.V,X1.2,"1.5 mm² black, core of W1 4G1.5 shielded",0.792,0
-125,U1.W,X1.3,"1.5 mm² grey, core of W1 4G1.5 shielded",0.804,0
-126,U1.PE,X1.PE,"1.5 mm² G/Y, core of W1 4G1.5 shielded",0.824,0
-127,X1.SH,U1.PEb,"W1 braided shield, 360° clamp both ends",0.814,0
-128,U1.P+,R1.T1,"1.5 mm² black, silicone",1.124,0
-129,U1.PB,R1.T2,"1.5 mm² black, silicone",1.091,0
-130,QF4.2,K1.41,"1.5 mm² red",0.612,0
-131,K1.44,KM1.A2,"1.5 mm² red",0.150,0
+123,U1.U,X1.1,"1.5 mm² brown, core of W1 4G1.5 shielded",0.752,0
+124,U1.V,X1.2,"1.5 mm² black, core of W1 4G1.5 shielded",0.760,0
+125,U1.W,X1.3,"1.5 mm² grey, core of W1 4G1.5 shielded",0.772,0
+126,U1.PE,X1.PE,"1.5 mm² G/Y, core of W1 4G1.5 shielded",0.792,0
+127,X1.SH,U1.PEb,"W1 braided shield, 360° clamp both ends",0.782,0
+128,U1.P+,R1.T1,"1.5 mm² black, silicone",0.994,0
+129,U1.PB,R1.T2,"1.5 mm² black, silicone",0.724,0
+130,QF4.2,K1.41,"1.5 mm² red",0.614,0
+131,K1.44,KM1.A2,"1.5 mm² red",0.153,0
 140,Mains.PE,PEBAR.BAR,"4 mm² G/Y",0.426,0
 139,BODY.T,PEBAR.BAR,"4 mm² G/Y",0.564,0
 141,BKP.T,PEBAR.BAR,"4 mm² G/Y",0.266,0
 142,DOOR.T,PEBAR.BAR,"6 mm² braided strap",1.096,1
 147,RAIL.T,PEBAR.BAR2,"2.5 mm² G/Y",1.342,0
 143,Z1.GND,PEBAR.BAR,"4 mm² G/Y",1.280,0
-144,U1.PEc,PEBAR.BAR,"2.5 mm² G/Y",0.927,0
-145,G1.PE,PEBAR.BAR2,"1.5 mm² G/Y",1.083,0
-146,G2.PE,PEBAR.BAR2,"1.5 mm² G/Y",0.933,0
+144,U1.PEc,PEBAR.BAR,"2.5 mm² G/Y",0.896,0
+145,G1.PE,PEBAR.BAR2,"1.5 mm² G/Y",1.048,0
+146,G2.PE,PEBAR.BAR2,"1.5 mm² G/Y",0.896,0
 149,XS1.PE,PEBAR.BAR2,"1.5 mm² G/Y",1.193,0
-148,G2.-V2,PEBAR.BAR2,"1.5 mm² G/Y",0.961,0
+148,G2.-V2,PEBAR.BAR2,"1.5 mm² G/Y",0.924,0
 138,PEBAR.BAR,PEBAR.BAR2,"4 mm² G/Y",0.376,0
-150,G1.+V1,A2.AC1,"1.5 mm² black",0.268,0
-151,G1.-V1,A2.AC2,"1.5 mm² black",0.224,0
-152,G1.+V2,A3.AC1,"1.5 mm² black",0.169,0
-153,G1.-V2,A3.AC2,"1.5 mm² black",0.128,0
-154,G1.+V3,A4.AC1,"1.5 mm² black",0.074,0
-155,G1.-V3,A4.AC2,"1.5 mm² black",0.076,0
-162,G2.+V1,F1.in,"2.5 mm² dark blue",0.809,0
-164,G2.+V2,F2.in,"2.5 mm² dark blue",0.733,0
-166,F2.out,A1.DC24V,"0.5 mm² dark blue",1.015,0
-168,F2.out,A1.24V,"0.5 mm² dark blue",1.251,0
-167,G2.-V1,A1.DCGND,"0.5 mm² blue/white",0.744,0
-169,G2.-V2,A1.GND,"0.5 mm² blue/white",0.949,0
-170,KM1.43,M2.+,"0.5 mm² dark blue",1.049,0
-171,A1.DCGND,M2.-,"0.5 mm² blue/white",0.489,0
-201,F1.out,S0.1,"0.5 mm² dark blue",1.558,1
+150,G1.+V1,A2.AC1,"1.5 mm² black",0.746,0
+151,G1.-V1,A2.AC2,"1.5 mm² black",0.690,0
+152,G1.+V2,A3.AC1,"1.5 mm² black",0.841,0
+153,G1.-V2,A3.AC2,"1.5 mm² black",0.785,0
+154,G1.+V3,A4.AC1,"1.5 mm² black",0.734,0
+155,G1.-V3,A4.AC2,"1.5 mm² black",0.768,0
+162,G2.+V1,F1.in,"2.5 mm² dark blue",0.821,0
+164,G2.+V2,F2.in,"2.5 mm² dark blue",0.746,0
+166,F2.out,A1.DC24V,"0.5 mm² dark blue",1.021,0
+168,F2.out,A1.24V,"0.5 mm² dark blue",1.264,0
+167,G2.-V1,A1.DCGND,"0.5 mm² blue/white",0.737,0
+169,G2.-V2,A1.GND,"0.5 mm² blue/white",0.915,0
+170,KM1.43,M2.+,"0.5 mm² dark blue",1.084,0
+171,A1.DCGND,M2.-,"0.5 mm² blue/white",0.491,0
+201,F1.out,S0.1,"0.5 mm² dark blue",1.559,1
 202,S0.2,S1.1,"0.5 mm² dark blue",0.157,1
 203,S1.2,S2.1,"0.5 mm² dark blue",0.072,1
-204,S2.2,K1.A1,"0.5 mm² dark blue",1.391,1
-205,S1.2,K1.11,"0.5 mm² dark blue",1.519,1
-206,K1.14,K1.A1,"0.5 mm² dark blue",0.566,0
-207,G2.-V1,K1.A2,"0.5 mm² blue/white",0.675,0
-210,S0.4,A1.X7,"0.5 mm² dark blue",1.808,1
-220,F1.out,KM1.43,"0.5 mm² dark blue",0.806,0
+204,S2.2,K1.A1,"0.5 mm² dark blue",1.394,1
+205,S1.2,K1.11,"0.5 mm² dark blue",1.522,1
+206,K1.14,K1.A1,"0.5 mm² dark blue",0.569,0
+207,G2.-V1,K1.A2,"0.5 mm² blue/white",0.690,0
+210,S0.4,A1.X7,"0.5 mm² dark blue",1.819,1
+220,F1.out,KM1.43,"0.5 mm² dark blue",0.805,0
 221,KM1.44,H1.+,"0.5 mm² dark blue",1.400,1
-222,K1.A2b,H1.-,"0.5 mm² blue/white",1.429,1
+222,K1.A2b,H1.-,"0.5 mm² blue/white",1.431,1
 223,S0.1,H2.+,"0.5 mm² dark blue",0.307,1
-224,H2.-,A1.Y6,"0.5 mm² dark blue",1.728,1
+224,H2.-,A1.Y6,"0.5 mm² dark blue",1.738,1
 225,H2.+,H3.+,"0.5 mm² dark blue",0.128,1
-226,H3.-,A1.Y5,"0.5 mm² dark blue",1.772,1
-301,A1.X_5V,A2.PUL+,"0.5 mm² dark blue, twisted",0.365,0
-302,A1.X_PUL,A2.PUL-,"0.5 mm² dark blue, twisted",0.378,0
-303,A1.X_DIR,A2.DIR-,"0.5 mm² dark blue, twisted",0.406,0
-304,A2.PUL+,A2.DIR+,"0.5 mm² dark blue",0.026,0
-,A2.A+,XM-X.1,"",0.991,0
-,A2.A-,XM-X.2,"",1.024,0
-,A2.B+,XM-X.3,"",1.013,0
-,A2.B-,XM-X.4,"",1.020,0
-305,A1.Y_5V,A3.PUL+,"0.5 mm² dark blue, twisted",0.496,0
-306,A1.Y_PUL,A3.PUL-,"0.5 mm² dark blue, twisted",0.509,0
-307,A1.Y_DIR,A3.DIR-,"0.5 mm² dark blue, twisted",0.530,0
-308,A3.PUL+,A3.DIR+,"0.5 mm² dark blue",0.053,0
-,A3.A+,XM-Y.1,"",0.857,0
-,A3.A-,XM-Y.2,"",0.856,0
-,A3.B+,XM-Y.3,"",0.849,0
-,A3.B-,XM-Y.4,"",0.857,0
-309,A1.Z_5V,A4.PUL+,"0.5 mm² dark blue, twisted",0.626,0
-310,A1.Z_PUL,A4.PUL-,"0.5 mm² dark blue, twisted",0.650,0
-311,A1.Z_DIR,A4.DIR-,"0.5 mm² dark blue, twisted",0.668,0
-312,A4.PUL+,A4.DIR+,"0.5 mm² dark blue",0.036,0
-,A4.A+,XM-Z.1,"",0.816,0
-,A4.A-,XM-Z.2,"",0.811,0
-,A4.B+,XM-Z.3,"",0.801,0
-,A4.B-,XM-Z.4,"",0.813,0
-315,A2.ALM+,A1.X5,"0.5 mm² dark blue",0.585,0
-317,A3.ALM+,A2.ALM+,"0.5 mm² dark blue",0.134,0
-319,A4.ALM+,A3.ALM+,"0.5 mm² dark blue",0.139,0
-316,A1.OGND,A2.ALM-,"0.5 mm² blue/white",0.512,0
-318,A2.ALM-,A3.ALM-,"0.5 mm² blue/white",0.135,0
-320,A3.ALM-,A4.ALM-,"0.5 mm² blue/white",0.138,0
-325,A1.Y1,U1.X1,"0.5 mm² dark blue",0.610,0
-326,A1.OGND,U1.COM,"0.5 mm² blue/white",0.688,0
-327,A1.Y2,U1.X2,"0.5 mm² dark blue",0.615,0
-328,A1.Y3,U1.X3,"0.5 mm² dark blue",0.625,0
-329,A1.Y4,U1.X4,"0.5 mm² dark blue",0.636,0
-330,X-LIM.1,A1.X1,"0.5 mm² dark blue",0.145,0
-331,Y-LIM.1,A1.X2,"0.5 mm² dark blue",0.197,0
-332,Z-LIM.2,A1.X3,"0.5 mm² dark blue",0.215,0
-336,X-LIM.2,A1.X6,"0.5 mm² dark blue",0.149,0
+226,H3.-,A1.Y5,"0.5 mm² dark blue",1.777,1
+301,A1.X_5V,A2.PUL+,"0.5 mm² dark blue, twisted",0.437,0
+302,A1.X_PUL,A2.PUL-,"0.5 mm² dark blue, twisted",0.447,0
+303,A1.X_DIR,A2.DIR-,"0.5 mm² dark blue, twisted",0.487,0
+304,A2.PUL+,A2.DIR+,"0.5 mm² dark blue",0.024,0
+,A2.A+,XM-X.1,"",0.873,0
+,A2.A-,XM-X.2,"",0.891,0
+,A2.B+,XM-X.3,"",0.891,0
+,A2.B-,XM-X.4,"",0.893,0
+305,A1.Y_5V,A3.PUL+,"0.5 mm² dark blue, twisted",0.582,0
+306,A1.Y_PUL,A3.PUL-,"0.5 mm² dark blue, twisted",0.591,0
+307,A1.Y_DIR,A3.DIR-,"0.5 mm² dark blue, twisted",0.606,0
+308,A3.PUL+,A3.DIR+,"0.5 mm² dark blue",0.024,0
+,A3.A+,XM-Y.1,"",0.767,0
+,A3.A-,XM-Y.2,"",0.760,0
+,A3.B+,XM-Y.3,"",0.759,0
+,A3.B-,XM-Y.4,"",0.763,0
+309,A1.Z_5V,A4.PUL+,"0.5 mm² dark blue, twisted",0.703,0
+310,A1.Z_PUL,A4.PUL-,"0.5 mm² dark blue, twisted",0.750,0
+311,A1.Z_DIR,A4.DIR-,"0.5 mm² dark blue, twisted",0.765,0
+312,A4.PUL+,A4.DIR+,"0.5 mm² dark blue",0.024,0
+,A4.A+,XM-Z.1,"",0.718,0
+,A4.A-,XM-Z.2,"",0.707,0
+,A4.B+,XM-Z.3,"",0.703,0
+,A4.B-,XM-Z.4,"",0.711,0
+315,A2.ALM+,A1.X5,"0.5 mm² dark blue",0.678,0
+317,A3.ALM+,A2.ALM+,"0.5 mm² dark blue",0.351,0
+319,A4.ALM+,A3.ALM+,"0.5 mm² dark blue",0.354,0
+316,A1.OGND,A2.ALM-,"0.5 mm² blue/white",0.597,0
+318,A2.ALM-,A3.ALM-,"0.5 mm² blue/white",0.362,0
+320,A3.ALM-,A4.ALM-,"0.5 mm² blue/white",0.315,0
+325,A1.Y1,U1.X1,"0.5 mm² dark blue",0.584,0
+326,A1.OGND,U1.COM,"0.5 mm² blue/white",0.663,0
+327,A1.Y2,U1.X2,"0.5 mm² dark blue",0.589,0
+328,A1.Y3,U1.X3,"0.5 mm² dark blue",0.600,0
+329,A1.Y4,U1.X4,"0.5 mm² dark blue",0.611,0
+330,X-LIM.1,A1.X1,"0.5 mm² dark blue",0.149,0
+331,Y-LIM.1,A1.X2,"0.5 mm² dark blue",0.201,0
+332,Z-LIM.2,A1.X3,"0.5 mm² dark blue",0.219,0
+336,X-LIM.2,A1.X6,"0.5 mm² dark blue",0.162,0
 334,X-LIM.2,Y-LIM.2,"0.5 mm² dark blue",0.214,0
 335,Y-LIM.2,Z-LIM.1,"0.5 mm² dark blue",0.225,0
-337,A1.GND,X-LIM.3,"0.5 mm² blue/white",0.197,0
+337,A1.GND,X-LIM.3,"0.5 mm² blue/white",0.210,0
 338,X-LIM.3,Y-LIM.3,"0.5 mm² blue/white",0.225,0
 339,Y-LIM.3,Z-LIM.3,"0.5 mm² blue/white",0.227,0
-340,A1.24V,X-LIM.4,"0.5 mm² dark blue",0.183,0
+340,A1.24V,X-LIM.4,"0.5 mm² dark blue",0.193,0
 341,X-LIM.4,Y-LIM.4,"0.5 mm² dark blue",0.187,0
 342,Y-LIM.4,Z-LIM.4,"0.5 mm² dark blue",0.190,0
-345,XT.1,A1.X4,"0.5 mm² dark blue",0.241,0
+345,XT.1,A1.X4,"0.5 mm² dark blue",0.243,0
 346,Z-LIM.3,XT.2,"0.5 mm² blue/white",0.183,0
 347,XT.3,S0.3,"0.5 mm² dark blue",1.967,1
-348,XT.2,XT.4,"0.5 mm² blue/white",0.154,0
+348,XT.2,XT.4,"0.5 mm² blue/white",0.020,0
 ,XM-X.1,XM-X.m1,"",external,0
 ,XM-X.2,XM-X.m2,"",external,0
 ,XM-X.3,XM-X.m3,"",external,0

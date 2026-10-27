@@ -26,7 +26,8 @@ Rev 0.7 changes (from a wire-by-wire review against the part datasheets, `Verifi
 - Every conductor behind the C25 main (103–106, 109, 111, 114, 117, 120) is 4 mm².
 - **Reminder C14 (open):** the FC300 nameplate's 11 A is the rated **output** current. The drive draws ≈ 22–24 A input at
   full spindle load, so QF1 C16 trips on long full-power cuts, the 20 A EMI filter is overloaded and QF0 C25 is marginal.
-  Light cuts are fine. Fix (owner's decision): QF1 C25 with 115 / 116 in 4 mm² and a ≈ 30 A filter.
+  Light cuts are fine. Z1 is fixed at 20 A (no larger filter available), so the way out is to cap the spindle at
+  ≈ 1.5 kW (≈ 15 A input) in the VFD; options in `Verification/A11_Enclosure_Selection.md`.
 
 ## Run
 
@@ -72,8 +73,8 @@ Inside is the full panel at datasheet size, in the bought enclosure:
 
 The panel has TS35 rails and slotted 40 × 60 ducts, plus the power lane VP and the motor lane VM on the spare width.
 Row A holds the plate-mounted EMI filter (far left), then on the 330 mm DIN rail the MCBs, UMC65 contactor, K1 (Finder 55.34 on a socket that looks like a Schneider RXZE2S114M, exact part not confirmed; wire by the IEC numbers, see caution C11),
-the F1 / F2 RT18 holders with 10 × 38 gG 2 A fuses and the Schuko DIN socket. The L / N busbars XL, XN stand vertically right of the right vertical duct. Row B has the VFD with a live display (100 mm clear above it) and two PSUs, row C the three DMA860H drives, and
-row D the A11E board. The braking resistor, the filter fan and the outlet filter sit on the side walls, and the two earth bars
+the F1 / F2 RT18 holders with 10 × 38 gG 2 A fuses and the Schuko DIN socket. The L / N busbars XL, XN stand vertically right of the right vertical duct. Row B has the VFD with a live display (100 mm clear above it) and two PSUs, row C the three DMA860H drives (side-mounted, terminals facing the door: signals top, power bottom), and
+row D the A11E board. Every part is drawn at the owner's measured size. The tube braking resistor (Ø 60 × 300), the 80 mm fan and the outlet (both behind flanged 80 mm filter adapters) sit on the side walls, and the two earth bars
 and the cable entries on the bottom wall. There are no terminal blocks (only XL / XN for 230 V). Each other wire goes
 from device screw to device screw, with at most 2 per screw (twin ferrule). The size choice and its sources are in `Verification/A11_Enclosure_Selection.md`.
 

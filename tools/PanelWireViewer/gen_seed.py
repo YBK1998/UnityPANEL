@@ -105,7 +105,7 @@ PARTS = [
      "Self-holding ON relay. 11-14 = latch, 41-44 = 230 V feed to contactor coil. A2 has a 2nd screw for the yellow lamp 0 V.", "K1"),
     ("VFD FC300-2.2G", "Drive", "Backplate", "FC300-2.2G-S2-B4C",
      "Spindle VFD. X1 = FWD run, X2-X4 = multi-speed bits, COM -> A11 OGND.", "VFD L;VFD N;VFD U;VFD V;VFD W;VFD P;VFD X;VFD COM"),
-    ("Braking resistor", "Resistor", "External", "100 ohm / 600 W", "VFD dynamic braking on P+ / PB.", "Braking resistor"),
+    ("Braking resistor", "Resistor", "External", "100 ohm / 800 W", "VFD dynamic braking on P+ / PB.", "Braking resistor"),
     ("DMA860H-X", "Drive", "Backplate", "Leadshine DMA860H", "X stepper drive.", "DMA860H-X"),
     ("DMA860H-Y", "Drive", "Backplate", "Leadshine DMA860H", "Y stepper drive.", "DMA860H-Y"),
     ("DMA860H-Z", "Drive", "Backplate", "Leadshine DMA860H", "Z stepper drive.", "DMA860H-Z"),

@@ -179,7 +179,7 @@ namespace A11Sim
         {
             tag = "Z1";
             title = "Z1 — EMI filter HD2AC-20A";
-            info = "Mains filter. Rating is less than the C25 main CB (open item § 9.1-1).";
+            info = "Mains filter, 20 A — fixed (no higher-current version available). Rating is less than the C25 main CB and the VFD full-load input (C14): cap the spindle at ≈ 1.5 kW.";
         }
 
         public override void Build()
@@ -858,7 +858,7 @@ namespace A11Sim
         public BrakeResistor()
         {
             tag = "R1";
-            title = "R1 — braking resistor 100 Ω / 600 W";
+            title = "R1 — braking resistor 100 Ω / 800 W";
             info = "Connect to VFD P+ and PB only (CAUTION C12). Glows while the VFD brakes the spindle.";
         }
 
@@ -874,7 +874,7 @@ namespace A11Sim
             g.Line(new Vector2(118, 174 + Sym.TermR), new Vector2(118, 176));
             g.Rect(new Vector2(117, 176), new Vector2(119, 180));
             lb.Add("R1", 116.2f, 178.8f, 1.0f, Pal.Title, TA.Right, 0, true);
-            lb.Add("100 Ω / 600 W", 116.2f, 177.1f, 0.75f, Pal.TextDim, TA.Right);
+            lb.Add("100 Ω / 800 W", 116.2f, 177.1f, 0.75f, Pal.TextDim, TA.Right);
         }
 
         public override void DrawDynamic(Gfx g, Gfx glow, float time)
