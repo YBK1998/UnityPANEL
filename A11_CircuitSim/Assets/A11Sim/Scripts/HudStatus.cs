@@ -105,6 +105,7 @@ namespace A11Sim
             ("Wheel", "zoom towards the cursor"), ("Drag  WASD", "pan"), ("F", "fit the whole circuit"),
             ("Click", "breakers, fuses, E-stop, sensors, drives"), ("1  0", "hold ON / OFF push-buttons"),
             ("Q  E", "main CB QF0 · E-stop"), ("Space  H  Esc", "spindle · home all · stop"), ("Hover", "wire data, live state, cautions"),
+            ("Click", "a wire: dim the others here and in 3D"),
         };
 
         static readonly (string key, string what)[] Help3D =

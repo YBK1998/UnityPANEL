@@ -97,14 +97,13 @@ namespace A11Sim
             public bool ghost;
         }
 
-        // Click on a wire: every other wire turns into a faint ghost so this one can be followed through the ducts.
+        // Click on a wire (here or in the schematic): every other wire turns into a faint ghost so this one can be
+        // followed through the ducts. The selection lives in the schematic view, so both views show the same wire.
+        Wire selWire;
         WireVis selected;
         readonly Dictionary<Material, Material> ghostMats = new();
 
-        public bool HasWireSelection => selected != null;
-        public void ClearWireSelection() => selected = null;
-
-        void ToggleSelect(WireVis wv) => selected = selected == wv ? null : wv;
+        public void ClearWireSelection() => V.selectedWire = null;
 
         Material Ghost(Material m)
         {
@@ -1384,8 +1383,7 @@ namespace A11Sim
                 var col = go.AddComponent<MeshCollider>();
                 col.sharedMesh = mesh;
                 var w = wv.w;
-                P.Register(col, () => V.WireTip(w) + (selected == wv ? "\nClick again (or on empty space) to show all wires." : "\nClick to isolate this wire."),
-                    null, null, () => ToggleSelect(wv));
+                P.Register(col, () => V.WireTip(w) + SchematicView.SelectHint(V.selectedWire == w), null, null, () => V.ToggleWire(w));
             }
         }
 
@@ -1503,11 +1501,17 @@ namespace A11Sim
             // Live wires: emission in the schematic's potential colours.
             // Build guide: wires not fitted yet are hidden, the one to fit now pulses.
             // Selected wire: all the others are ghosted and lose their markers.
-            if (selected != null && selected.buildState == 0) selected = null;
+            // A wire with no 3D route (a schematic bus, an external cable) or not fitted yet ghosts nothing.
+            if (V.selectedWire != selWire)
+            {
+                selWire = V.selectedWire;
+                selected = selWire == null ? null : wires.Find(x => x.w == selWire);
+            }
+            bool isolate = selected != null && selected.buildState != 0;
             foreach (var wv in wires)
             {
                 int bs = V.guide != null ? V.guide.StateOf(wv.w) : 1;
-                bool ghost = selected != null && wv != selected;
+                bool ghost = isolate && wv != selected;
                 if (bs != wv.buildState || ghost != wv.ghost)
                 {
                     wv.buildState = bs;

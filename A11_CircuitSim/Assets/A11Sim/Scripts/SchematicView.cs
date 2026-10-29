@@ -35,6 +35,12 @@ namespace A11Sim
         public string tooltip;
         public Vector2? simScreen; // simulated pointer for automated screenshots
 
+        /// Wire clicked in either view: the schematic dims the others, the 3D cabinet ghosts them.
+        public Wire selectedWire;
+        public void ToggleWire(Wire w) => selectedWire = selectedWire == w ? null : w;
+        public static string SelectHint(bool isSelected) =>
+            isSelected ? "\nClick again (or on empty space) to show all wires." : "\nClick to isolate this wire (schematic and 3D).";
+
         Material coreMat, glowMat, dynGlowMat;
         TMP_FontAsset font;
         Transform root;
@@ -55,6 +61,7 @@ namespace A11Sim
             public Labels.Item item;
             public string last;
             public bool wireNo, caution;
+            public Wire w;   // wire-number labels: dimmed with their wire
         }
 
         readonly List<Lbl> lbls = new();
@@ -67,6 +74,9 @@ namespace A11Sim
         CautionMark hoverCaution;
         float lastWpp = -1;
         bool lastNumbers = true, lastCautions = true;
+        Wire lastSel, pressWire;
+        bool pressPending, pressMoved;
+        Vector2 pressAt;
 
         static bool HasArg(string a) => Array.IndexOf(Environment.GetCommandLineArgs(), a) >= 0;
 
@@ -387,7 +397,7 @@ namespace A11Sim
                 }
             }
             var col = w.notConnected ? Pal.Caution : Pal.WireNo;
-            lbls.Add(new Lbl { t = MakeText(text, pos, 0.9f, col, align, 0, true), wireNo = true });
+            lbls.Add(new Lbl { t = MakeText(text, pos, 0.9f, col, align, 0, true), wireNo = true, w = w });
         }
 
         static Vector2Int Key(Vector2 p) => new(Mathf.RoundToInt(p.x * 100), Mathf.RoundToInt(p.y * 100));
@@ -513,9 +523,20 @@ namespace A11Sim
             hoverSpot = null;
             hoverWire = null;
             hoverCaution = null;
+            // A click that did not drag: on a wire it isolates that wire, anywhere else it shows all wires again.
+            if (pressPending)
+            {
+                if ((mp - pressAt).sqrMagnitude > 25f) pressMoved = true;
+                if (!Input.GetMouseButton(0))
+                {
+                    pressPending = false;
+                    if (!pressMoved) selectedWire = pressWire != null && pressWire != selectedWire ? pressWire : null;
+                }
+            }
             if (panel.full)
             {
                 // The 3D door owns the mouse.
+                pressPending = false;
                 tooltip = null;
                 if (pressed != null)
                 {
@@ -593,7 +614,14 @@ namespace A11Sim
                     hoverSpot.onDown();
                     pressed = hoverSpot;
                 }
-                else rig.BeginPan(0);
+                else
+                {
+                    rig.BeginPan(0);
+                    pressWire = hoverWire;
+                    pressPending = true;
+                    pressMoved = false;
+                    pressAt = mp;
+                }
             }
             if (pressed != null && !Input.GetMouseButton(0))
             {
@@ -603,7 +631,7 @@ namespace A11Sim
 
             if (hoverSpot != null) tooltip = hoverSpot.tip?.Invoke();
             else if (hoverCaution != null) tooltip = $"<b><color=#ff9a3c>CAUTION {hoverCaution.id} — MEASURE / CONFIRM</color></b>\n{hoverCaution.text}";
-            else if (hoverWire != null) tooltip = WireTip(hoverWire);
+            else if (hoverWire != null) tooltip = WireTip(hoverWire) + SelectHint(selectedWire == hoverWire);
             else tooltip = null;
         }
 
@@ -713,6 +741,13 @@ namespace A11Sim
                 var targetCore = live ? Color.Lerp(col, Color.white, 0.22f) : col;
                 var targetGlow = live ? col * gi : Color.black;
                 targetGlow.a = 1;
+                if (selectedWire != null && v.w != selectedWire)
+                {
+                    // Premultiplied blend: fading the whole colour fades the line towards the background.
+                    targetCore *= 0.16f;
+                    targetGlow *= 0.1f;
+                    targetGlow.a = 1;
+                }
                 v.col = Color.Lerp(v.col, targetCore, k);
                 v.gcol = Color.Lerp(v.gcol, targetGlow, k);
                 float f = showFlow ? flow : 0;
@@ -752,6 +787,12 @@ namespace A11Sim
                 var gw = guide.Current.w;
                 for (int i = 0; i < gw.pts.Length - 1; i++)
                     dynGlow.Line(gw.pts[i], gw.pts[i + 1], 1.8f, gold * (0.6f * pulse));
+            }
+            if (selectedWire != null && !panel.full)
+            {
+                var sw = selectedWire;
+                for (int i = 0; i < sw.pts.Length - 1; i++)
+                    dynGlow.Line(sw.pts[i], sw.pts[i + 1], 1.4f, new Color(0.55f, 0.9f, 1f) * 0.55f);
             }
             foreach (var tt in proc.Targets())
             {
@@ -796,12 +837,13 @@ namespace A11Sim
         void UpdateLabels()
         {
             float wpp = 2f * cam.orthographicSize / Mathf.Max(1, Screen.height);
-            bool lod = Mathf.Abs(wpp - lastWpp) > lastWpp * 0.03f || lastNumbers != showNumbers || lastCautions != showCautions;
+            bool lod = Mathf.Abs(wpp - lastWpp) > lastWpp * 0.03f || lastNumbers != showNumbers || lastCautions != showCautions || lastSel != selectedWire;
             if (lod)
             {
                 lastWpp = wpp;
                 lastNumbers = showNumbers;
                 lastCautions = showCautions;
+                lastSel = selectedWire;
                 cautionRenderer.enabled = showCautions;
             }
             foreach (var l in lbls)
@@ -821,6 +863,7 @@ namespace A11Sim
                 float a = Mathf.InverseLerp(3.5f, 7f, px);
                 if (l.wireNo && !showNumbers) a = 0;
                 if (l.caution && !showCautions) a = 0;
+                if (l.w != null && selectedWire != null && l.w != selectedWire) a *= 0.15f;
                 bool on = a > 0.01f;
                 if (l.t.enabled != on) l.t.enabled = on;
                 if (on) l.t.alpha = a;
