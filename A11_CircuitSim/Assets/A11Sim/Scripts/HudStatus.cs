@@ -111,6 +111,7 @@ namespace A11Sim
         {
             ("V", "3D enclosure ↔ schematic"), ("Drag", "orbit"), ("Middle  Wheel", "pan · zoom"),
             ("O  I", "open / close the door · look inside"), ("C  M", "duct covers · dimensions"), ("F  G", "door · handheld"),
+            ("Click", "a wire: ghost the others · again: show all"),
         };
 
         static readonly (string key, string what)[] HelpTools =

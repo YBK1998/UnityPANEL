@@ -43,11 +43,15 @@ namespace A11Sim
             public Vector3 rest, pressedOff;
             public Func<bool> isDown;
             public Action down, up;
+            public Action click;   // press and release without dragging (a drag still orbits)
         }
 
         readonly List<Btn> btns = new();
         readonly Dictionary<Collider, Btn> byCollider = new();
         Btn active, hover;
+        Btn pressed;
+        bool pressPending, pressMoved;
+        Vector2 pressAt;
 
         class LampVis
         {
@@ -149,8 +153,8 @@ namespace A11Sim
             byCollider[bc] = new Btn { tipF = tip, isDown = () => false, down = down, up = up };
         }
 
-        internal void Register(Collider c, Func<string> tip, Action down, Action up) =>
-            byCollider[c] = new Btn { tipF = tip, isDown = () => false, down = down, up = up };
+        internal void Register(Collider c, Func<string> tip, Action down, Action up, Action click = null) =>
+            byCollider[c] = new Btn { tipF = tip, isDown = () => false, down = down, up = up, click = click };
 
         void SetupRendering()
         {
@@ -694,6 +698,20 @@ namespace A11Sim
             bool overFull = full && !view.hud.IsOver(mp);
             hover = null;
             hoverTip = null;
+            // A click that did not drag: on a wire it isolates that wire, anywhere else it shows all wires again.
+            if (pressPending)
+            {
+                if ((mp - pressAt).sqrMagnitude > 25f) pressMoved = true;
+                if (!LeftHeld)
+                {
+                    pressPending = false;
+                    if (!pressMoved)
+                    {
+                        if (pressed?.click != null) pressed.click();
+                        else cabinet.ClearWireSelection();
+                    }
+                }
+            }
             // Multimeter: in the full view a click near a wiring point places a probe.
             if (overFull && view.meter.active && active == null && !orbiting && !panning)
             {
@@ -728,7 +746,14 @@ namespace A11Sim
                         hover.down();
                         active = hover;
                     }
-                    else if (overFull)
+                    else
+                    {
+                        pressed = hover;
+                        pressPending = true;
+                        pressMoved = false;
+                        pressAt = mp;
+                    }
+                    if (hover?.down == null && overFull)
                     {
                         orbiting = true;
                         goalTarget = null;

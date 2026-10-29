@@ -92,7 +92,26 @@ namespace A11Sim
             public float len;
             public bool door;
             public readonly List<GameObject> markers = new();
+            public readonly List<Material> mats = new();
             public int buildState = 1;
+            public bool ghost;
+        }
+
+        // Click on a wire: every other wire turns into a faint ghost so this one can be followed through the ducts.
+        WireVis selected;
+        readonly Dictionary<Material, Material> ghostMats = new();
+
+        public bool HasWireSelection => selected != null;
+        public void ClearWireSelection() => selected = null;
+
+        void ToggleSelect(WireVis wv) => selected = selected == wv ? null : wv;
+
+        Material Ghost(Material m)
+        {
+            if (ghostMats.TryGetValue(m, out var g)) return g;
+            var c = m.color;
+            g = new Material(Shader.Find("A11/Ghost")) { color = new Color(c.r, c.g, c.b, 0.1f), mainTexture = m.mainTexture };
+            return ghostMats[m] = g;
         }
 
         /// Routed conductors with their length (m, along the duct route) for the build guide.
@@ -1359,12 +1378,14 @@ namespace A11Sim
             var go = MeshObj(parent, wv.w != null ? "wire " + (wv.w.number != "" ? wv.w.number : wv.w.a.id) : "cable", mesh, mat);
             var r = go.GetComponent<MeshRenderer>();
             wv.rends.Add(r);
+            wv.mats.Add(mat);
             if (wv.w != null)
             {
                 var col = go.AddComponent<MeshCollider>();
                 col.sharedMesh = mesh;
                 var w = wv.w;
-                P.Register(col, () => V.WireTip(w), null, null);
+                P.Register(col, () => V.WireTip(w) + (selected == wv ? "\nClick again (or on empty space) to show all wires." : "\nClick to isolate this wire."),
+                    null, null, () => ToggleSelect(wv));
             }
         }
 
@@ -1481,18 +1502,25 @@ namespace A11Sim
 
             // Live wires: emission in the schematic's potential colours.
             // Build guide: wires not fitted yet are hidden, the one to fit now pulses.
+            // Selected wire: all the others are ghosted and lose their markers.
+            if (selected != null && selected.buildState == 0) selected = null;
             foreach (var wv in wires)
             {
                 int bs = V.guide != null ? V.guide.StateOf(wv.w) : 1;
-                if (bs != wv.buildState)
+                bool ghost = selected != null && wv != selected;
+                if (bs != wv.buildState || ghost != wv.ghost)
                 {
                     wv.buildState = bs;
-                    foreach (var r in wv.rends)
+                    wv.ghost = ghost;
+                    for (int i = 0; i < wv.rends.Count; i++)
                     {
+                        var r = wv.rends[i];
                         r.enabled = bs != 0;
+                        r.sharedMaterial = ghost ? Ghost(wv.mats[i]) : wv.mats[i];
+                        r.shadowCastingMode = ghost ? ShadowCastingMode.Off : ShadowCastingMode.On;
                         if (r.TryGetComponent<MeshCollider>(out var mc)) mc.enabled = bs != 0;
                     }
-                    foreach (var m in wv.markers) m.SetActive(bs != 0);
+                    foreach (var m in wv.markers) m.SetActive(bs != 0 && !ghost);
                 }
                 Color e = Color.black;
                 if (bs == 2) e = new Color(1f, 0.78f, 0.15f) * (1.4f + 0.9f * Mathf.Sin(Time.time * 7f));
