@@ -20,7 +20,7 @@ and the **motor lane VM** (right: the three stepper motor cables only).
 | Fuse holders F1, F2, RT18-32 1P | 17 × 79 × 60 | width **measured** (17); 10 × 38 mm fuse links, gG 2 A ([RT18-32X listing](https://makerselectronics.com/product/fuse-holders-500v32a-10x38-rt18-32x/)) | height / depth approximate |
 | VFD U1, FC300-2.2G-S2 | 140 × 205 × 160 | **measured** | 100 mm clear above, 50 mm to G1 |
 | PSU G1 48 V 15 A (S-720-48 class) | 125 × 240 × 65 | **measured** | upright |
-| PSU G2 24 V 20 A (S-500-24 class) | 115 × 215 × 50 | **measured** | upright |
+| PSU G2 24 V 8.33 A (ROZH LED BFC24 200 W; replaced the defective 20 A S-500-24 class unit, 2026-10-31) | 49 × 180 × 22 | **measured**; terminals on the 49 mm ends: L / N / PE at one end, V+ V+ V− V− at the other | upright, flat on the plate, centred between G1 and the right duct; L / N / PE end up (→ D1), V end down (→ D2), 30 mm above D2 |
 | Drives A2–A4, Leadshine DMA860H | 52 × 150 × 97 | **measured**, side-mounted (52 × 150 on the plate, 97 out) | terminals face the door in one column; signal connector at the top (→ D2), power connector at the bottom (→ D3, motor cables straight into VM) — **as on the owner's drives** |
 | A11E interface board | 153 × 90 × 20 (35 with the screw terminals) | **measured** | landscape, terminal strips along both long edges (as drawn before) |
 | EMI filter Z1, HD2AC-20A | 51 × 51 × 30 | **measured**; plate mounted (not DIN rail): 2 terminals (L, N in) on one side, 3 (L, N out, PE) on the other | far left of row A, LINE side down |

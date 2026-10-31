@@ -781,13 +781,54 @@ namespace A11Sim
                       "\n<color=#ffb050>REMINDER C14 (open): the nameplate's 11 A is the OUTPUT current — input ≈ 22–24 A at full load. QF1 C16 trips on long full-power cuts, Z1 20 A is overloaded, QF0 C25 marginal; the supply path behind QF0 is 4 mm².</color>" +
                       "\nOutput: one 4G1.5 shielded cable W1 down the power lane, shield 360° at both ends (EMC clamp + HDC-HA hood).");
 
-            // PSUs upright, measured: G1 50 mm right of the VFD, G2 10 mm right of G1 (9 mm left to the right vertical duct).
+            // PSUs, measured: G1 upright, 50 mm right of the VFD. G2 (the slim ROZH that replaced the defective 20 A unit) see below.
             Psu(C.Get<Psu>("G1"), 0.033f, 0.125f, 0.24f, 0.065f, "S-720-48", "48 V  15 A",
                 new[] { "G1.L", "G1.N", "G1.PE", "G1.-V1", "G1.-V2", "G1.-V3", "G1.+V1", "G1.+V2", "G1.+V3" },
                 new[] { "L", "N", "PE", "-V", "-V", "-V", "+V", "+V", "+V" }, "measured");
-            Psu(C.Get<Psu>("G2"), 0.163f, 0.115f, 0.215f, 0.05f, "S-500-24", "24 V  20 A",
-                new[] { "G2.L", "G2.N", "G2.PE", "G2.-V1", "G2.-V2", "G2.+V1", "G2.+V2" },
-                new[] { "L", "N", "PE", "-V", "-V", "+V", "+V" }, "measured");
+            // G2: ROZH LED BFC24 200 W, 180 × 49 × 22 (measured), flat on the plate, upright, centred in the 124 mm between G1 and the
+            // right vertical duct. Terminals on the 49 mm ends: L / N / PE at the top end (→ D1, towards QF4 and XN),
+            // V+ V+ V− V− at the bottom end (→ D2), 30 mm above D2 for the bend.
+            PsuBrick(C.Get<Psu>("G2"), 0.1675f, RowBBottom + 0.03f, 0.049f, 0.18f, 0.022f, "BFC24-200W", "24 V  8.33 A",
+                new[] { "G2.L", "G2.N", "G2.PE" }, new[] { "L", "N", "PE" },
+                new[] { "G2.+V1", "G2.+V2", "G2.-V1", "G2.-V2" }, new[] { "V+", "V+", "V-", "V-" }, "measured");
+        }
+
+        /// Slim LED-style PSU: a long box flat on the plate with a screw terminal row on each short end
+        /// (input at the top end into D1, output at the bottom end into D2).
+        void PsuBrick(Psu psu, float xc, float y0, float w, float h, float d, string model, string rating,
+                      string[] inIds, string[] inLabels, string[] outIds, string[] outLabels, string src)
+        {
+            var g = Group(psu.tag);
+            float yc = y0 + h / 2, zf = Zb - d, tb = 0.014f; // terminal zone at each end
+            Box(g, new Vector3(xc, yc, Zb - d / 2), new Vector3(w, h - 2 * tb, d), mAlu);
+            foreach (float ye in new[] { y0 + tb / 2, y0 + h - tb / 2 })
+                Box(g, new Vector3(xc, ye, Zb - d / 2), new Vector3(w, tb, d), mBlack);
+            for (int i = 0; i < 10; i++)
+                Box(g, new Vector3(xc, yc + 0.06f - i * 0.006f, zf - 0.0003f), new Vector3(w * 0.75f, 0.0025f, 0.001f), mBlack);
+            Box(g, new Vector3(xc, yc - 0.03f, zf - 0.0005f), new Vector3(w * 0.85f, 0.034f, 0.001f), mWhite);
+            Label(g, model, new Vector3(xc, yc - 0.019f, zf - 0.0012f), 0.0042f, Color.black, true);
+            Label(g, rating, new Vector3(xc, yc - 0.028f, zf - 0.0012f), 0.0038f, new Color(0.15f, 0.15f, 0.15f), true);
+            Label(g, psu.tag, new Vector3(xc, yc - 0.039f, zf - 0.0012f), 0.0055f, new Color(0.1f, 0.1f, 0.4f), true);
+
+            void Row(string[] ids, string[] labels, bool top)
+            {
+                float step = w * 0.86f / ids.Length, ys = top ? y0 + h - tb / 2 : y0 + tb / 2, sgn = top ? 1f : -1f;
+                for (int i = 0; i < ids.Length; i++)
+                {
+                    float x = xc - w * 0.43f + step * (i + 0.5f);
+                    ScrewHead(g, new Vector3(x, ys, zf - 0.0006f));
+                    Label(g, labels[i], new Vector3(x, ys - sgn * 0.0095f, zf - 0.0012f), 0.0026f, Color.black);
+                    // wire entry through the end face
+                    Anchor(ids[i], new Vector3(x - 0.0015f, ys + sgn * (tb / 2 + 0.002f), Zb - d * 0.45f), top ? 1 : 2);
+                    Anchor(ids[i], new Vector3(x + 0.0015f, ys + sgn * (tb / 2 + 0.002f), Zb - d * 0.65f), top ? 1 : 2);
+                }
+            }
+            Row(inIds, inLabels, true);
+            Row(outIds, outLabels, false);
+            Led(g, new Vector3(xc + w * 0.3f, y0 + tb + 0.008f, zf - 0.001f), new Color(0.2f, 1f, 0.3f), () => psu.on);
+            Solid(psu.tag, new Vector3(xc, yc, Zb - d / 2), new Vector3(w, h, d));
+            Click(g, new Vector3(xc, yc, Zb - d / 2), new Vector3(w, h, d), () => psu.Tip() +
+                $"\nSlim LED-type switching PSU, {model}. Terminals on the 49 mm ends: L / N / PE at the top, V+ V+ V− V− at the bottom. No voltage-adjust pot assumed." + Dims(w, h, d, src));
         }
 
         void Psu(Psu psu, float xc, float w, float h, float d, string model, string rating, string[] ids, string[] labels, string src)

@@ -30,8 +30,9 @@ THROUGH = [("Z1.LIN", "Z1.LOUT"), ("Z1.NIN", "Z1.NOUT"), ("KM1.1L1", "KM1.2T1"),
            ("G2.+V1", "G2.+V2"), ("G2.-V1", "G2.-V2"), ("G1.+V1", "G1.+V2"), ("G1.+V1", "G1.+V3"), ("G1.-V1", "G1.-V2"), ("G1.-V1", "G1.-V3")]
 
 # Upstream protection (A) seen from the output side of each protective device / current-limited source.
+# G2 = ROZH LED BFC24 200 W, 8.33 A rated (2026-10-31); 12.5 A = 150 % overload limit, a conservative worst case.
 PROTECT = {"QF0.2": 25, "QF0.4": 25, "QF1.2": 16, "QF2.2": 10, "QF3.2": 10, "QF4.2": 6, "F1.out": 2, "F2.out": 2,
-           "G2.+V": 20, "G2.+V1": 20, "G2.+V2": 20, "G1.+V1": 15, "G1.+V2": 15, "G1.+V3": 15}
+           "G2.+V": 12.5, "G2.+V1": 12.5, "G2.+V2": 12.5, "G1.+V1": 15, "G1.+V2": 15, "G1.+V3": 15}
 # IEC 60204-1 Table 6, B2. 0.5 mm² is not in the table; 3 A is used as a conservative control-wiring value.
 AMPACITY = {0.5: 3.0, 0.75: 7.6, 1.0: 10.4, 1.5: 13.5, 2.5: 18.3, 4.0: 25.0, 6.0: 32.0}
 PE_REQUIRED = ["Mains.PE", "Z1.GND", "U1.PE", "G1.PE", "G2.PE", "X1.PE", "XS1.PE", "BKP.T", "DOOR.T", "BODY.T"]

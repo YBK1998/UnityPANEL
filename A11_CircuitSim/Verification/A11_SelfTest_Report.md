@@ -1,6 +1,6 @@
 # A11 circuit self-test
 
-Generated 2026-10-27 19:47 from `A11Layout.Build()` (the same model the app runs).
+Generated 2026-10-31 22:41 from `A11Layout.Build()` (the same model the app runs).
 
 **62 passed, 0 failed.**
 

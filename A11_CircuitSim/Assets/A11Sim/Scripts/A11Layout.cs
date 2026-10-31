@@ -23,8 +23,8 @@ namespace A11Sim
             c.Add(new EmiFilter());
             c.Add(new Breaker("QF4", "CB-24V C6A", "24 V PSU branch — on the UNSWITCHED side so the A11 stays on and senses the E-stop.",
                 246, 238, true, new Vector2(27.6f, 242), TA.Right, 30));
-            var g2 = c.Add(new Psu("G2", "G2 — PSU 24 V / 20 A", "Power for the A11, sensors, panel, K1 and fan. −V is bonded to PE once (wire 148, PELV).",
-                Rect.MinMaxRect(26, 218, 48, 230), "G2  PSU 24 V / 20 A", "unswitched",
+            var g2 = c.Add(new Psu("G2", "G2 — PSU 24 V / 8.33 A (ROZH LED BFC24 200 W)", "Power for the A11, sensors, panel, K1 and fan. −V is bonded to PE once (wire 148, PELV). Replaced the defective 20 A unit (2026-10-31). Load is capped by F1 + F2 (2 × 2 A gG) at 4 A, so 8.33 A is ample.",
+                Rect.MinMaxRect(26, 218, 48, 230), "G2  PSU 24 V / 8.33 A", "unswitched",
                 new Vector2(30, 230), new Vector2(38, 230), new Vector2(48, 224),
                 new[] { new Vector2(42, 218), new Vector2(46, 218) }, new[] { new Vector2(30, 218), new Vector2(34, 218) }, Pot.P24, Pot.Z0));
             c.Add(new RelayK1());

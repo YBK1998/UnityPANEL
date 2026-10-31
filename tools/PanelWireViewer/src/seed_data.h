@@ -166,7 +166,7 @@ static const SeedPart kSeedParts[] = {
     {"CB-VFD C16A","Breaker","Backplate","C16A","VFD branch.","CB-VFD"},
     {"CB-48V C10A","Breaker","Backplate","C10A","48 V PSU branch.","CB-48V"},
     {"CB-PUMP C10A","Breaker","Backplate","C10A","Coolant pump outlet branch.","CB-PUMP"},
-    {"PSU 24V/20A","Power Supply","Backplate","24 V / 20 A","A11, sensors, panel, K1, fan. -V bonded to PE (wire 148).","PSU 24V"},
+    {"PSU 24V/8.33A","Power Supply","Backplate","24 V / 8.33 A (ROZH LED BFC24 200 W)","A11, sensors, panel, K1, fan. -V bonded to PE (wire 148).","PSU 24V"},
     {"PSU 48V/15A","Power Supply","Backplate","48 V / 15 A","X + Y + Z drives, one +V/-V pair each.","PSU 48V"},
     {"Fuse F1","Fuse","Backplate","DIN fuse terminal 5x20, 2 A","24 V CONTROL: E-stop chain, lamps, fan.","F1"},
     {"Fuse F2","Fuse","Backplate","DIN fuse terminal 5x20, 2 A","24 V SIGNAL: A11 board + sensors.","F2"},

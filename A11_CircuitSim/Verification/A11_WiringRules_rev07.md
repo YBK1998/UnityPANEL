@@ -32,8 +32,6 @@
 | 150 | 1.0 mm² | 10.4 A | 15 A | **FAIL** |
 | 152 | 1.0 mm² | 10.4 A | 15 A | **FAIL** |
 | 154 | 1.0 mm² | 10.4 A | 15 A | **FAIL** |
-| 162 | 2.5 mm² | 18.3 A | 20 A | WARN |
-| 164 | 2.5 mm² | 18.3 A | 20 A | WARN |
 
 ## R6 Neutral conductors (return current of every branch behind them)
 
